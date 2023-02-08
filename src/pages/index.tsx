@@ -1,8 +1,8 @@
 import Head from "next/head";
 import PageWrapper from "@/components/PageWrapper";
-import Header from "@/components/Header";
 import Main from "@/components/Main";
 import Calendar from "@/components/Calendar";
+import Services from "@/components/Services";
 
 export default function Home() {
   return (
@@ -15,7 +15,18 @@ export default function Home() {
       </Head>
       <PageWrapper>
         <Main>
-          <Calendar currentDate={new Date()} />
+          <div className="p-8">
+            <h2 className="font-medium mb-2">Create booking</h2>
+            <h2 className="text-xs text-neutral-500 mb-4">
+              Select a date and time that works for you
+            </h2>
+            <div className="mb-4">
+              <Calendar currentDate={new Date()} />
+            </div>
+            <div className="">
+              <Services />
+            </div>
+          </div>
         </Main>
       </PageWrapper>
     </>

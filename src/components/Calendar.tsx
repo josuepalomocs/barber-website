@@ -41,16 +41,16 @@ export default function Calendar({ currentDate }: CalendarProps) {
     const numRows = Math.ceil((daysInMonth + firstDayIndex) / 7);
 
     return Array.from({ length: numRows }, (_, i) => (
-      <tr key={i} className="[&>td]">
+      <tr key={i} className="text-xs flex justify-between">
         {Array.from({ length: 7 }, (_, j) => {
           if (i === 0 && j < firstDayIndex) {
-            return <td key={i * 7 + j} />;
+            return <td key={i * 7 + j} className="w-10 h-10" />;
           }
           if (
             i === numRows - 1 &&
             7 * i + j - firstDayIndex + 1 > daysInMonth
           ) {
-            return <td key={i * 7 + j} />;
+            return <td key={i * 7 + j} className="w-10 h-10" />;
           }
           return (
             <td
@@ -86,8 +86,8 @@ export default function Calendar({ currentDate }: CalendarProps) {
   }
 
   return (
-    <div className="p-4 bg-gray-50 rounded-lg drop-shadow">
-      <div className="font-medium mb-4">
+    <div className="p-4 rounded-lg border border-neutral-200">
+      <div className="mb-4">
         <div className="flex justify-between items-center">
           <button
             className="text-neutral-400"
@@ -97,7 +97,7 @@ export default function Calendar({ currentDate }: CalendarProps) {
           >
             <ChevronLeftIcon className="w-[20px] h-[20px]" />
           </button>
-          <span>
+          <span className="text-xs">
             {formatDate(`${selectedYear}-${selectedMonth + 1}`, "MMMM")}
           </span>
           <button
@@ -111,16 +111,16 @@ export default function Calendar({ currentDate }: CalendarProps) {
         </div>
       </div>
       <hr className="border-neutral-200 mb-2" />
-      <table className="border-collapse [&>*]:text-center mb-2">
+      <table className="border-collapse w-full">
         <thead className="text-xs">
-          <tr className="[&>th]:font-light [&>th]:p-2">
-            <th>Sun</th>
-            <th>Mon</th>
-            <th>Tue</th>
-            <th>Wed</th>
-            <th>Thu</th>
-            <th>Fri</th>
-            <th>Sat</th>
+          <tr className="flex justify-between [&>th]:font-light [&>th]:w-10 [&>th]:h-10">
+            <th className="flex justify-center items-center">Sun</th>
+            <th className="flex justify-center items-center">Mon</th>
+            <th className="flex justify-center items-center">Tue</th>
+            <th className="flex justify-center items-center">Wed</th>
+            <th className="flex justify-center items-center">Thu</th>
+            <th className="flex justify-center items-center">Fri</th>
+            <th className="flex justify-center items-center">Sat</th>
           </tr>
         </thead>
         <tbody>{renderTableBodyRows()}</tbody>
