@@ -3,6 +3,7 @@ import PageWrapper from "@/components/PageWrapper";
 import Main from "@/components/Main";
 import Sidebar from "@/components/Sidebar";
 import useSidebar from "@/hooks/useSidebar";
+import Header from "@/components/Header";
 
 export default function Home() {
   const { isOpen, openSidebar, closeSidebar } = useSidebar();
@@ -16,6 +17,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageWrapper>
+        <Header />
         <Main>
           <button className="" onClick={openSidebar}>
             Open sidebar

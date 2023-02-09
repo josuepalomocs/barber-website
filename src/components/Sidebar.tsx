@@ -9,39 +9,41 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
-  const isOpenStyling = "translate-x-[400px]";
+  const isOpenStyling = "translate-x-[640px]";
   return (
     <>
       <aside
-        className={`fixed max-h-screen right-0 top-0 max-w-[400px] overflow-y-auto z-10 bg-neutral-50 ${
+        className={`flex justify-center fixed top-0 right-0 max-h-screen w-full sm:max-w-[400px] overflow-y-auto z-10 bg-neutral-50 ${
           !isOpen ? isOpenStyling : ""
         } transition duration-300`}
       >
-        <div className="sticky top-0 bg-neutral-50 px-8">
-          <div className="flex justify-between py-4">
-            <h2 className="font-medium">Book appointment</h2>
-            <button className="font-light text-xs" onClick={closeSidebar}>
-              Close
-            </button>
+        <div className="w-full h-full">
+          <div className="w-full sticky top-0 bg-neutral-50">
+            <div className="flex justify-between p-4 m-auto">
+              <h2 className="">Book appointment</h2>
+              <button className="font-light text-xs" onClick={closeSidebar}>
+                Close
+              </button>
+            </div>
+            <hr className="border-neutral-200" />
           </div>
-          <hr className="border-neutral-200" />
-        </div>
-        <div className="p-8">
-          <h2 className="text-xs text-neutral-500 mb-4">Pick a date</h2>
-          <div className="mb-4">
-            <Calendar currentDate={new Date()} />
-          </div>
-          <hr className="border-neutral-200 mb-8" />
-          <div className="mb-4">
-            <TimeSlots />
-          </div>
-          <hr className="border-neutral-200 mb-8" />
-          <div className="mb-4">
-            <Services />
-          </div>
-          <hr className="border-neutral-200 mb-8" />
-          <div className="">
-            <PersonalForm />
+          <div className="p-4">
+            <h2 className="text-xs text-neutral-500 mb-4">Pick a date</h2>
+            <div className="mb-4">
+              <Calendar currentDate={new Date()} />
+            </div>
+            <hr className="border-neutral-200 mb-8" />
+            <div className="mb-4">
+              <TimeSlots />
+            </div>
+            <hr className="border-neutral-200 mb-8" />
+            <div className="mb-4">
+              <Services />
+            </div>
+            <hr className="border-neutral-200 mb-8" />
+            <div className="">
+              <PersonalForm />
+            </div>
           </div>
         </div>
       </aside>

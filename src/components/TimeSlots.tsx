@@ -4,7 +4,7 @@ export default function TimeSlots({}: TimeSlotsProps) {
   return (
     <div className="text-xs">
       <p className="text-neutral-500 mb-4">Pick a time</p>
-      <ul className="grid grid-cols-4 gap-2">
+      <ul className="grid grid-cols-2 gap-2">
         <li className="text-center p-3 rounded-lg border border-neutral-200 bg-white">
           <button className="">
             <time>9:00am</time>
@@ -47,42 +47,42 @@ export default function TimeSlots({}: TimeSlotsProps) {
         </li>
         <li className="text-center p-3 rounded-lg border border-neutral-200 bg-white">
           <button className="">
-            <time>9:00am</time>
+            <time>11:00am</time>
           </button>
         </li>
         <li className="text-center p-3 rounded-lg border border-neutral-200 bg-white">
           <button className="">
-            <time>9:15am</time>
+            <time>11:15am</time>
           </button>
         </li>
         <li className="text-center p-3 rounded-lg border border-neutral-200 bg-white">
           <button className="">
-            <time>9:30am</time>
+            <time>11:30am</time>
           </button>
         </li>
         <li className="text-center p-3 rounded-lg border border-neutral-200 bg-white">
           <button className="">
-            <time>9:45am</time>
+            <time>11:45am</time>
           </button>
         </li>
         <li className="text-center p-3 rounded-lg border border-neutral-200 bg-white">
           <button className="">
-            <time>10:00am</time>
+            <time>12:00am</time>
           </button>
         </li>
         <li className="text-center p-3 rounded-lg border border-neutral-200 bg-white">
           <button className="">
-            <time>10:15am</time>
+            <time>12:15am</time>
           </button>
         </li>
         <li className="text-center p-3 rounded-lg border border-neutral-200 bg-white">
           <button className="">
-            <time>10:30am</time>
+            <time>12:30am</time>
           </button>
         </li>
         <li className="text-center p-3 rounded-lg border border-neutral-200 bg-white">
           <button className="">
-            <time>10:45am</time>
+            <time>12:45am</time>
           </button>
         </li>
       </ul>
