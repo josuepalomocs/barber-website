@@ -44,13 +44,13 @@ export default function Calendar({ currentDate }: CalendarProps) {
       <tr key={i} className="text-xs flex justify-between">
         {Array.from({ length: 7 }, (_, j) => {
           if (i === 0 && j < firstDayIndex) {
-            return <td key={i * 7 + j} className="w-10 h-10" />;
+            return <td key={i * 7 + j} className="w-8 h-8" />;
           }
           if (
             i === numRows - 1 &&
             7 * i + j - firstDayIndex + 1 > daysInMonth
           ) {
-            return <td key={i * 7 + j} className="w-10 h-10" />;
+            return <td key={i * 7 + j} className="w-8 h-8" />;
           }
           return (
             <td
@@ -64,13 +64,13 @@ export default function Calendar({ currentDate }: CalendarProps) {
               {7 * i + j - firstDayIndex + 1 <
               getDayOfMonthFromDate(currentDate) ? (
                 <div
-                  className={`flex items-center justify-center ${inactiveDayStyling} w-full h-full w-10 h-10`}
+                  className={`flex items-center justify-center ${inactiveDayStyling} w-full h-full w-8 h-8`}
                 >
                   {7 * i + j - firstDayIndex + 1}
                 </div>
               ) : (
                 <button
-                  className="w-full h-full w-10 h-10"
+                  className="w-full h-full w-8 h-8"
                   onClick={() => {
                     setSelectedDay(7 * i + j - firstDayIndex + 1);
                   }}
@@ -86,7 +86,7 @@ export default function Calendar({ currentDate }: CalendarProps) {
   }
 
   return (
-    <div className="p-4 rounded-lg border border-neutral-200">
+    <div className="p-4 rounded-lg border border-neutral-200 bg-white">
       <div className="mb-4">
         <div className="flex justify-between items-center">
           <button
@@ -113,7 +113,7 @@ export default function Calendar({ currentDate }: CalendarProps) {
       <hr className="border-neutral-200 mb-2" />
       <table className="border-collapse w-full">
         <thead className="text-xs">
-          <tr className="flex justify-between [&>th]:font-light [&>th]:w-10 [&>th]:h-10">
+          <tr className="flex justify-between [&>th]:font-light [&>th]:w-8 [&>th]:h-8">
             <th className="flex justify-center items-center">Sun</th>
             <th className="flex justify-center items-center">Mon</th>
             <th className="flex justify-center items-center">Tue</th>

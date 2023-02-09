@@ -1,10 +1,12 @@
 import Head from "next/head";
 import PageWrapper from "@/components/PageWrapper";
 import Main from "@/components/Main";
-import Calendar from "@/components/Calendar";
-import Services from "@/components/Services";
+import Sidebar from "@/components/Sidebar";
+import useSidebar from "@/hooks/useSidebar";
 
 export default function Home() {
+  const { isOpen, openSidebar, closeSidebar } = useSidebar();
+
   return (
     <>
       <Head>
@@ -15,18 +17,14 @@ export default function Home() {
       </Head>
       <PageWrapper>
         <Main>
-          <div className="p-8">
-            <h2 className="font-medium mb-2">Create booking</h2>
-            <h2 className="text-xs text-neutral-500 mb-4">
-              Select a date and time that works for you
-            </h2>
-            <div className="mb-4">
-              <Calendar currentDate={new Date()} />
-            </div>
-            <div className="">
-              <Services />
-            </div>
-          </div>
+          <button className="" onClick={openSidebar}>
+            Open sidebar
+          </button>
+          <Sidebar
+            isOpen={isOpen}
+            openSidebar={openSidebar}
+            closeSidebar={closeSidebar}
+          />
         </Main>
       </PageWrapper>
     </>
