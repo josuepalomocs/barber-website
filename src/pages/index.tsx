@@ -20,11 +20,7 @@ export default function Home() {
           <button className="" onClick={openSidebar}>
             Open sidebar
           </button>
-          <Sidebar
-            isOpen={isOpen}
-            openSidebar={openSidebar}
-            closeSidebar={closeSidebar}
-          />
+          <Sidebar isOpen={isOpen} closeSidebar={closeSidebar} />
         </Main>
       </PageWrapper>
     </>

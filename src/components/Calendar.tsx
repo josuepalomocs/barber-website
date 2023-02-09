@@ -64,13 +64,13 @@ export default function Calendar({ currentDate }: CalendarProps) {
               {7 * i + j - firstDayIndex + 1 <
               getDayOfMonthFromDate(currentDate) ? (
                 <div
-                  className={`flex items-center justify-center ${inactiveDayStyling} w-full h-full w-8 h-8`}
+                  className={`flex items-center justify-center ${inactiveDayStyling} w-8 h-8`}
                 >
                   {7 * i + j - firstDayIndex + 1}
                 </div>
               ) : (
                 <button
-                  className="w-full h-full w-8 h-8"
+                  className="w-8 h-8"
                   onClick={() => {
                     setSelectedDay(7 * i + j - firstDayIndex + 1);
                   }}
