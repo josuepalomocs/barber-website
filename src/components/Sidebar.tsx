@@ -18,14 +18,13 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
         } transition duration-300`}
       >
         <div className="w-full h-full">
-          <div className="w-full sticky top-0 bg-neutral-50">
-            <div className="flex justify-between p-4 m-auto">
-              <h2 className="">Book appointment</h2>
+          <div className="flex items-center w-full sticky top-0 h-16 text-neutral-900 bg-white border-b border-neutral-200  ">
+            <div className="flex justify-between items-center w-full px-4">
+              <h2 className="text-xs">Book an appointment with Osvaldo</h2>
               <button className="font-light text-xs" onClick={closeSidebar}>
                 Close
               </button>
             </div>
-            <hr className="border-neutral-200" />
           </div>
           <div className="p-4">
             <h2 className="text-xs text-neutral-500 mb-4">Pick a date</h2>
