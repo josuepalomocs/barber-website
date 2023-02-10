@@ -1,81 +1,93 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import useCalendar from "@/hooks/useCalendar";
 import {
   formatDate,
-  getDateFromString,
-  getDayOfMonthFromDate,
-  getDayOfWeekFromDate,
+  getDayOfMonth,
   getDaysInMonth,
-  getMonthFromDate,
-  getStartOfMonthDate,
-  getYearFromDate,
-} from "@/utilities/dayjs";
-import { MonthNumber } from "@/types";
+  getMonth,
+  getWeekday,
+  getYear,
+} from "@/utilities/date";
 
 interface CalendarProps {
   currentDate: Date;
 }
 
 export default function Calendar({ currentDate }: CalendarProps) {
-  const [selectedDay, setSelectedDay] = useState(
-    getDayOfMonthFromDate(currentDate)
-  );
-  const [selectedMonth, setSelectedMonth] = useState<MonthNumber>(
-    getMonthFromDate(currentDate)
-  );
-  const [selectedYear, setSelectedYear] = useState(
-    getYearFromDate(currentDate)
-  );
+  const {
+    selectedDate,
+    selectDate,
+    selectedView,
+    selectPreviousView,
+    selectNextView,
+  } = useCalendar({
+    currentDate,
+  });
 
   const inactiveDayStyling = "text-neutral-400 font-light";
   const selectedDayStyling =
     "bg-blue-50 outline outline-1 outline-blue-400 rounded";
+  const currentDayStyling = "bg-neutral-100 rounded";
 
   function renderTableBodyRows() {
-    const startOfMonth = getStartOfMonthDate(
-      getDateFromString(`${selectedYear}-${selectedMonth + 1}-${selectedDay}`)
+    const firstDayOfMonthDate = new Date(
+      selectedView.year,
+      selectedView.month,
+      1
     );
-    const firstDayIndex = getDayOfWeekFromDate(startOfMonth);
-    const daysInMonth = getDaysInMonth(selectedMonth + 1, selectedYear);
+    const firstDayOfMonthIndex = getWeekday(firstDayOfMonthDate);
+    const daysInMonth = getDaysInMonth(firstDayOfMonthDate);
+    const numCalendarRows = Math.ceil((daysInMonth + firstDayOfMonthIndex) / 7);
 
-    const numRows = Math.ceil((daysInMonth + firstDayIndex) / 7);
+    console.log(firstDayOfMonthIndex);
 
-    return Array.from({ length: numRows }, (_, i) => (
+    return Array.from({ length: numCalendarRows }, (_, i) => (
       <tr key={i} className="text-xs flex justify-between">
         {Array.from({ length: 7 }, (_, j) => {
-          if (i === 0 && j < firstDayIndex) {
-            return <td key={i * 7 + j} className="w-8 h-8" />;
+          if (i === 0 && j < firstDayOfMonthIndex) {
+            return <td key={i * 7 + j} className="w-10 h-10" />;
           }
           if (
-            i === numRows - 1 &&
-            7 * i + j - firstDayIndex + 1 > daysInMonth
+            i === numCalendarRows - 1 &&
+            7 * i + j - firstDayOfMonthIndex + 1 > daysInMonth
           ) {
-            return <td key={i * 7 + j} className="w-8 h-8" />;
+            return <td key={i * 7 + j} className="w-10 h-10" />;
           }
           return (
             <td
               key={i * 7 + j}
               className={`${
-                7 * i + j - firstDayIndex + 1 === selectedDay
+                7 * i + j - firstDayOfMonthIndex + 1 === selectedDate.day &&
+                selectedView.month === selectedDate.month
                   ? selectedDayStyling
+                  : 7 * i + j - firstDayOfMonthIndex + 1 ===
+                      getDayOfMonth(currentDate) &&
+                    selectedView.month === getMonth(currentDate) &&
+                    selectedView.year === getYear(currentDate)
+                  ? currentDayStyling
                   : ""
               }`}
             >
-              {7 * i + j - firstDayIndex + 1 <
-              getDayOfMonthFromDate(currentDate) ? (
+              {7 * i + j - firstDayOfMonthIndex + 1 <
+                getDayOfMonth(currentDate) &&
+              selectedView.month === getMonth(currentDate) ? (
                 <div
-                  className={`flex items-center justify-center ${inactiveDayStyling} w-8 h-8`}
+                  className={`flex items-center justify-center ${inactiveDayStyling} w-10 h-10`}
                 >
-                  {7 * i + j - firstDayIndex + 1}
+                  {7 * i + j - firstDayOfMonthIndex + 1}
                 </div>
               ) : (
                 <button
-                  className="w-8 h-8"
+                  className="w-10 h-10"
                   onClick={() => {
-                    setSelectedDay(7 * i + j - firstDayIndex + 1);
+                    selectDate(
+                      7 * i + j - firstDayOfMonthIndex + 1,
+                      selectedView.month,
+                      selectedView.year
+                    );
                   }}
                 >
-                  {7 * i + j - firstDayIndex + 1}
+                  {7 * i + j - firstDayOfMonthIndex + 1}
                 </button>
               )}
             </td>
@@ -86,34 +98,27 @@ export default function Calendar({ currentDate }: CalendarProps) {
   }
 
   return (
-    <div className="p-4 rounded-lg border border-neutral-200 bg-white">
-      <div className="mb-4">
-        <div className="flex justify-between items-center">
-          <button
-            className="text-neutral-400"
-            onClick={() => {
-              setSelectedMonth((selectedMonth - 1) as MonthNumber);
-            }}
-          >
-            <ChevronLeftIcon className="w-[20px] h-[20px]" />
+    <div className="py-2 rounded-lg border border-neutral-200 bg-white">
+      <div className="mb-2">
+        <div className="flex justify-center space-x-2 items-center">
+          <button className="text-neutral-400 p-2" onClick={selectPreviousView}>
+            <ChevronLeftIcon className="w-[16px] h-[16px]" />
           </button>
           <span className="text-xs">
-            {formatDate(`${selectedYear}-${selectedMonth + 1}`, "MMMM")}
+            {formatDate(
+              new Date(selectedView.year, selectedView.month),
+              "MMMM yyyy"
+            )}
           </span>
-          <button
-            className="text-neutral-400"
-            onClick={() => {
-              setSelectedMonth((selectedMonth + 1) as MonthNumber);
-            }}
-          >
-            <ChevronRightIcon className="w-[20px] h-[20px]" />
+          <button className="text-neutral-400 p-2" onClick={selectNextView}>
+            <ChevronRightIcon className="w-[16px] h-[16px]" />
           </button>
         </div>
       </div>
       <hr className="border-neutral-200 mb-2" />
-      <table className="border-collapse w-full">
+      <table className="border-collapse w-auto m-auto">
         <thead className="text-xs">
-          <tr className="flex justify-between [&>th]:font-light [&>th]:w-8 [&>th]:h-8">
+          <tr className="flex justify-between [&>th]:font-light [&>th]:w-10 [&>th]:h-10">
             <th className="flex justify-center items-center">Sun</th>
             <th className="flex justify-center items-center">Mon</th>
             <th className="flex justify-center items-center">Tue</th>

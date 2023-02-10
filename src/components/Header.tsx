@@ -21,8 +21,7 @@ export default function Header({ openSidebar }: HeaderProps) {
         <div className="flex justify-between items-center text-xs [&>a]:p-2 ml-auto space-x-8">
           <Link href="/about">ABOUT</Link>
           <Link href="/services">SERVICES</Link>
-          <Link href="/home">HOURS</Link>
-          <Link href="/home">LOCATION</Link>
+          <Link href="/home">CONTACT</Link>
           <button
             className="flex items-center space-x-2 text-xs p-3 bg-black text-white rounded"
             onClick={openSidebar}
