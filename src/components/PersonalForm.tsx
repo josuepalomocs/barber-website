@@ -13,7 +13,7 @@ export default function PersonalForm() {
             First name
           </label>
           <input
-            className="p-3 border border-neutral-200 rounded bg-white"
+            className="p-3 border border-neutral-200 rounded bg-white focus:outline-neutral-300"
             id="firstName"
             type="text"
             placeholder="Peter"

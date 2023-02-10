@@ -2,6 +2,9 @@ import Calendar from "@/components/Calendar";
 import TimeSlots from "@/components/TimeSlots";
 import Services from "@/components/Services";
 import PersonalForm from "@/components/PersonalForm";
+import TimeOptionListContainer from "@/components/TimeOptionListContainer";
+import ServiceListContainer from "@/components/ServiceListContainer";
+import ContactFormContainer from "@/components/ContactFormContainer";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -21,7 +24,10 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
           <div className="flex items-center w-full sticky top-0 h-16 text-neutral-900 bg-white border-b border-neutral-200  ">
             <div className="flex justify-between items-center w-full px-4">
               <h2 className="text-xs">Book an appointment with Osvaldo</h2>
-              <button className="font-light text-xs" onClick={closeSidebar}>
+              <button
+                className="font-light text-xs focus:outline-neutral-300 p-2"
+                onClick={closeSidebar}
+              >
                 Close
               </button>
             </div>
@@ -33,15 +39,15 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
             </div>
             <hr className="border-neutral-200 mb-8" />
             <div className="mb-4">
-              <TimeSlots />
+              <TimeOptionListContainer />
             </div>
             <hr className="border-neutral-200 mb-8" />
             <div className="mb-4">
-              <Services />
+              <ServiceListContainer />
             </div>
             <hr className="border-neutral-200 mb-8" />
             <div className="">
-              <PersonalForm />
+              <ContactFormContainer />
             </div>
           </div>
         </div>

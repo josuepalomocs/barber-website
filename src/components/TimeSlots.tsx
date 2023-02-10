@@ -1,17 +1,21 @@
+import { useState } from "react";
+
 interface TimeSlotsProps {}
 
 export default function TimeSlots({}: TimeSlotsProps) {
+  const [selectedTime, setSelectedTime] = useState();
+
   return (
     <div className="text-xs">
       <p className="text-neutral-500 mb-4">Pick a time</p>
       <ul className="grid grid-cols-2 gap-2">
-        <li className="text-center p-3 rounded-lg border border-neutral-200 bg-white">
-          <button className="">
+        <li className="text-center rounded-lg border border-neutral-200 bg-white hover:bg-neutral-200">
+          <button className="w-full h-full p-3">
             <time>9:00am</time>
           </button>
         </li>
-        <li className="text-center p-3 rounded-lg border border-neutral-200 bg-white">
-          <button className="">
+        <li className="text-center rounded-lg border border-neutral-200 bg-white">
+          <button className="w-full h-full">
             <time>9:15am</time>
           </button>
         </li>

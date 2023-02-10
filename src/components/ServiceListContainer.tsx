@@ -1,0 +1,21 @@
+import ServiceList from "@/components/ServiceList";
+import { Service } from "@/types";
+
+interface ServiceListProps {}
+
+export default function ServiceListContainer({}: ServiceListProps) {
+  const serviceList: Service[] = [
+    { name: "Haircut", durationInMinutes: 60, price: 30 },
+    { name: "Haircut + Eyebrows", durationInMinutes: 75, price: 35 },
+    { name: "Haircut + Beard", durationInMinutes: 75, price: 35 },
+    { name: "Haircut + Beard + Eyebrows", durationInMinutes: 90, price: 40 },
+    { name: "Kids' Haircut", durationInMinutes: 30, price: 25 },
+  ];
+
+  return (
+    <div className="text-xs">
+      <p className="text-neutral-500 mb-4">Pick a service</p>
+      <ServiceList serviceList={serviceList} />
+    </div>
+  );
+}
