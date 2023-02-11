@@ -1,9 +1,22 @@
 import { ScissorsIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
+import { useContext } from "react";
+import { AppointmentContext } from "@/context/AppointmentProvider";
 
 interface ContactFormProps {}
 
 export default function ContactForm({}: ContactFormProps) {
+  const {
+    firstName,
+    lastName,
+    email,
+    phone,
+    handleChangeFirstName,
+    handleChangeLastName,
+    handleChangeEmail,
+    handleChangePhone,
+  } = useContext(AppointmentContext);
+
   return (
     <form className="grid grid-cols-1 gap-y-2" action="">
       <div className="flex flex-col">
@@ -15,6 +28,8 @@ export default function ContactForm({}: ContactFormProps) {
           id="firstName"
           type="text"
           placeholder="Peter"
+          value={firstName}
+          onChange={handleChangeFirstName}
         />
       </div>
       <div className="flex flex-col">
@@ -26,6 +41,8 @@ export default function ContactForm({}: ContactFormProps) {
           id="lastName"
           type="text"
           placeholder="Pan"
+          value={lastName}
+          onChange={handleChangeLastName}
         />
       </div>
       <div className="flex flex-col">
@@ -37,6 +54,8 @@ export default function ContactForm({}: ContactFormProps) {
           id="email"
           type="email"
           placeholder="example@ocf.com"
+          value={email}
+          onChange={handleChangeEmail}
         />
       </div>
       <div className="flex flex-col">
@@ -48,6 +67,8 @@ export default function ContactForm({}: ContactFormProps) {
           id="phone"
           type="tel"
           placeholder="+1 (xxx) xxx xxxx"
+          value={phone}
+          onChange={handleChangePhone}
         />
       </div>
       <div className="mb-2">

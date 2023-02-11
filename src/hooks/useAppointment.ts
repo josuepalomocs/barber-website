@@ -36,7 +36,7 @@ export default function useAppointment() {
     setSelectedDateTime(date);
   }
 
-  function selectService(serviceId: number) {
+  function selectServiceId(serviceId: number) {
     setSelectedServiceId(serviceId);
   }
 
@@ -64,7 +64,7 @@ export default function useAppointment() {
     selectedDateTime,
     selectDateTime,
     selectedServiceId,
-    selectService,
+    selectServiceId,
     firstName: contactInformation.firstName,
     lastName: contactInformation.lastName,
     email: contactInformation.email,

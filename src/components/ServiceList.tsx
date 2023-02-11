@@ -7,13 +7,14 @@ interface ServiceListProps {
 
 export default function ServiceList({ serviceList }: ServiceListProps) {
   function renderServices() {
-    return serviceList.map(({ name, durationInMinutes, price }, index) => {
+    return serviceList.map(({ id, name, durationInMinutes, price }, index) => {
       return (
         <li
           key={index}
           className="flex justify-between items-center border border-neutral-200 bg-white hover:bg-neutral-200"
         >
           <Service
+            id={id}
             name={name}
             durationInMinutes={durationInMinutes}
             price={price}

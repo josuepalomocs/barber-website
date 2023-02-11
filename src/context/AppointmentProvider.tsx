@@ -6,7 +6,7 @@ type AppointmentContext = {
   selectedDateTime: Date;
   selectDateTime: (date: Date) => void;
   selectedServiceId: number;
-  selectService: (serviceId: number) => void;
+  selectServiceId: (serviceId: number) => void;
   firstName: string;
   lastName: string;
   email: string;
@@ -30,11 +30,11 @@ const currentDateSanitized = new Date(
   0
 );
 
-const AppointmentContext = createContext<AppointmentContext>({
+export const AppointmentContext = createContext<AppointmentContext>({
   selectedDateTime: new Date(currentYear, currentMonth, currentDay, 0, 0),
-  selectDateTime: () => {},
+  selectDateTime: (date: Date) => {},
   selectedServiceId: -1,
-  selectService: () => {},
+  selectServiceId: (serviceId: number) => {},
   firstName: "",
   lastName: "",
   email: "",

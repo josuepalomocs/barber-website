@@ -6,13 +6,13 @@ interface TimeOptionsProps {
 
 export default function TimeOptionList({ timeOptionList }: TimeOptionsProps) {
   function renderTimeOptions(): JSX.Element[] {
-    return timeOptionList.map((date) => {
+    return timeOptionList.map((date, index) => {
       return (
         <li
-          key={date.toISOString()}
+          key={index}
           className="text-center border border-neutral-200 bg-white hover:bg-neutral-200"
         >
-          <TimeOption key={date.toISOString()} date={date} />
+          <TimeOption date={date} />
         </li>
       );
     });

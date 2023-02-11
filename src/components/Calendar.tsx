@@ -9,18 +9,18 @@ import {
   getYear,
 } from "@/utilities/date";
 import useAppointment from "@/hooks/useAppointment";
+import { useContext } from "react";
+import { AppointmentContext } from "@/context/AppointmentProvider";
 
 interface CalendarProps {}
 
 export default function Calendar({}: CalendarProps) {
-  const { selectedDateTime, selectDateTime } = useAppointment();
+  const { selectedDateTime, selectDateTime } = useContext(AppointmentContext);
 
   const { selectDate, selectedView, selectPreviousView, selectNextView } =
     useCalendar({
       currentDate: selectedDateTime,
     });
-
-  console.log(selectedDateTime);
 
   const inactiveButtonStyles = "text-neutral-400 hover:bg-neutral-200";
   const inactiveDayStyles = "text-neutral-400 font-light";
@@ -58,7 +58,7 @@ export default function Calendar({}: CalendarProps) {
                 selectedView.year === getYear(selectedDateTime)
                   ? selectedDayStyles
                   : 7 * i + j - firstDayOfMonthIndex + 1 >=
-                    getDayOfMonth(selectedDateTime)
+                    getDayOfMonth(new Date())
                   ? "hover:bg-neutral-200"
                   : ""
               }`}
