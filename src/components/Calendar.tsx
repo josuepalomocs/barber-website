@@ -8,26 +8,23 @@ import {
   getWeekday,
   getYear,
 } from "@/utilities/date";
+import useAppointment from "@/hooks/useAppointment";
 
-interface CalendarProps {
-  currentDate: Date;
-}
+interface CalendarProps {}
 
-export default function Calendar({ currentDate }: CalendarProps) {
-  const {
-    selectedDate,
-    selectDate,
-    selectedView,
-    selectPreviousView,
-    selectNextView,
-  } = useCalendar({
-    currentDate,
-  });
+export default function Calendar({}: CalendarProps) {
+  const { selectedDateTime, selectDateTime } = useAppointment();
+
+  const { selectDate, selectedView, selectPreviousView, selectNextView } =
+    useCalendar({
+      currentDate: selectedDateTime,
+    });
+
+  console.log(selectedDateTime);
 
   const inactiveButtonStyles = "text-neutral-400 hover:bg-neutral-200";
-  const inactiveDayStyling = "text-neutral-400 font-light";
-  const selectedDayStyling = "bg-neutral-900 text-white rounded";
-  const currentDayStyling = "";
+  const inactiveDayStyles = "text-neutral-400 font-light";
+  const selectedDayStyles = "bg-neutral-900 text-white";
 
   function renderTableBodyRows() {
     const firstDayOfMonthDate = new Date(
@@ -38,8 +35,6 @@ export default function Calendar({ currentDate }: CalendarProps) {
     const firstDayOfMonthIndex = getWeekday(firstDayOfMonthDate);
     const daysInMonth = getDaysInMonth(firstDayOfMonthDate);
     const numCalendarRows = Math.ceil((daysInMonth + firstDayOfMonthIndex) / 7);
-
-    console.log(firstDayOfMonthIndex);
 
     return Array.from({ length: numCalendarRows }, (_, i) => (
       <tr key={i} className="text-xs flex justify-between">
@@ -57,21 +52,23 @@ export default function Calendar({ currentDate }: CalendarProps) {
             <td
               key={i * 7 + j}
               className={`${
-                7 * i + j - firstDayOfMonthIndex + 1 === selectedDate.day &&
-                selectedView.month === selectedDate.month &&
-                selectedView.year === selectedDate.year
-                  ? selectedDayStyling
+                7 * i + j - firstDayOfMonthIndex + 1 ===
+                  getDayOfMonth(selectedDateTime) &&
+                selectedView.month === getMonth(selectedDateTime) &&
+                selectedView.year === getYear(selectedDateTime)
+                  ? selectedDayStyles
                   : 7 * i + j - firstDayOfMonthIndex + 1 >=
-                    getDayOfMonth(currentDate)
-                  ? "hover:bg-neutral-200 rounded"
+                    getDayOfMonth(selectedDateTime)
+                  ? "hover:bg-neutral-200"
                   : ""
               }`}
             >
               {7 * i + j - firstDayOfMonthIndex + 1 <
-                getDayOfMonth(currentDate) &&
-              selectedView.month === getMonth(currentDate) ? (
+                getDayOfMonth(new Date()) &&
+              selectedView.month === getMonth(new Date()) &&
+              selectedView.year === getYear(new Date()) ? (
                 <div
-                  className={`flex items-center justify-center ${inactiveDayStyling} w-10 h-10`}
+                  className={`flex items-center justify-center ${inactiveDayStyles} w-10 h-10`}
                 >
                   {7 * i + j - firstDayOfMonthIndex + 1}
                 </div>
@@ -79,10 +76,14 @@ export default function Calendar({ currentDate }: CalendarProps) {
                 <button
                   className="w-10 h-10 focus:outline-neutral-300"
                   onClick={() => {
-                    selectDate(
-                      7 * i + j - firstDayOfMonthIndex + 1,
-                      selectedView.month,
-                      selectedView.year
+                    selectDateTime(
+                      new Date(
+                        selectedView.year,
+                        selectedView.month,
+                        7 * i + j - firstDayOfMonthIndex + 1,
+                        0,
+                        0
+                      )
                     );
                   }}
                 >
@@ -97,11 +98,11 @@ export default function Calendar({ currentDate }: CalendarProps) {
   }
 
   return (
-    <div className="py-2 rounded-lg border border-neutral-200 bg-white">
+    <div className="py-2 border border-neutral-200 bg-white">
       <div className="mb-2">
         <div className="flex justify-between items-center">
           <button
-            className={`ml-8 text-neutral-400 p-2 hover:text-neutral-500 hover:bg-neutral-200 hover:rounded focus:outline-neutral-300`}
+            className={`ml-8 text-neutral-400 p-2 hover:text-neutral-500 hover:bg-neutral-200 focus:outline-neutral-300`}
             onClick={selectPreviousView}
           >
             <ChevronLeftIcon className="w-[16px] h-[16px]" />
@@ -113,7 +114,7 @@ export default function Calendar({ currentDate }: CalendarProps) {
             )}
           </span>
           <button
-            className="mr-8 text-neutral-400 p-2 hover:text-neutral-500 hover:bg-neutral-200 hover:rounded focus:outline-neutral-300"
+            className="mr-8 text-neutral-400 p-2 hover:text-neutral-500 hover:bg-neutral-200 focus:outline-neutral-300"
             onClick={selectNextView}
           >
             <ChevronRightIcon className="w-[16px] h-[16px]" />

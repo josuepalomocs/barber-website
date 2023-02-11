@@ -11,7 +11,7 @@ export default function ContactForm({}: ContactFormProps) {
           First name
         </label>
         <input
-          className="p-3 border border-neutral-200 rounded bg-white focus:outline-neutral-300"
+          className="p-3 border border-neutral-200 bg-white focus:outline-neutral-300"
           id="firstName"
           type="text"
           placeholder="Peter"
@@ -22,7 +22,7 @@ export default function ContactForm({}: ContactFormProps) {
           Last name
         </label>
         <input
-          className="p-3 border border-neutral-200 rounded bg-white focus:outline-neutral-300"
+          className="p-3 border border-neutral-200 bg-white focus:outline-neutral-300"
           id="lastName"
           type="text"
           placeholder="Pan"
@@ -33,7 +33,7 @@ export default function ContactForm({}: ContactFormProps) {
           Email
         </label>
         <input
-          className="p-3 border border-neutral-200 rounded bg-white focus:outline-neutral-300"
+          className="p-3 border border-neutral-200 bg-white focus:outline-neutral-300"
           id="email"
           type="email"
           placeholder="example@ocf.com"
@@ -44,7 +44,7 @@ export default function ContactForm({}: ContactFormProps) {
           Phone
         </label>
         <input
-          className="p-3 border border-neutral-200 rounded bg-white focus:outline-neutral-300"
+          className="p-3 border border-neutral-200 bg-white focus:outline-neutral-300"
           id="phone"
           type="tel"
           placeholder="+1 (xxx) xxx xxxx"
@@ -53,7 +53,7 @@ export default function ContactForm({}: ContactFormProps) {
       <div className="mb-2">
         <hr className="border-neutral-200 mt-2 mb-8" />
         <button
-          className="flex justify-center items-center gap-1 p-3 w-full rounded text-white bg-neutral-900 focus:outline-neutral-300"
+          className="flex justify-center items-center gap-1 p-3 w-full text-white bg-neutral-900 focus:outline-neutral-300"
           id="bookAppointment"
           type="submit"
         >

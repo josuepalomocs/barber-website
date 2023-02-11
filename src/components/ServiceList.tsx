@@ -11,7 +11,7 @@ export default function ServiceList({ serviceList }: ServiceListProps) {
       return (
         <li
           key={index}
-          className="flex justify-between items-center rounded-lg border border-neutral-200 bg-white hover:bg-neutral-200"
+          className="flex justify-between items-center border border-neutral-200 bg-white hover:bg-neutral-200"
         >
           <Service
             name={name}

@@ -5,6 +5,10 @@ import PersonalForm from "@/components/PersonalForm";
 import TimeOptionListContainer from "@/components/TimeOptionListContainer";
 import ServiceListContainer from "@/components/ServiceListContainer";
 import ContactFormContainer from "@/components/ContactFormContainer";
+import { useState } from "react";
+import { AppointmentData } from "@/types";
+import { getDayOfMonth } from "@/utilities/date";
+import { AppointmentProvider } from "@/context/AppointmentProvider";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -12,12 +16,27 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
-  const isOpenStyling = "translate-x-[640px]";
+  const appointmentDataInitialState = {
+    date: new Date(),
+    serviceId: 0,
+    contactInformation: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+    },
+  };
+
+  const [appointmentData, setAppointmentData] = useState<AppointmentData>(
+    appointmentDataInitialState
+  );
+
+  const isOpenStyles = "translate-x-[640px]";
   return (
     <>
       <aside
         className={`flex justify-center fixed top-0 right-0 max-h-screen w-full sm:max-w-[400px] overflow-y-auto z-10 bg-neutral-50 ${
-          !isOpen ? isOpenStyling : ""
+          !isOpen ? isOpenStyles : ""
         } transition duration-300`}
       >
         <div className="w-full h-full">
@@ -34,21 +53,23 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
           </div>
           <div className="p-4">
             <h2 className="text-xs text-neutral-500 mb-4">Pick a date</h2>
-            <div className="mb-4">
-              <Calendar currentDate={new Date()} />
-            </div>
-            <hr className="border-neutral-200 mb-8" />
-            <div className="mb-4">
-              <TimeOptionListContainer />
-            </div>
-            <hr className="border-neutral-200 mb-8" />
-            <div className="mb-4">
-              <ServiceListContainer />
-            </div>
-            <hr className="border-neutral-200 mb-8" />
-            <div className="">
-              <ContactFormContainer />
-            </div>
+            <AppointmentProvider>
+              <div className="mb-4">
+                <Calendar />
+              </div>
+              <hr className="border-neutral-200 mb-8" />
+              <div className="mb-4">
+                <TimeOptionListContainer />
+              </div>
+              <hr className="border-neutral-200 mb-8" />
+              <div className="mb-4">
+                <ServiceListContainer />
+              </div>
+              <hr className="border-neutral-200 mb-8" />
+              <div className="">
+                <ContactFormContainer />
+              </div>
+            </AppointmentProvider>
           </div>
         </div>
       </aside>

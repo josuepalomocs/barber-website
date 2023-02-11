@@ -39,8 +39,8 @@ export default function useCalendar({ currentDate }: UseCalendarParams) {
   );
 
   function selectPreviousView(): void {
-    const currentMonth = getMonth(currentDate);
-    const currentYear = getYear(currentDate);
+    const currentMonth = getMonth(new Date());
+    const currentYear = getYear(new Date());
     if (
       selectedView.month !== currentMonth ||
       selectedView.year !== currentYear
