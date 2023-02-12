@@ -5,6 +5,7 @@ import {
   getDaysInMonth as getDaysInMonthFn,
   format as formatFn,
   isSameMinute as isSameMinuteFn,
+  isAfter as isAfterFn,
 } from "date-fns";
 
 export type WeekdayNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -36,4 +37,12 @@ export function formatDate(date: Date, format: string): string {
 
 export function isSameMinute(dateA: Date, dateB: Date): boolean {
   return isSameMinuteFn(dateA, dateB);
+}
+
+export function isAfter(dateA: Date, dateB: Date): boolean {
+  return isAfterFn(dateA, dateB);
+}
+
+export function isSameOrAfter(dateA: Date, dateB: Date) {
+  return isAfter(dateA, dateB) || isSameMinute(dateA, dateB);
 }
