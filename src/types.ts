@@ -5,6 +5,7 @@ export interface TimeOption {
 export interface Service {
   id: number;
   name: string;
+  description: string;
   durationInMinutes: number;
   price: number;
 }

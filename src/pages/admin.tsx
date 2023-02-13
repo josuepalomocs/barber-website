@@ -13,9 +13,19 @@ import ContactFormContainer from "@/components/ContactFormContainer";
 import Modal from "@/components/Modal";
 import useModal from "@/hooks/useModal";
 import { PlusIcon, ScissorsIcon } from "@heroicons/react/20/solid";
+import Form from "@/components/Form";
+import FormInput from "@/components/FormInput";
+import FormSubmit from "@/components/FormSubmit";
+import AddServiceModal from "@/components/admin/AddServiceModal";
+import AdminHeader from "@/components/admin/AdminHeader";
+import AdminServiceListContainer from "@/components/admin/AdminServiceListContainer";
 
 export default function Home() {
-  const { isOpen, openModal, closeModal } = useModal();
+  const {
+    isOpen: isAddServiceModalOpen,
+    openModal: openAddServiceModal,
+    closeModal: closeAddServiceModal,
+  } = useModal();
 
   return (
     <>
@@ -26,71 +36,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageWrapper>
+        <AdminHeader />
         <Main>
-          <button className="" onClick={openModal}>
-            Open Modal
-          </button>
-          <Modal title="Add service" isOpen={isOpen} closeModal={closeModal}>
-            <form
-              className="flex flex-col min-h-full text-neutral-500 mb-4"
-              action=""
-            >
-              <div className="row-auto flex flex-col mb-2">
-                <label className="pb-2" htmlFor="serviceName">
-                  Name
-                </label>
-                <input
-                  className="p-3 border border-neutral-200 bg-white focus:outline-neutral-300"
-                  id="serviceName"
-                  type="text"
-                  placeholder="Basic Haircut"
-                />
-              </div>
-              <div className="row-auto flex flex-col mb-2">
-                <label className="pb-2" htmlFor="serviceDescription">
-                  Description
-                </label>
-                <input
-                  className="p-3 border border-neutral-200 bg-white focus:outline-neutral-300"
-                  id="serviceDescription"
-                  type="text"
-                  placeholder="A basic haircut service."
-                />
-              </div>
-              <div className="row-auto flex flex-col mb-2">
-                <label className="pb-2" htmlFor="servicePrice">
-                  Duration (Minutes)
-                </label>
-                <input
-                  className="p-3 border border-neutral-200 bg-white focus:outline-neutral-300"
-                  id="servicePrice"
-                  type="number"
-                  placeholder="60"
-                />
-              </div>
-              <div className="flex flex-col mb-2">
-                <label className="pb-2" htmlFor="servicePrice">
-                  Price (USD)
-                </label>
-                <input
-                  className="p-3 border border-neutral-200 bg-white focus:outline-neutral-300"
-                  id="servicePrice"
-                  type="number"
-                  placeholder="30"
-                />
-              </div>
-              <div className="flex flex-col justify-between mb-2 flex-1">
-                <hr className="border-neutral-200 mt-2" />
-                <button
-                  className="p-3 w-full text-white bg-neutral-900 focus:outline-neutral-300"
-                  id="bookAppointment"
-                  type="submit"
-                >
-                  Add service
-                </button>
-              </div>
-            </form>
-          </Modal>
+          <div className="w-full p-4 text-xs">
+            <AdminServiceListContainer
+              openAddServiceModal={openAddServiceModal}
+            />
+          </div>
+          <AddServiceModal
+            isOpen={isAddServiceModalOpen}
+            closeModal={closeAddServiceModal}
+          />
         </Main>
       </PageWrapper>
     </>

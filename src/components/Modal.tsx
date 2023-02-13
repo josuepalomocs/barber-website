@@ -18,7 +18,7 @@ export default function Modal({
     return <></>;
   }
   return (
-    <div className="absolute top-0 flex flex-col w-screen h-screen">
+    <div className="absolute top-0 flex flex-col w-screen h-screen bg-neutral-50">
       <div className="flex justify-between items-center w-full h-16 px-4 bg-white border-b border-neutral-200">
         <h2 className="text-xs">{title}</h2>
         <button
