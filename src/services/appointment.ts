@@ -1,4 +1,4 @@
-import { isAfter, isSameMinute, isSameOrAfter } from "@/utilities/date";
+import { isSameOrAfter } from "@/utilities/date";
 
 export type WeekdayNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export type ShopDayOpenCloseHours = [string, string] | null;
@@ -10,7 +10,6 @@ export function init(
 ): ShopDayAvailableAppointmentDates {
   const openCloseHours = getOpenCloseHours(weekdayNumber);
   const breaks = getBreaks(weekdayNumber);
-  // return [new Date()];
   return getAvailableAppointmentTimes(openCloseHours, breaks, 15);
 }
 
@@ -95,6 +94,7 @@ function getAvailableAppointmentTimes(
   while (!isSameOrAfter(nextAppointmentStart, closeDate)) {
     if (nextBreakStart && nextBreakEnd) {
       while (!isSameOrAfter(nextAppointmentStart, nextBreakStart)) {
+        console.log("here");
         availableAppointmentDates.push(nextAppointmentStart);
         const prevAppointmentStart = nextAppointmentStart;
         nextAppointmentStart = new Date();

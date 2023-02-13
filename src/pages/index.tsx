@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import useSidebar from "@/hooks/useSidebar";
 import Header from "@/components/Header";
 import About from "@/components/About";
+import AppointmentFlow from "@/components/AppointmentFlow";
 
 export default function Home() {
   const { isOpen, openSidebar, closeSidebar } = useSidebar();
@@ -19,7 +20,9 @@ export default function Home() {
       </Head>
       <PageWrapper>
         <Header openSidebar={openSidebar} />
-        <Sidebar isOpen={isOpen} closeSidebar={closeSidebar} />
+        <Sidebar isOpen={isOpen} closeSidebar={closeSidebar}>
+          <AppointmentFlow closeSidebar={closeSidebar} />
+        </Sidebar>
         <Main>
           <About />
         </Main>
