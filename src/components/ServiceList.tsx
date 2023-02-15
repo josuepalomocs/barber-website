@@ -1,5 +1,5 @@
 import Service from "@/components/Service";
-import { Service as IService } from "../types";
+import { BarberService as IService } from "../types";
 
 interface ServiceListProps {
   serviceList: IService[];

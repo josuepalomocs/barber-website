@@ -2,12 +2,12 @@ export interface TimeOption {
   date: Date;
 }
 
-export interface Service {
-  id: number;
+export interface BarberService {
+  id: string;
   name: string;
   description: string;
   durationInMinutes: number;
-  price: number;
+  priceInUSD: number;
 }
 
 export interface ContactInformation {

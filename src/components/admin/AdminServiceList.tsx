@@ -1,36 +1,46 @@
-import { Service } from "@/types";
+import { BarberService } from "@/types";
 import AdminService from "@/components/admin/AdminService";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface AdminServiceListProps {}
 
 export default function AdminServiceList({}: AdminServiceListProps) {
-  const services: Service[] = [
-    {
-      id: 0,
-      name: "Haircut",
-      description:
-        "A basic haircut service involves trimming and shaping the hair to create a desired look and maintain its health.",
-      durationInMinutes: 60,
-      price: 30,
-    },
-  ];
+  const [barberServiceList, setBarberServiceList] = useState<BarberService[]>(
+    []
+  );
+
+  useEffect(() => {
+    async function getBarberServiceListFromServer(): Promise<void> {
+      const apiEndpoint = "http://localhost:3000/api/services";
+      const { data } = await axios.get<BarberService[]>(apiEndpoint);
+      setBarberServiceList(data);
+    }
+
+    getBarberServiceListFromServer();
+  }, []);
+
+  function handleDeleteFromList(id: string) {
+    const newBarberServiceList = barberServiceList.filter((barberService) => {
+      return barberService.id != id;
+    });
+    setBarberServiceList(newBarberServiceList);
+  }
 
   function renderServices() {
-    return services.map(
-      ({ id, name, description, durationInMinutes, price }) => {
-        return (
-          <li key={id}>
-            <AdminService
-              id={id}
-              name={name}
-              description={description}
-              durationInMinutes={durationInMinutes}
-              price={price}
-            />
-          </li>
-        );
-      }
-    );
+    if (!barberServiceList.length) {
+      return <></>;
+    }
+    return barberServiceList.map((barberService) => {
+      return (
+        <li key={barberService.id}>
+          <AdminService
+            barberService={barberService}
+            handleDeleteFromList={handleDeleteFromList}
+          />
+        </li>
+      );
+    });
   }
 
   return <ul className="">{renderServices()}</ul>;

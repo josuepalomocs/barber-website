@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AppointmentContext } from "@/context/AppointmentProvider";
-import { Service as IService } from "../types";
+import { BarberService as IService } from "../types";
 
 interface ServiceProps extends IService {}
 

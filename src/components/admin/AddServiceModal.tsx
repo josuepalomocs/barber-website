@@ -3,7 +3,8 @@ import FormInput from "@/components/FormInput";
 import FormSubmit from "@/components/FormSubmit";
 import Modal from "@/components/Modal";
 import { ChangeEvent, ChangeEventHandler, FormEvent, useState } from "react";
-import { Service } from "@/types";
+import { BarberService } from "@/types";
+import axios from "axios";
 
 interface AddServiceModal {
   isOpen: boolean;
@@ -14,38 +15,41 @@ export default function AddServiceModal({
   isOpen,
   closeModal,
 }: AddServiceModal) {
-  const [serviceData, setServiceData] = useState<Service>({
-    id: 0,
+  const [barberServiceData, setBarberServiceData] = useState<BarberService>({
+    id: "",
     name: "",
     description: "",
     durationInMinutes: 0,
-    price: 0,
+    priceInUSD: 0,
   });
 
   function handleServiceNameChange(e: ChangeEvent<HTMLInputElement>) {
-    setServiceData({ ...serviceData, name: e.target.value });
+    setBarberServiceData({ ...barberServiceData, name: e.target.value });
   }
   function handleServiceDescription(e: ChangeEvent<HTMLInputElement>) {
-    setServiceData({ ...serviceData, description: e.target.value });
+    setBarberServiceData({ ...barberServiceData, description: e.target.value });
   }
   function handleServiceDurationInMinutesChange(
     e: ChangeEvent<HTMLInputElement>
   ) {
-    setServiceData({
-      ...serviceData,
+    setBarberServiceData({
+      ...barberServiceData,
       durationInMinutes: e.target.valueAsNumber,
     });
   }
   function handleServicePriceInUSDChange(e: ChangeEvent<HTMLInputElement>) {
-    setServiceData({
-      ...serviceData,
-      price: e.target.valueAsNumber,
+    setBarberServiceData({
+      ...barberServiceData,
+      priceInUSD: e.target.valueAsNumber,
     });
   }
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     closeModal();
+    // create new service on the server
+    const apiEndpoint = "http://localhost:3000/api/services";
+    const response = axios.post<any>(apiEndpoint, barberServiceData);
   }
 
   return (

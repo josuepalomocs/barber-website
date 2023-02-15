@@ -1,13 +1,17 @@
 import AWS from "aws-sdk";
 
+const AMAZON_REGION = process.env.AMAZON_REGION as string;
+const AMAZON_ACCESS_KEY = process.env.AMAZON_ACCESS_KEY as string;
+const AMAZON_SECRET_KEY = process.env.AMAZON_SECRET_KEY as string;
+
 AWS.config.update({
-  region: "us-east-2",
+  region: AMAZON_REGION,
   credentials: {
-    accessKeyId: "AKIA5SBKGKWDCJCAB4DP",
-    secretAccessKey: "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",
+    accessKeyId: AMAZON_ACCESS_KEY,
+    secretAccessKey: AMAZON_SECRET_KEY,
   },
 });
 
-const dynamoDB = new AWS.DynamoDB();
+const dynamoClient = new AWS.DynamoDB();
 
-export default dynamoDB;
+export default dynamoClient;
