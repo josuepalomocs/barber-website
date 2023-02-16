@@ -63,10 +63,12 @@ export default async function handler(
         r = err;
       } else {
         r = data;
+        console.log("added data");
+        console.log(data);
       }
     });
 
-    res.status(200).json({ r });
+    res.status(200).json({ ...req.body, id: serviceId });
   }
   if (req.method === "DELETE") {
     const barberServiceId = req.query["barber-service-id"];

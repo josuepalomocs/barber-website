@@ -20,6 +20,10 @@ export default function AdminServiceList({}: AdminServiceListProps) {
     getBarberServiceListFromServer();
   }, []);
 
+  function handleAddToList(barberService: BarberService) {
+    setBarberServiceList([...barberServiceList, barberService]);
+  }
+
   function handleDeleteFromList(id: string) {
     const newBarberServiceList = barberServiceList.filter((barberService) => {
       return barberService.id != id;
@@ -36,6 +40,7 @@ export default function AdminServiceList({}: AdminServiceListProps) {
         <li key={barberService.id}>
           <AdminService
             barberService={barberService}
+            handleAddToList={handleAddToList}
             handleDeleteFromList={handleDeleteFromList}
           />
         </li>
