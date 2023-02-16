@@ -16,17 +16,11 @@ import { PlusIcon, ScissorsIcon } from "@heroicons/react/20/solid";
 import Form from "@/components/Form";
 import FormInput from "@/components/FormInput";
 import FormSubmit from "@/components/FormSubmit";
-import AddServiceModal from "@/components/admin/AddServiceModal";
+import AddServiceModal from "@/components/admin/AdminAddServiceModal";
 import AdminHeader from "@/components/admin/AdminHeader";
-import AdminServiceListContainer from "@/components/admin/AdminServiceListContainer";
+import BarberServicesContainer from "@/components/admin/BarberServicesContainer";
 
 export default function Home() {
-  const {
-    isOpen: isAddServiceModalOpen,
-    openModal: openAddServiceModal,
-    closeModal: closeAddServiceModal,
-  } = useModal();
-
   return (
     <>
       <Head>
@@ -35,20 +29,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PageWrapper>
-        <AdminHeader />
-        <Main>
-          <div className="w-full p-4 text-xs">
-            <AdminServiceListContainer
-              openAddServiceModal={openAddServiceModal}
-            />
-          </div>
-          <AddServiceModal
-            isOpen={isAddServiceModalOpen}
-            closeModal={closeAddServiceModal}
-          />
-        </Main>
-      </PageWrapper>
+      <div className="w-full min-h-screen p-4 text-xs bg-neutral-100">
+        <BarberServicesContainer />
+      </div>
     </>
   );
 }

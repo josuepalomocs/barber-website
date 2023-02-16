@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BarberService } from "@/types";
 
-type BarberServiceListOrder =
+type BarberServicesOrder =
   | "price-asc"
   | "price-desc"
   | "duration-asc"
@@ -17,8 +17,8 @@ const instance = axios.create({
 // http requests that target the 'barber-service' api route
 const barberServicesApiRoute = "/barber-services";
 
-export async function getBarberServiceListRequest(
-  order?: BarberServiceListOrder
+export async function getBarberServicesRequest(
+  order?: BarberServicesOrder
 ): Promise<BarberService[]> {
   const { data } = await instance.get<BarberService[]>(
     `${barberServicesApiRoute}${order ? `?order=${order}` : ""}`

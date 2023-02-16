@@ -3,25 +3,23 @@ import { BarberService } from "@/types";
 import {
   createBarberServiceRequest,
   deleteBarberServiceRequest,
-  getBarberServiceListRequest,
+  getBarberServicesRequest,
   updateBarberServiceRequest,
 } from "@/services/api";
 
-export default function useAdminBarberServiceList() {
-  const [barberServiceList, setBarberServiceList] = useState<BarberService[]>(
-    []
-  );
+export default function useAdminBarberServices() {
+  const [barberServices, setBarberServices] = useState<BarberService[]>([]);
 
   useEffect(() => {
-    getBarberServiceListRequest()
-      .then((barberServiceList) => setBarberServiceList(barberServiceList))
+    getBarberServicesRequest()
+      .then((barberServices) => setBarberServices(barberServices))
       .catch((error) => console.log(error));
   }, []);
 
   function createBarberService(newBarberService: BarberService): void {
     createBarberServiceRequest(newBarberService)
       .then((newBarberService) =>
-        setBarberServiceList([...barberServiceList, newBarberService])
+        setBarberServices([...barberServices, newBarberService])
       )
       .catch((error) => console.log(error));
   }
@@ -29,8 +27,8 @@ export default function useAdminBarberServiceList() {
   function updateBarberService(modifiedBarberService: BarberService): void {
     updateBarberServiceRequest(modifiedBarberService)
       .then((modifiedBarberService) =>
-        setBarberServiceList(
-          barberServiceList.map((barberService) =>
+        setBarberServices(
+          barberServices.map((barberService) =>
             modifiedBarberService.id === barberService.id
               ? modifiedBarberService
               : barberService
@@ -43,15 +41,15 @@ export default function useAdminBarberServiceList() {
   function deleteBarberService(id: string): void {
     deleteBarberServiceRequest(id)
       .then(() =>
-        setBarberServiceList(
-          barberServiceList.filter((barberService) => barberService.id != id)
+        setBarberServices(
+          barberServices.filter((barberService) => barberService.id != id)
         )
       )
       .catch((error) => console.log(error));
   }
 
   return {
-    barberServiceList,
+    barberServices,
     createBarberService,
     updateBarberService,
     deleteBarberService,

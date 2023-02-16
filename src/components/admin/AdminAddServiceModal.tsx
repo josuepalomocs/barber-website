@@ -2,19 +2,20 @@ import Form from "@/components/Form";
 import FormInput from "@/components/FormInput";
 import FormSubmit from "@/components/FormSubmit";
 import Modal from "@/components/Modal";
-import { ChangeEvent, ChangeEventHandler, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { BarberService } from "@/types";
-import axios from "axios";
 
-interface AddServiceModal {
+interface AdminAddServiceModalProps {
   isOpen: boolean;
   closeModal: () => void;
+  createBarberService: (barberService: BarberService) => void;
 }
 
-export default function AddServiceModal({
+export default function AdminAddServiceModal({
   isOpen,
   closeModal,
-}: AddServiceModal) {
+  createBarberService,
+}: AdminAddServiceModalProps) {
   const [barberServiceData, setBarberServiceData] = useState<BarberService>({
     id: "",
     name: "",
@@ -44,12 +45,10 @@ export default function AddServiceModal({
     });
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     closeModal();
-    // create new service on the server
-    const apiEndpoint = "http://localhost:3000/api/services";
-    const response = axios.post<any>(apiEndpoint, barberServiceData);
+    createBarberService(barberServiceData);
   }
 
   return (

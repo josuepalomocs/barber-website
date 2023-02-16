@@ -2,73 +2,25 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import dynamoClient from "@/lib/dynamo";
 import { v4 as uuidv4 } from "uuid";
 import { BarberService } from "@/types";
+import {
+  createBarberServiceInDB,
+  getBarberServicesInDB,
+} from "@/services/database";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const params = {
-      TableName: "BarberService",
-    };
-
-    dynamoClient.scan(params, function (err, data) {
-      if (err) {
-      } else {
-        let barberServiceList: BarberService[] = [];
-        if (data.Items) {
-          for (let i = 0; i < data.Items.length; i++) {
-            const {
-              barberServiceId,
-              barberServiceName,
-              barberServiceDescription,
-              barberServiceDurationInMinutes,
-              barberServicePriceInUSD,
-            } = data.Items[i];
-            barberServiceList[i] = {
-              id: barberServiceId.S as string,
-              name: barberServiceName.S as string,
-              description: barberServiceDescription.S as string,
-              durationInMinutes: Number(barberServiceDurationInMinutes.N),
-              priceInUSD: Number(barberServicePriceInUSD.N),
-            };
-          }
-        }
-        res.status(200).json(barberServiceList);
-      }
-    });
+    return getBarberServicesInDB()
+      .then((barberServices) => res.status(200).json(barberServices))
+      .catch((error) => res.status(500).json(error));
   }
   if (req.method === "POST") {
-    const { name, description, durationInMinutes, priceInUSD }: BarberService =
-      req.body;
-
-    const serviceId = uuidv4();
-
-    const params = {
-      TableName: "BarberService",
-      Item: {
-        barberServiceId: { S: serviceId.toString() },
-        barberServiceName: { S: name },
-        barberServiceDescription: { S: description },
-        barberServiceDurationInMinutes: { N: durationInMinutes.toString() },
-        barberServicePriceInUSD: { N: priceInUSD.toString() },
-      },
-    };
-
-    let r;
-
-    // Call DynamoDB to add the item to the table
-    dynamoClient.putItem(params, function (err, data) {
-      if (err) {
-        r = err;
-      } else {
-        r = data;
-        console.log("added data");
-        console.log(data);
-      }
-    });
-
-    res.status(200).json({ ...req.body, id: serviceId });
+    const barberService: BarberService = req.body;
+    return createBarberServiceInDB(barberService)
+      .then((barberService) => res.status(200).json(barberService))
+      .catch((error) => res.status(500).json(error));
   }
   if (req.method === "DELETE") {
     const barberServiceId = req.query["barber-service-id"];
