@@ -64,6 +64,64 @@ export async function createBarberServiceInDB(
   });
 }
 
+export async function updateBarberServiceInDB(
+  barberService: BarberService
+): Promise<BarberService> {
+  const params = {
+    TableName: "BarberService",
+    Key: {
+      barberServiceId: { S: barberService.id },
+    },
+    UpdateExpression:
+      "SET #barberServiceName = :barberServiceName, #barberServiceDescription = :barberServiceDescription, " +
+      "#barberServiceDurationInMinutes = :barberServiceDurationInMinutes, #barberServicePriceInUSD = :barberServicePriceInUSD",
+    ExpressionAttributeNames: {
+      "#barberServiceName": "barberServiceName",
+      "#barberServiceDescription": "barberServiceDescription",
+      "#barberServiceDurationInMinutes": "barberServiceDurationInMinutes",
+      "#barberServicePriceInUSD": "barberServicePriceInUSD",
+    },
+    ExpressionAttributeValues: {
+      ":barberServiceName": { S: barberService.name },
+      ":barberServiceDescription": { S: barberService.description },
+      ":barberServiceDurationInMinutes": {
+        S: barberService.durationInMinutes.toString(),
+      },
+      ":barberServicePriceInUSD": { S: barberService.priceInUSD.toString() },
+    },
+    ReturnValues: "ALL_NEW",
+  };
+
+  return new Promise<BarberService>((resolve, reject) => {
+    dynamoClient.updateItem(params, function (error) {
+      if (error) {
+        const message = "Failed to update item in 'BarberService' table.";
+        reject(new Error(message, { cause: error }));
+      }
+      resolve(barberService);
+    });
+  });
+}
+
+export async function deleteBarberServiceInDB(id: string): Promise<void> {
+  const params = {
+    TableName: "BarberService",
+    Key: {
+      barberServiceId: { S: id },
+    },
+  };
+
+  new Promise<void>((resolve, reject) => {
+    dynamoClient.deleteItem(params, function (error) {
+      if (error) {
+        const message = "Failed to delete item in 'BarberService' table.";
+        reject(new Error(message, { cause: error }));
+      }
+      resolve();
+    });
+  });
+}
+
 // database queries that target the 'barber-day-schedule' table
 
 export async function getBarberDaySchedulesInDB(): Promise<
@@ -166,7 +224,6 @@ export async function updateBarberDaySchedulesInDB(
     dynamoClient.updateItem(params, function (error) {
       if (error) {
         const message = "Failed to update item in 'BarberDaySchedule' table.";
-        console.log(error);
         reject(new Error(message, { cause: error }));
       }
       resolve(barberDaySchedule);
@@ -174,21 +231,20 @@ export async function updateBarberDaySchedulesInDB(
   });
 }
 
-export async function deleteBarberDaySchedule(
-  barberDaySchedule: BarberDaySchedule
+export async function deleteBarberDayScheduleInDB(
+  weekdayNumber: number
 ): Promise<void> {
   const params = {
     TableName: "BarberDaySchedule",
     Key: {
-      weekdayNumber: { N: barberDaySchedule.weekdayNumber.toString() },
+      weekdayNumber: { N: weekdayNumber.toString() },
     },
   };
 
   new Promise<void>((resolve, reject) => {
     dynamoClient.deleteItem(params, function (error) {
       if (error) {
-        const message = "Failed to update item in 'BarberDaySchedule' table.";
-        console.log(error);
+        const message = "Failed to delete item in 'BarberDaySchedule' table.";
         reject(new Error(message, { cause: error }));
       }
       resolve();
