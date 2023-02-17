@@ -24,7 +24,6 @@ export default async function handler(
   }
   if (req.method === "DELETE") {
     const barberServiceId = req.query["barber-service-id"];
-    console.log(barberServiceId);
     if (barberServiceId) {
       const params = {
         TableName: "BarberService",

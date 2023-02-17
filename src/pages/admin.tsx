@@ -16,7 +16,7 @@ import { PlusIcon, ScissorsIcon } from "@heroicons/react/20/solid";
 import Form from "@/components/Form";
 import FormInput from "@/components/FormInput";
 import FormSubmit from "@/components/FormSubmit";
-import AddServiceModal from "@/components/admin/AdminAddServiceModal";
+import AddServiceModal from "@/components/admin/AddBarberServiceModal";
 import AdminHeader from "@/components/admin/AdminHeader";
 import BarberServicesContainer from "@/components/admin/BarberServicesContainer";
 
@@ -29,7 +29,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="w-full min-h-screen p-4 text-xs bg-neutral-100">
+      <div className="w-full min-h-screen p-2 text-xs bg-neutral-50">
         <BarberServicesContainer />
       </div>
     </>

@@ -10,6 +10,18 @@ export interface BarberService {
   priceInUSD: number;
 }
 
+export interface BarberDaySchedule {
+  weekdayNumber: number;
+  openTime: string;
+  closeTime: string;
+  breaks: BarberBreak[];
+}
+
+export interface BarberBreak {
+  startTime: string;
+  endTime: string;
+}
+
 export interface ContactInformation {
   firstName: string;
   lastName: string;

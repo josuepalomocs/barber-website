@@ -7,7 +7,7 @@ import {
   updateBarberServiceRequest,
 } from "@/services/api";
 
-export default function useAdminBarberServices() {
+export default function useBarberServices() {
   const [barberServices, setBarberServices] = useState<BarberService[]>([]);
 
   useEffect(() => {

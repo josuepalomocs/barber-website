@@ -5,23 +5,23 @@ import Modal from "@/components/Modal";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { BarberService } from "@/types";
 
-interface AdminAddServiceModalProps {
+interface AddBarberServiceModalProps {
   isOpen: boolean;
   closeModal: () => void;
   createBarberService: (barberService: BarberService) => void;
 }
 
-export default function AdminAddServiceModal({
+export default function AddBarberServiceModal({
   isOpen,
   closeModal,
   createBarberService,
-}: AdminAddServiceModalProps) {
+}: AddBarberServiceModalProps) {
   const [barberServiceData, setBarberServiceData] = useState<BarberService>({
     id: "",
     name: "",
     description: "",
-    durationInMinutes: 0,
-    priceInUSD: 0,
+    durationInMinutes: -1,
+    priceInUSD: -1,
   });
 
   function handleServiceNameChange(e: ChangeEvent<HTMLInputElement>) {
@@ -60,6 +60,7 @@ export default function AdminAddServiceModal({
           type="text"
           placeholder="Basic Haircut"
           label="Name"
+          value={barberServiceData.name}
           handleChange={handleServiceNameChange}
         ></FormInput>
         <FormInput
@@ -68,6 +69,7 @@ export default function AdminAddServiceModal({
           type="text"
           placeholder="A basic haircut service."
           label="Description"
+          value={barberServiceData.description}
           handleChange={handleServiceDescription}
         ></FormInput>
         <FormInput
@@ -76,6 +78,11 @@ export default function AdminAddServiceModal({
           type="number"
           placeholder="60"
           label="Duration (Minutes)"
+          value={
+            barberServiceData.durationInMinutes < 0
+              ? ""
+              : barberServiceData.durationInMinutes
+          }
           handleChange={handleServiceDurationInMinutesChange}
         ></FormInput>
         <FormInput
@@ -84,6 +91,9 @@ export default function AdminAddServiceModal({
           type="number"
           placeholder="30"
           label="Price (USD)"
+          value={
+            barberServiceData.priceInUSD < 0 ? "" : barberServiceData.priceInUSD
+          }
           handleChange={handleServicePriceInUSDChange}
         ></FormInput>
         <FormSubmit id="addServiceSubmit" name="addServiceSubmit" />

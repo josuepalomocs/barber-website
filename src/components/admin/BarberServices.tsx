@@ -1,5 +1,5 @@
 import BarberService from "@/components/admin/BarberService";
-import AddServiceModal from "@/components/admin/AdminAddServiceModal";
+import AddServiceModal from "@/components/admin/AddBarberServiceModal";
 import useModal from "@/hooks/useModal";
 import { BarberService as IBarberService } from "../../types";
 interface BarberServicesProps {

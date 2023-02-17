@@ -6,6 +6,7 @@ interface FormInputProps {
   type: HTMLInputTypeAttribute;
   placeholder: string;
   label: string;
+  value?: string | number | readonly string[] | undefined;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -15,6 +16,7 @@ export default function FormInput({
   type,
   placeholder,
   label,
+  value,
   handleChange,
 }: FormInputProps) {
   return (
@@ -23,11 +25,12 @@ export default function FormInput({
         {label}
       </label>
       <input
-        className="p-3 border border-neutral-200 bg-white focus:outline-neutral-300"
+        className="p-3 border border-neutral-200 bg-white focus:outline-neutral-300 rounded"
         id={id}
         name={name}
         type={type}
         placeholder={placeholder}
+        value={value}
         onChange={handleChange}
       />
     </div>

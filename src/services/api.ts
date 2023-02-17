@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BarberService } from "@/types";
+import { BarberBreak, BarberDaySchedule, BarberService } from "@/types";
 
 type BarberServicesOrder =
   | "price-asc"
@@ -14,7 +14,7 @@ const instance = axios.create({
   timeout: 1000,
 });
 
-// http requests that target the 'barber-service' api route
+// http requests that target the 'barber-services' api route
 const barberServicesApiRoute = "/barber-services";
 
 export async function getBarberServicesRequest(
@@ -60,3 +60,20 @@ export async function deleteBarberServiceRequest(id: string): Promise<void> {
     `${barberServicesApiRoute}?barber-service-id=${id}`
   );
 }
+
+// http requests that target the 'barber-day-schedules' api route
+const barberDaySchedulesApiRoute = "/barber-day-schedules";
+
+export async function getBarberDaySchedules() {}
+export async function getBarberDayScheduleByWeekdayNumber() {}
+export async function createBarberDaySchedule(
+  barberDaySchedule: BarberDaySchedule
+): Promise<BarberDaySchedule> {
+  const { data } = await instance.post<BarberDaySchedule>(
+    barberDaySchedulesApiRoute,
+    barberDaySchedule
+  );
+  return data;
+}
+export async function updateBarberDaySchedule() {}
+export async function deleteBarberDaySchedule() {}
