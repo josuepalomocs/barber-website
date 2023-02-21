@@ -1,6 +1,6 @@
 import { CustomerAppointment } from "@/types";
 import {
-  getBarberDayScheduleByWeekdayNumberInDB,
+  getBarberDayScheduleByWeekdayNumberFromDB,
   getBarberServiceByIdInDB,
 } from "@/services/database";
 import {
@@ -16,10 +16,12 @@ import {
   createCustomerAppointmentInDB,
   getCustomerAppointmentByTimestampFromDB,
   getCustomerAppointmentsByDateFromDB,
-  getCustomerAppointmentsInDB,
+  getCustomerAppointmentsFromDB,
 } from "@/database/customerAppointmentRepository";
 
-export async function getAllCustomerAppointments() {}
+export async function getAllCustomerAppointments() {
+  return getCustomerAppointmentsFromDB();
+}
 
 export async function getCustomerAppointmentsByDate(
   date: string
@@ -51,26 +53,27 @@ export async function createCustomerAppointmentService(
   );
   const weekdayNumber = getWeekday(customerAppointmentStartDate);
 
-  return getBarberDayScheduleByWeekdayNumberInDB(weekdayNumber).then(
+  return getBarberDayScheduleByWeekdayNumberFromDB(weekdayNumber).then(
     (barberDaySchedule) => {
       return getBarberServiceByIdInDB(customerAppointment.barberServiceId).then(
         (barberService) => {
-          if (!barberDaySchedule) {
-            const message = `BarberDaySchedule with weekdayNumber: ${weekdayNumber} is not valid. (Values 0-6 allowed only)`;
-            throw new Error(message);
-          }
-          if (!barberService) {
-            const message = `Requested barber service not found.`;
-            throw new Error(message);
-          }
+          if (!barberDaySchedule)
+            throw new Error(
+              `Failed to find barberDaySchedule with weekdayNumber '${weekdayNumber}'`
+            );
+          if (!barberService)
+            throw new Error(
+              `Failed to find barber service with id '${customerAppointment.barberServiceId}'`
+            );
+          if (!barberDaySchedule.openTime)
+            throw new Error(
+              `Invalid appointment. Could not create appointment on weekdayNumber '${weekdayNumber}'
+                due to no opening time.`
+            );
           const customerAppointmentEndDate = new Date(
             customerAppointment.timestamp * 1000 +
               barberService.durationInMinutes * 60 * 1000
           );
-          if (!barberDaySchedule.openTime) {
-            const message = `BarberDaySchedule with weekdayNumber: ${weekdayNumber} does not have any open hours. No appointments can be made on this weekday.`;
-            throw new Error(message);
-          }
           if (
             isBefore(
               customerAppointmentStartDate,
@@ -91,9 +94,8 @@ export async function createCustomerAppointmentService(
               )
             )
           ) {
-            const message = `The provided customer appointment timestamp: '${customerAppointment.timestamp}' 
-          is outside of the barber shop open hours for weekdayNumber: '${weekdayNumber}'`;
-            throw new Error(message);
+            throw new Error(`Invalid appointment. Could not create appointment due to an overlap with 
+              either the opening time, closing time, or any break times.`);
           }
           if (
             !barberDaySchedule.appointmentSlots.some((appointmentSlot) => {
@@ -177,12 +179,6 @@ export async function createCustomerAppointmentService(
               }
             })
           ) {
-            const message = `The provided customer appointment timestamp: '${customerAppointment.timestamp}' 
-          overlaps with the barber shop break hours for weekdayNumber: '${weekdayNumber}'`;
-            throw new Error(message);
-          }
-          return getCustomerAppointmentsInDB();
-          if (false) {
             const message = `The provided customer appointment timestamp: '${customerAppointment.timestamp}' 
           overlaps with the barber shop break hours for weekdayNumber: '${weekdayNumber}'`;
             throw new Error(message);

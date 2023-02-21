@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import {
   createCustomerAppointmentService,
+  getAllCustomerAppointments,
   getCustomerAppointmentByTimestamp,
   getCustomerAppointmentsByDate,
 } from "@/services/customerAppointmentServices";
 import { CustomerAppointment } from "@/types";
-import { getCustomerAppointmentsInDB } from "@/services/database";
 
 export default async function customerAppointmentController(
   req: NextApiRequest,
@@ -28,7 +28,7 @@ export default async function customerAppointmentController(
         )
         .catch((error) => res.status(500).json(error));
     }
-    return getCustomerAppointmentsInDB()
+    return getAllCustomerAppointments()
       .then((customerAppointments) =>
         res.status(200).json(customerAppointments)
       )

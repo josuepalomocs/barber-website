@@ -85,7 +85,7 @@ export async function getCustomerAppointmentByTimestampFromDB(
   });
 }
 
-export async function getCustomerAppointmentsInDB(): Promise<
+export async function getCustomerAppointmentsFromDB(): Promise<
   CustomerAppointment[]
 > {
   const params = {

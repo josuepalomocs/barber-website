@@ -159,7 +159,7 @@ export async function deleteBarberServiceInDB(id: string): Promise<void> {
 
 // database queries that target the 'barber-day-schedule' table
 
-export async function getBarberDayScheduleByWeekdayNumberInDB(
+export async function getBarberDayScheduleByWeekdayNumberFromDB(
   weekdayNumber: number
 ): Promise<BarberDaySchedule | null> {
   const params = {
