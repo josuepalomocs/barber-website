@@ -18,14 +18,14 @@ export default function BarberServicesContainer() {
   } = useBarberServices();
 
   return (
-    <div className="w-full p-4 drop-shadow rounded bg-white">
-      <div className="flex justify-between items-center mb-8">
-        <h4 className="text-neutral-600 text-sm font-medium">Services</h4>
+    <div className="w-full rounded bg-white">
+      <div className="sticky top-0 bg-white w-full flex justify-between p-4 items-center">
+        <h4 className="text-black text-base font-medium">Services 🛠️</h4>
         <button
-          className="text-white bg-black py-2 px-3 rounded-2xl"
+          className="text-white bg-black text-xs p-3 rounded"
           onClick={openAddBarberServiceModal}
         >
-          Add service
+          ADD SERVICE +
         </button>
       </div>
       <BarberServices

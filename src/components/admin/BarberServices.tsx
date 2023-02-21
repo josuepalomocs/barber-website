@@ -15,11 +15,11 @@ export default function BarberServices({
 }: BarberServicesProps) {
   function renderServices() {
     if (!barberServices.length) {
-      return <></>;
+      return <p className="px-4 text-sm">You do not have any services.</p>;
     }
     return barberServices.map((barberService) => {
       return (
-        <li className="mb-4" key={barberService.id}>
+        <li className="px-4 py-2 bg-white" key={barberService.id}>
           <BarberService
             barberService={barberService}
             actions={{ updateBarberService, deleteBarberService }}
@@ -31,7 +31,7 @@ export default function BarberServices({
 
   return (
     <>
-      <ul className="pt-4 border-t">{renderServices()}</ul>
+      <ul className="">{renderServices()}</ul>
     </>
   );
 }

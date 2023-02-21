@@ -22,30 +22,37 @@ export default function BarberService({
       : `${barberService.durationInMinutes}min`;
   }
 
-  //TODO: implement update barber service
   return (
-    <div className="text-neutral-500 bg-white">
-      <div className="w-full h-full focus:outline-neutral-300 mb-4">
-        <div className="w-full flex justify-between">
-          <p className="mb-4">{barberService.name}</p>
-          <p className="">${barberService.priceInUSD} USD</p>
+    <div className="text-neutral-500 bg-neutral-100 rounded text-sm">
+      <div className="w-full h-full focus:outline-neutral-300 p-4">
+        <div>
+          <p className="mb-4 text-base text-black">{`${barberService.name}`}</p>
         </div>
-        <p className="text-neutral-500 mb-4">{barberService.description}</p>
-        <p className="mb-4">Duration: {formatBarberServiceDuration()}</p>
+        <div>
+          <p className="font-medium">Description</p>
+          <p className="mb-4">{barberService.description || "N/A"}</p>
+        </div>
+        <div>
+          <p className="font-medium">Duration</p>
+          <p className="mb-4">{formatBarberServiceDuration()}</p>
+        </div>
+        <div>
+          <p className="font-medium">Price</p>
+          <p className="mb-4">${barberService.priceInUSD}</p>
+        </div>
         <button
-          className="w-16 p-2 bg-neutral-100 rounded mr-4"
+          className="text-xs w-16 p-3 bg-neutral-200 rounded mr-4"
           onClick={() => updateBarberService(barberService)}
         >
-          Edit
+          EDIT
         </button>
         <button
-          className="w-16 p-2 text-neutral-400"
+          className="text-xs w-16 p-3 text-neutral-400"
           // onClick={() => deleteBarberService(barberService.id)}
         >
-          Delete
+          DELETE
         </button>
       </div>
-      <hr />
     </div>
   );
 }
