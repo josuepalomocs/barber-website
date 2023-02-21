@@ -40,7 +40,7 @@ export default function BarberService({
         </button>
         <button
           className="w-16 p-2 text-neutral-400"
-          onClick={() => deleteBarberService(barberService.id)}
+          // onClick={() => deleteBarberService(barberService.id)}
         >
           Delete
         </button>

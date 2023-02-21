@@ -15,6 +15,8 @@ export interface BarberDaySchedule {
   openTime: string;
   closeTime: string;
   breaks: BarberBreak[];
+  appointmentIntervalInMinutes: number;
+  appointmentSlots: string[];
 }
 
 export interface BarberBreak {
@@ -22,15 +24,15 @@ export interface BarberBreak {
   endTime: string;
 }
 
-export interface ContactInformation {
+export interface CustomerAppointment {
+  timestamp: number;
+  barberServiceId: string;
+  customerInformation: CustomerInformation;
+}
+
+export interface CustomerInformation {
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
-}
-
-export interface AppointmentData {
-  date: Date;
-  serviceId: number;
-  contactInformation: ContactInformation;
 }

@@ -5,6 +5,7 @@ import {
   getDaysInMonth as getDaysInMonthFn,
   format as formatFn,
   isSameMinute as isSameMinuteFn,
+  isBefore as isBeforeFn,
   isAfter as isAfterFn,
 } from "date-fns";
 
@@ -39,8 +40,16 @@ export function isSameMinute(dateA: Date, dateB: Date): boolean {
   return isSameMinuteFn(dateA, dateB);
 }
 
+export function isBefore(dateA: Date, dateB: Date): boolean {
+  return isBeforeFn(dateA, dateB);
+}
+
 export function isAfter(dateA: Date, dateB: Date): boolean {
   return isAfterFn(dateA, dateB);
+}
+
+export function isSameOrBefore(dateA: Date, dateB: Date) {
+  return isBefore(dateA, dateB) || isSameMinute(dateA, dateB);
 }
 
 export function isSameOrAfter(dateA: Date, dateB: Date) {

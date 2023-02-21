@@ -1,17 +1,31 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { BarberDaySchedule } from "@/types";
 import {
-  createBarberDayScheduleInDB,
   deleteBarberDayScheduleInDB,
+  getBarberDayScheduleByWeekdayNumberInDB,
   getBarberDaySchedulesInDB,
-  updateBarberDaySchedulesInDB,
+  updateBarberDayScheduleInDB,
 } from "@/services/database";
+import {
+  createBarberDayScheduleService,
+  updateBarberDayScheduleService,
+} from "@/services/barberDaySchedules";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
+    const weekdayNumber = req.query["weekday-number"];
+
+    if (weekdayNumber) {
+      return getBarberDayScheduleByWeekdayNumberInDB(Number(weekdayNumber))
+        .then((barberDaySchedule) => res.status(200).json(barberDaySchedule))
+        .catch((error) => {
+          console.log(error);
+          return res.status(500).json(error);
+        });
+    }
     return getBarberDaySchedulesInDB()
       .then((barberDaySchedules) => res.status(200).json(barberDaySchedules))
       .catch((error) => {
@@ -21,7 +35,7 @@ export default async function handler(
   }
   if (req.method === "POST") {
     const barberDaySchedule: BarberDaySchedule = req.body;
-    return createBarberDayScheduleInDB(barberDaySchedule)
+    return createBarberDayScheduleService(barberDaySchedule)
       .then((barberDaySchedule) => res.status(200).json(barberDaySchedule))
       .catch((error) => {
         console.log(error);
@@ -30,7 +44,7 @@ export default async function handler(
   }
   if (req.method === "PUT") {
     const barberDaySchedule: BarberDaySchedule = req.body;
-    return updateBarberDaySchedulesInDB(barberDaySchedule)
+    return updateBarberDayScheduleService(barberDaySchedule)
       .then((barberDaySchedule) => res.status(200).json(barberDaySchedule))
       .catch((error) => {
         console.log(error);

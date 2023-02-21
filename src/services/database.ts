@@ -1,8 +1,43 @@
 import { v4 as uuidv4 } from "uuid";
-import { BarberBreak, BarberDaySchedule, BarberService } from "@/types";
+import {
+  BarberBreak,
+  BarberDaySchedule,
+  BarberService,
+  CustomerAppointment,
+} from "@/types";
 import dynamoClient from "@/lib/dynamo";
 
 // database queries that target the 'barber-service' table
+
+export async function getBarberServiceByIdInDB(
+  id: string
+): Promise<BarberService | null> {
+  const params = {
+    TableName: "BarberService",
+    Key: { barberServiceId: { S: id } },
+  };
+
+  return new Promise<BarberService | null>((resolve, reject) => {
+    dynamoClient.getItem(params, function (error, data) {
+      if (error) {
+        const message = `Failed to get item by id: ${id} in 'BarberService' table.`;
+        reject(new Error(message, { cause: error }));
+      }
+      let barberService: BarberService | null = null;
+      const dataItem = data?.Item;
+      if (dataItem) {
+        barberService = {
+          id: dataItem.barberServiceId.S as string,
+          name: dataItem.barberServiceName.S as string,
+          description: dataItem.barberServiceDescription.S as string,
+          durationInMinutes: Number(dataItem.barberServiceDurationInMinutes.N),
+          priceInUSD: Number(dataItem.barberServicePriceInUSD.N),
+        };
+      }
+      resolve(barberService);
+    });
+  });
+}
 
 export async function getBarberServicesInDB(): Promise<BarberService[]> {
   const params = {
@@ -124,6 +159,46 @@ export async function deleteBarberServiceInDB(id: string): Promise<void> {
 
 // database queries that target the 'barber-day-schedule' table
 
+export async function getBarberDayScheduleByWeekdayNumberInDB(
+  weekdayNumber: number
+): Promise<BarberDaySchedule | null> {
+  const params = {
+    TableName: "BarberDaySchedule",
+    Key: { weekdayNumber: { N: weekdayNumber.toString() } },
+  };
+
+  return new Promise<BarberDaySchedule | null>((resolve, reject) => {
+    dynamoClient.getItem(params, function (error, data) {
+      if (error) {
+        const message = `Failed to get item by weekdayNumber: ${weekdayNumber} in 'BarberDaySchedule' table.`;
+        reject(new Error(message, { cause: error }));
+      }
+      let barberDaySchedule: BarberDaySchedule | null = null;
+      const dataItem = data.Item;
+      if (dataItem) {
+        barberDaySchedule = {
+          weekdayNumber: Number(dataItem.weekdayNumber.N),
+          openTime: dataItem.openTime.S as string,
+          closeTime: dataItem.closeTime.S as string,
+          breaks:
+            dataItem.breaks.L?.map((barberBreak) => ({
+              startTime: barberBreak.M?.startTime.S as string,
+              endTime: barberBreak.M?.endTime.S as string,
+            })) ?? [],
+          appointmentIntervalInMinutes: Number(
+            dataItem.appointmentIntervalInMinutes.N
+          ),
+          appointmentSlots:
+            dataItem.appointmentSlots.L?.map(
+              (appointmentSlot) => appointmentSlot.S as string
+            ) ?? [],
+        };
+      }
+      resolve(barberDaySchedule);
+    });
+  });
+}
+
 export async function getBarberDaySchedulesInDB(): Promise<
   BarberDaySchedule[]
 > {
@@ -150,6 +225,13 @@ export async function getBarberDaySchedulesInDB(): Promise<
                 startTime: barberBreak.M?.startTime.S as string,
                 endTime: barberBreak.M?.endTime.S as string,
               })) ?? [],
+            appointmentIntervalInMinutes: Number(
+              dataItem.appointmentIntervalInMinutes.N
+            ),
+            appointmentSlots:
+              dataItem.appointmentSlots?.L?.map(
+                (appointmentSlot) => appointmentSlot.S as string
+              ) ?? [],
           };
         });
       }
@@ -175,6 +257,14 @@ export async function createBarberDayScheduleInDB(
           },
         })),
       },
+      appointmentIntervalInMinutes: {
+        N: barberDaySchedule.appointmentIntervalInMinutes.toString(),
+      },
+      appointmentSlots: {
+        L: barberDaySchedule.appointmentSlots.map((appointmentSlot) => ({
+          S: appointmentSlot,
+        })),
+      },
     },
   };
 
@@ -190,7 +280,7 @@ export async function createBarberDayScheduleInDB(
   });
 }
 
-export async function updateBarberDaySchedulesInDB(
+export async function updateBarberDayScheduleInDB(
   barberDaySchedule: BarberDaySchedule
 ): Promise<BarberDaySchedule> {
   const params = {
@@ -199,11 +289,14 @@ export async function updateBarberDaySchedulesInDB(
       weekdayNumber: { N: barberDaySchedule.weekdayNumber.toString() },
     },
     UpdateExpression:
-      "SET #openTime = :openTime, #closeTime = :closeTime, #breaks = :breaks",
+      "SET #openTime = :openTime, #closeTime = :closeTime, #breaks = :breaks, " +
+      "#appointmentIntervalInMinutes = :appointmentIntervalInMinutes, #appointmentSlots = :appointmentSlots",
     ExpressionAttributeNames: {
       "#openTime": "openTime",
       "#closeTime": "closeTime",
       "#breaks": "breaks",
+      "#appointmentIntervalInMinutes": "appointmentIntervalInMinutes",
+      "#appointmentSlots": "appointmentSlots",
     },
     ExpressionAttributeValues: {
       ":openTime": { S: barberDaySchedule.openTime },
@@ -214,6 +307,14 @@ export async function updateBarberDaySchedulesInDB(
             startTime: { S: barberBreak.startTime },
             endTime: { S: barberBreak.endTime },
           },
+        })),
+      },
+      ":appointmentIntervalInMinutes": {
+        N: barberDaySchedule.appointmentIntervalInMinutes.toString(),
+      },
+      ":appointmentSlots": {
+        L: barberDaySchedule.appointmentSlots.map((appointmentSlot) => ({
+          S: appointmentSlot,
         })),
       },
     },
@@ -251,3 +352,7 @@ export async function deleteBarberDayScheduleInDB(
     });
   });
 }
+
+// database queries that target the 'customer-appointment' table
+
+function sanitizeCustomerAppointment() {}

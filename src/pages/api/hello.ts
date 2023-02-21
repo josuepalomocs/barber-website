@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { init } from "@/services/appointment";
+import { init } from "@/services/barberDaySchedules";
 import { ampValidation } from "next/dist/build/output";
 
 type Data = {
