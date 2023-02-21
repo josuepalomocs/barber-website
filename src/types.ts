@@ -25,7 +25,8 @@ export interface BarberBreak {
 }
 
 export interface CustomerAppointment {
-  timestamp: number;
+  startTimestamp: number;
+  endTimestamp: number;
   barberServiceId: string;
   customerInformation: CustomerInformation;
 }

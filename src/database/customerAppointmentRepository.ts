@@ -6,14 +6,17 @@ import { AttributeMap } from "aws-sdk/clients/dynamodb";
 export async function getCustomerAppointmentsByDateFromDB(
   date: Date
 ): Promise<CustomerAppointment[]> {
-  const dayStart = date.setHours(0, 0, 0, 0);
-  const dayEnd = date.setHours(23, 59, 59, 0);
+  const tempDate = new Date(date);
+  tempDate.setHours(0, 0, 0, 0);
+  const dayStart = Math.floor(tempDate.getTime() / 1000);
+  tempDate.setHours(23, 59, 59, 0);
+  const dayEnd = Math.floor(tempDate.getTime() / 1000);
 
   const params = {
     TableName: "CustomerAppointment",
-    KeyConditionExpression: "#timestamp between :start and :end",
+    FilterExpression: "#startTimestamp between :start and :end",
     ExpressionAttributeNames: {
-      "#timestamp": "timestamp",
+      "#startTimestamp": "startTimestamp",
     },
     ExpressionAttributeValues: {
       ":start": { N: dayStart.toString() },
@@ -22,7 +25,7 @@ export async function getCustomerAppointmentsByDateFromDB(
   };
 
   return new Promise<CustomerAppointment[]>((resolve, reject) => {
-    dynamoClient.query(params, function (error, data) {
+    dynamoClient.scan(params, function (error, data) {
       if (error) {
         const message =
           "Failed to get items by date in the 'CustomerAppointment' database table.";
@@ -30,10 +33,12 @@ export async function getCustomerAppointmentsByDateFromDB(
       }
       let customerAppointments: CustomerAppointment[] = [];
       const dataItems = data?.Items;
+      console.log(data);
       if (dataItems && dataItems.length) {
         customerAppointments = dataItems.map(
           (dataItem): CustomerAppointment => ({
-            timestamp: Number(dataItem.timestamp.N),
+            startTimestamp: Number(dataItem.startTimestamp.N),
+            endTimestamp: Number(dataItem.endTimestamp.N),
             barberServiceId: dataItem.barberServiceId.S as string,
             customerInformation: {
               firstName: dataItem.customerInformation.M?.firstName.S as string,
@@ -70,7 +75,8 @@ export async function getCustomerAppointmentByTimestampFromDB(
       const dataItem = data.Item;
       if (dataItem) {
         customerAppointment = {
-          timestamp: Number(dataItem.timestamp.N),
+          startTimestamp: Number(dataItem.startTimestamp.N),
+          endTimestamp: Number(dataItem.endTimestamp.N),
           barberServiceId: dataItem.barberServiceId.S as string,
           customerInformation: {
             firstName: dataItem.customerInformation.M?.firstName as string,
@@ -103,7 +109,8 @@ export async function getCustomerAppointmentsFromDB(): Promise<
       if (dataItems && dataItems.length) {
         customerAppointments = dataItems.map(
           (dataItem): CustomerAppointment => ({
-            timestamp: Number(dataItem.timestamp.N),
+            startTimestamp: Number(dataItem.startTimestamp.N),
+            endTimestamp: Number(dataItem.endTimestamp.N),
             barberServiceId: dataItem.barberServiceId.S as string,
             customerInformation: {
               firstName: dataItem.customerInformation.M?.firstName.S as string,
@@ -122,11 +129,11 @@ export async function getCustomerAppointmentsFromDB(): Promise<
 export async function createCustomerAppointmentInDB(
   customerAppointment: CustomerAppointment
 ): Promise<CustomerAppointment> {
-  console.log("Creating customer appointment item in DB");
   const params = {
     TableName: "CustomerAppointment",
     Item: {
-      timestamp: { N: customerAppointment.timestamp.toString() },
+      startTimestamp: { N: customerAppointment.startTimestamp.toString() },
+      endTimestamp: { N: customerAppointment.endTimestamp.toString() },
       barberServiceId: { S: customerAppointment.barberServiceId },
       customerInformation: {
         M: {
@@ -157,17 +164,20 @@ export async function updateCustomerAppointmentInDB(
   const params = {
     TableName: "CustomerAppointment",
     Key: {
-      timestamp: { N: customerAppointment.timestamp.toString() },
+      startTimestamp: { N: customerAppointment.startTimestamp.toString() },
     },
     UpdateExpression:
-      "SET #timestamp = :timestamp, #barberServiceId = :barberServiceId, #customerInformation = :customerInformation",
+      "SET #startTimestamp = :startTimestamp, #endTimestamp = :endTimestamp, " +
+      "#barberServiceId = :barberServiceId, #customerInformation = :customerInformation",
     ExpressionAttributeNames: {
-      "#timestamp": "openTime",
-      "#barberServiceId": "closeTime",
-      "#customerInformation": "breaks",
+      "#startTimestamp": "startTimestamp",
+      "#endTimestamp": "endTimestamp",
+      "#barberServiceId": "barberServiceId",
+      "#customerInformation": "customerInformation",
     },
     ExpressionAttributeValues: {
-      ":timestamp": { N: customerAppointment.timestamp.toString() },
+      ":startTimestamp": { N: customerAppointment.startTimestamp.toString() },
+      ":endTimestamp": { N: customerAppointment.endTimestamp.toString() },
       ":barberServiceId": { S: customerAppointment.barberServiceId as string },
       ":customerInformation": {
         M: {
@@ -193,12 +203,12 @@ export async function updateCustomerAppointmentInDB(
 }
 
 export async function deleteCustomerAppointmentInDB(
-  timestamp: number
+  startTimestamp: number
 ): Promise<void> {
   const params = {
     TableName: "CustomerAppointment",
     Key: {
-      timestamp: { N: timestamp.toString() },
+      startTimestamp: { N: startTimestamp.toString() },
     },
   };
 
@@ -211,19 +221,4 @@ export async function deleteCustomerAppointmentInDB(
       resolve();
     });
   });
-}
-
-function sanitizeCustomerAppointment(
-  dataItem: AttributeMap
-): CustomerAppointment {
-  return {
-    timestamp: Number(dataItem.timestamp.N),
-    barberServiceId: dataItem.barberServiceId.S as string,
-    customerInformation: {
-      firstName: dataItem.customerInformation.M?.firstName as string,
-      lastName: dataItem.customerInformation.M?.lastName as string,
-      email: dataItem.customerInformation.M?.email as string,
-      phone: dataItem.customerInformation.M?.phone as string,
-    },
-  };
 }

@@ -33,25 +33,30 @@ export async function getCustomerAppointmentsByDate(
   return getCustomerAppointmentsByDateFromDB(new Date(date));
 }
 
-export async function getCustomerAppointmentByTimestamp(
-  timestamp: number
+export async function getCustomerAppointmentByStartTimestamp(
+  startTimestamp: number
 ): Promise<CustomerAppointment | null> {
-  if (isNaN(timestamp))
-    throw new Error(`Invalid input parameter 'timestamp'. Expected a number.`);
-  if (timestamp < 0)
+  if (isNaN(startTimestamp))
     throw new Error(
-      `Invalid input parameter 'timestamp'. Expected a positive number, but received '${timestamp}'.`
+      `Invalid input parameter 'startTimestamp'. Expected a number.`
     );
-  return getCustomerAppointmentByTimestampFromDB(timestamp);
+  if (startTimestamp < 0)
+    throw new Error(
+      `Invalid input parameter 'startTimestamp'. Expected a positive number, but received '${startTimestamp}'.`
+    );
+  return getCustomerAppointmentByTimestampFromDB(startTimestamp);
 }
 
 export async function createCustomerAppointmentService(
   customerAppointment: CustomerAppointment
 ): Promise<CustomerAppointment> {
-  const customerAppointmentStartDate = new Date(
-    customerAppointment.timestamp * 1000
+  const customerAppointmentStartDateTime = new Date(
+    customerAppointment.startTimestamp * 1000
   );
-  const weekdayNumber = getWeekday(customerAppointmentStartDate);
+  const customerAppointmentEndDateTime = new Date(
+    customerAppointment.endTimestamp * 1000
+  );
+  const weekdayNumber = getWeekday(customerAppointmentStartDateTime);
 
   return getBarberDayScheduleByWeekdayNumberFromDB(weekdayNumber).then(
     (barberDaySchedule) => {
@@ -70,108 +75,101 @@ export async function createCustomerAppointmentService(
               `Invalid appointment. Could not create appointment on weekdayNumber '${weekdayNumber}'
                 due to no opening time.`
             );
-          const customerAppointmentEndDate = new Date(
-            customerAppointment.timestamp * 1000 +
-              barberService.durationInMinutes * 60 * 1000
-          );
           if (
             isBefore(
-              customerAppointmentStartDate,
+              customerAppointmentStartDateTime,
               convertTimeStringToDate(
                 barberDaySchedule.openTime,
-                customerAppointmentStartDate.getFullYear(),
-                customerAppointmentStartDate.getMonth(),
-                customerAppointmentStartDate.getDate()
+                customerAppointmentStartDateTime.getFullYear(),
+                customerAppointmentStartDateTime.getMonth(),
+                customerAppointmentStartDateTime.getDate()
               )
             ) ||
             isAfter(
-              customerAppointmentEndDate,
+              customerAppointmentEndDateTime,
               convertTimeStringToDate(
                 barberDaySchedule.closeTime,
-                customerAppointmentStartDate.getFullYear(),
-                customerAppointmentStartDate.getMonth(),
-                customerAppointmentStartDate.getDate()
+                customerAppointmentStartDateTime.getFullYear(),
+                customerAppointmentStartDateTime.getMonth(),
+                customerAppointmentStartDateTime.getDate()
               )
             )
           ) {
             throw new Error(`Invalid appointment. Could not create appointment due to an overlap with 
-              either the opening time, closing time, or any break times.`);
+              either the opening time or the closing time.`);
           }
           if (
             !barberDaySchedule.appointmentSlots.some((appointmentSlot) => {
               const appointmentSlotDate = convertTimeStringToDate(
                 appointmentSlot,
-                customerAppointmentStartDate.getFullYear(),
-                customerAppointmentStartDate.getMonth(),
-                customerAppointmentStartDate.getDate()
+                customerAppointmentStartDateTime.getFullYear(),
+                customerAppointmentStartDateTime.getMonth(),
+                customerAppointmentStartDateTime.getDate()
               );
               return isSameMinute(
                 appointmentSlotDate,
-                customerAppointmentStartDate
+                customerAppointmentStartDateTime
               );
             })
           ) {
-            const message = `The provided customer appointment timestamp: '${
-              customerAppointment.timestamp
-            }' (${formatDate(customerAppointmentStartDate, "HH:mm")})
-          does not match an appointment slot specified in the barber day schedule for weekdayNumber: '${weekdayNumber}'`;
-            throw new Error(message);
+            throw new Error(`Invalid appointment. Could not create appointment due to the 
+              desired appointment time not matching an appointment timeslot.`);
           }
           if (
             barberDaySchedule.breaks.some((barberBreak) => {
               if (
                 (isSameOrAfter(
-                  customerAppointmentStartDate,
+                  customerAppointmentStartDateTime,
                   convertTimeStringToDate(
                     barberBreak.startTime,
-                    customerAppointmentStartDate.getFullYear(),
-                    customerAppointmentStartDate.getMonth(),
-                    customerAppointmentStartDate.getDate()
+                    customerAppointmentStartDateTime.getFullYear(),
+                    customerAppointmentStartDateTime.getMonth(),
+                    customerAppointmentStartDateTime.getDate()
                   )
                 ) &&
                   isBefore(
-                    customerAppointmentStartDate,
+                    customerAppointmentStartDateTime,
                     convertTimeStringToDate(
                       barberBreak.endTime,
-                      customerAppointmentStartDate.getFullYear(),
-                      customerAppointmentStartDate.getMonth(),
-                      customerAppointmentStartDate.getDate()
+                      customerAppointmentStartDateTime.getFullYear(),
+                      customerAppointmentStartDateTime.getMonth(),
+                      customerAppointmentStartDateTime.getDate()
                     )
                   )) ||
                 (isAfter(
-                  customerAppointmentEndDate,
+                  customerAppointmentEndDateTime,
                   convertTimeStringToDate(
                     barberBreak.startTime,
-                    customerAppointmentStartDate.getFullYear(),
-                    customerAppointmentStartDate.getMonth(),
-                    customerAppointmentStartDate.getDate()
+                    customerAppointmentStartDateTime.getFullYear(),
+                    customerAppointmentStartDateTime.getMonth(),
+                    customerAppointmentStartDateTime.getDate()
                   )
                 ) &&
                   isSameOrBefore(
-                    customerAppointmentEndDate,
+                    customerAppointmentEndDateTime,
                     convertTimeStringToDate(
                       barberBreak.endTime,
-                      customerAppointmentStartDate.getFullYear(),
-                      customerAppointmentStartDate.getMonth(),
-                      customerAppointmentStartDate.getDate()
+                      customerAppointmentStartDateTime.getFullYear(),
+                      customerAppointmentStartDateTime.getMonth(),
+                      customerAppointmentStartDateTime.getDate()
                     )
                   )) ||
                 (isSameOrBefore(
-                  customerAppointmentStartDate,
+                  customerAppointmentStartDateTime,
                   convertTimeStringToDate(
                     barberBreak.startTime,
-                    customerAppointmentStartDate.getFullYear(),
-                    customerAppointmentStartDate.getMonth(),
-                    customerAppointmentStartDate.getDate()
+                    customerAppointmentStartDateTime.getFullYear(),
+                    customerAppointmentStartDateTime.getMonth(),
+                    customerAppointmentStartDateTime.getDate()
                   )
                 ) &&
                   isSameOrAfter(
-                    customerAppointmentEndDate,
+                    customerAppointmentEndDateTime,
                     convertTimeStringToDate(
                       barberBreak.endTime,
-                      customerAppointmentStartDate.getFullYear(),
-                      customerAppointmentStartDate.getMonth(),
-                      customerAppointmentStartDate.getDate()
+                      customerAppointmentStartDateTime.getFullYear(),
+                      customerAppointmentStartDateTime.getMonth(),
+                      customerAppointmentStartDateTime.getDate()
                     )
                   ))
               ) {
@@ -179,13 +177,61 @@ export async function createCustomerAppointmentService(
               }
             })
           ) {
-            const message = `The provided customer appointment timestamp: '${customerAppointment.timestamp}' 
-          overlaps with the barber shop break hours for weekdayNumber: '${weekdayNumber}'`;
-            throw new Error(message);
+            throw new Error(
+              `Invalid appointment. Could not create appointment due to an overlap with break times.`
+            );
           }
-          return createCustomerAppointmentInDB(customerAppointment).then(
-            (customerAppointment) => customerAppointment
-          );
+          return getCustomerAppointmentsByDateFromDB(
+            customerAppointmentStartDateTime
+          ).then((existingCustomerAppointments) => {
+            if (
+              existingCustomerAppointments.some(
+                (existingCustomerAppointment) => {
+                  const existingCustomerAppointmentStartDateTime = new Date(
+                    existingCustomerAppointment.startTimestamp * 1000
+                  );
+                  const existingCustomerAppointmentEndDateTime = new Date(
+                    existingCustomerAppointment.endTimestamp * 1000
+                  );
+                  if (
+                    (isSameOrAfter(
+                      customerAppointmentStartDateTime,
+                      existingCustomerAppointmentStartDateTime
+                    ) &&
+                      isBefore(
+                        customerAppointmentStartDateTime,
+                        existingCustomerAppointmentEndDateTime
+                      )) ||
+                    (isAfter(
+                      customerAppointmentEndDateTime,
+                      existingCustomerAppointmentStartDateTime
+                    ) &&
+                      isSameOrBefore(
+                        customerAppointmentEndDateTime,
+                        existingCustomerAppointmentEndDateTime
+                      )) ||
+                    (isSameOrBefore(
+                      customerAppointmentStartDateTime,
+                      existingCustomerAppointmentStartDateTime
+                    ) &&
+                      isSameOrAfter(
+                        customerAppointmentEndDateTime,
+                        existingCustomerAppointmentEndDateTime
+                      ))
+                  ) {
+                    return true;
+                  }
+                }
+              )
+            ) {
+              throw new Error(
+                `Invalid appointment. Could not create appointment due to an overlap with an existing appointment.`
+              );
+            }
+            return createCustomerAppointmentInDB(customerAppointment).then(
+              (customerAppointment) => customerAppointment
+            );
+          });
         }
       );
     }

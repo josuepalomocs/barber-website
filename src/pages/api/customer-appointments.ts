@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import {
   createCustomerAppointmentService,
   getAllCustomerAppointments,
-  getCustomerAppointmentByTimestamp,
+  getCustomerAppointmentByStartTimestamp,
   getCustomerAppointmentsByDate,
 } from "@/services/customerAppointmentServices";
 import { CustomerAppointment } from "@/types";
@@ -15,7 +15,7 @@ export default async function customerAppointmentController(
     const timestamp = req.query["timestamp"];
     const date = req.query["date"];
     if (timestamp && typeof timestamp === "string") {
-      return getCustomerAppointmentByTimestamp(Number(timestamp))
+      return getCustomerAppointmentByStartTimestamp(Number(timestamp))
         .then((customerAppointment) =>
           res.status(200).json(customerAppointment)
         )
