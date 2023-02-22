@@ -24,13 +24,13 @@ export default function TimeOption({ date }: TimeOptionProps) {
 
   console.log(date);
 
-  const selectedTimeOptionStyles = "bg-neutral-900 text-white";
+  const selectedTimeOptionStyles = "border border-blue-500 bg-blue-50";
 
   const sameDateTime = isSameMinute(selectedDateTime, timeOptionDate);
 
   return (
     <button
-      className={`w-full h-full p-3 focus:outline-neutral-300 ${
+      className={`w-full h-full p-3 focus:outline-neutral-300 rounded-lg border border-neutral-200 ${
         sameDateTime ? selectedTimeOptionStyles : ""
       }`}
       onClick={() => {

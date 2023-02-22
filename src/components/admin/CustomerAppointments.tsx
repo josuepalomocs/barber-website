@@ -32,7 +32,7 @@ export default function CustomerAppointments({}: CustomerAppointmentCardsProps) 
             <div className="flex justify-between">
               <h3 className="mb-2 text-sm">{date}</h3>
             </div>
-            <ul>
+            <ul className="mb-4">
               {customerAppointments.map((customerAppointment) => (
                 <li
                   key={customerAppointment.startTimestamp}

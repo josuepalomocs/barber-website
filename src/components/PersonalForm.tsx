@@ -5,8 +5,7 @@ interface PersonalFormProps {}
 
 export default function PersonalForm() {
   return (
-    <div className="text-xs">
-      <p className="text-neutral-500 mb-4">Add contact information</p>
+    <div className="text-sm">
       <form className="grid grid-cols-1 gap-y-2" action="">
         <div className="flex flex-col">
           <label className="pb-2" htmlFor="firstName">

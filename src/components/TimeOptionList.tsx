@@ -10,7 +10,7 @@ export default function TimeOptionList({ timeOptionList }: TimeOptionsProps) {
       return (
         <li
           key={index}
-          className="text-center border border-neutral-200 bg-white hover:bg-neutral-200"
+          className="text-center bg-white hover:bg-neutral-200 rounded-lg"
         >
           <TimeOption date={date} />
         </li>

@@ -12,7 +12,7 @@ export default function Service({
 }: ServiceProps) {
   const { selectedServiceId, selectServiceId } = useContext(AppointmentContext);
 
-  const selectedServiceStyles = "bg-neutral-900 text-white";
+  const selectedServiceStyles = "border bg-blue-50 border-blue-500";
 
   const hours = Math.trunc(durationInMinutes / 60);
   const minutesRemainder = durationInMinutes % 60;
@@ -22,7 +22,7 @@ export default function Service({
 
   return (
     <button
-      className={`w-full h-full flex justify-between text-left p-4 focus:outline-neutral-300 ${
+      className={`w-full h-full flex justify-between text-left p-4 focus:outline-neutral-300 rounded-lg border border-neutral-200 ${
         selectedServiceId === id ? selectedServiceStyles : ""
       }`}
       onClick={() => {
@@ -30,14 +30,8 @@ export default function Service({
       }}
     >
       <div className="">
-        <p className="mb-2">{name}</p>
-        <p
-          className={`text-neutral-400 ${
-            selectedServiceId === id ? "text-white" : ""
-          }`}
-        >
-          {durationString}
-        </p>
+        <p className="mb-4">{name}</p>
+        <p className="text-neutral-500 text-xs">{durationString}</p>
       </div>
       <p className="">${price}</p>
     </button>

@@ -352,7 +352,3 @@ export async function deleteBarberDayScheduleInDB(
     });
   });
 }
-
-// database queries that target the 'customer-appointment' table
-
-function sanitizeCustomerAppointment() {}

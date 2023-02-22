@@ -11,7 +11,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="w-full min-h-screen text-xs bg-white">
+      <div className="w-full min-h-screen text-xs bg-neutral-500">
         <CustomerAppointmentsContainer />
         <BarberServicesContainer />
       </div>

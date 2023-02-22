@@ -24,7 +24,8 @@ export default function Calendar({}: CalendarProps) {
 
   const inactiveButtonStyles = "text-neutral-400 hover:bg-neutral-200";
   const inactiveDayStyles = "text-neutral-400 font-light";
-  const selectedDayStyles = "bg-neutral-900 text-white";
+  const selectedDayStyles =
+    "bg-blue-50 outline outline-1 outline-blue-500 rounded-lg";
 
   function renderTableBodyRows() {
     const firstDayOfMonthDate = new Date(
@@ -37,7 +38,7 @@ export default function Calendar({}: CalendarProps) {
     const numCalendarRows = Math.ceil((daysInMonth + firstDayOfMonthIndex) / 7);
 
     return Array.from({ length: numCalendarRows }, (_, i) => (
-      <tr key={i} className="text-xs flex justify-between">
+      <tr key={i} className="text-sm flex justify-between">
         {Array.from({ length: 7 }, (_, j) => {
           if (i === 0 && j < firstDayOfMonthIndex) {
             return <td key={i * 7 + j} className="w-10 h-10" />;
@@ -98,16 +99,16 @@ export default function Calendar({}: CalendarProps) {
   }
 
   return (
-    <div className="py-2 border border-neutral-200 bg-white">
+    <div className="py-2 border border-neutral-200 bg-white rounded-lg">
       <div className="mb-2">
         <div className="flex justify-between items-center">
           <button
             className={`ml-8 text-neutral-400 p-2 hover:text-neutral-500 hover:bg-neutral-200 focus:outline-neutral-300`}
             onClick={selectPreviousView}
           >
-            <ChevronLeftIcon className="w-[16px] h-[16px]" />
+            <ChevronLeftIcon className="w-[20px] h-[20px]" />
           </button>
-          <span className="text-xs">
+          <span className="text-sm text-neutral-500">
             {formatDate(
               new Date(selectedView.year, selectedView.month),
               "MMMM yyyy"
@@ -117,14 +118,14 @@ export default function Calendar({}: CalendarProps) {
             className="mr-8 text-neutral-400 p-2 hover:text-neutral-500 hover:bg-neutral-200 focus:outline-neutral-300"
             onClick={selectNextView}
           >
-            <ChevronRightIcon className="w-[16px] h-[16px]" />
+            <ChevronRightIcon className="w-[20px] h-[20px]" />
           </button>
         </div>
       </div>
       <hr className="border-neutral-200 mb-2" />
       <table className="border-collapse w-auto m-auto">
-        <thead className="text-xs">
-          <tr className="flex justify-between [&>th]:font-light [&>th]:w-10 [&>th]:h-10">
+        <thead className="text-sm">
+          <tr className="flex justify-between [&>th]:font-normal [&>th]:text-neutral-500 [&>th]:w-10 [&>th]:h-10">
             <th className="flex justify-center items-center">Sun</th>
             <th className="flex justify-center items-center">Mon</th>
             <th className="flex justify-center items-center">Tue</th>

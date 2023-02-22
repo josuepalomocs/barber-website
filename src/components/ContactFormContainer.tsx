@@ -6,7 +6,7 @@ interface ContactFormContainerProps {}
 
 export default function ContactFormContainer({}: ContactFormContainerProps) {
   return (
-    <div className="text-xs">
+    <div className="text-sm">
       <p className="text-neutral-500 mb-4">Add contact information</p>
       <ContactForm />
     </div>

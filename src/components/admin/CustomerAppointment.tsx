@@ -11,7 +11,7 @@ export default function CustomerAppointment({
   customerInformation,
 }: CustomerAppointmentCardProps) {
   return (
-    <div className="p-4 text-sm bg-neutral-100 mb-2 text-neutral-500 rounded-md">
+    <div className="p-4 text-sm mb-2 text-neutral-500 rounded-md">
       <div className="flex justify-between mb-2">
         <p>{`${customerInformation.firstName} ${customerInformation.lastName}`}</p>
         <p>{`${formatDate(

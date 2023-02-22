@@ -37,3 +37,8 @@ export interface CustomerInformation {
   email: string;
   phone: string;
 }
+
+export interface AvailableAppointment {
+  startTimestamp: number;
+  availableBarberServices: BarberService[];
+}

@@ -33,7 +33,6 @@ export async function getCustomerAppointmentsByDateFromDB(
       }
       let customerAppointments: CustomerAppointment[] = [];
       const dataItems = data?.Items;
-      console.log(data);
       if (dataItems && dataItems.length) {
         customerAppointments = dataItems.map(
           (dataItem): CustomerAppointment => ({

@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  AvailableAppointment,
   BarberBreak,
   BarberDaySchedule,
   BarberService,
@@ -153,4 +154,14 @@ export async function deleteCustomerAppointmentRequest(
   await instance.delete<void>(
     `${customerAppointmentsApiRoute}?startTimestamp=${startTimestamp}`
   );
+}
+
+// http requests that target the 'available-appointments' api route
+const availableAppointmentsApiRoute = "/available-appointments";
+
+export async function getAvailableAppointmentsByDate(date: string) {
+  const { data } = await instance.get<AvailableAppointment[]>(
+    `${availableAppointmentsApiRoute}?date=${date}`
+  );
+  return data;
 }

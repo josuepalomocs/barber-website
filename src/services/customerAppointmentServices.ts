@@ -26,11 +26,12 @@ export async function getAllCustomerAppointments() {
 export async function getCustomerAppointmentsByDate(
   date: string
 ): Promise<CustomerAppointment[]> {
-  if (/^\d{4}:\d{2}:\d{2}$/.test(date))
-    throw new Error(
-      `Invalid input parameter 'date'. Expected a valid date string, but received '${date}'`
-    );
-  return getCustomerAppointmentsByDateFromDB(new Date(date));
+  const dateObject = new Date();
+  dateObject.setFullYear(Number(date.split("-")[0]));
+  dateObject.setMonth(Number(date.split("-")[1]) - 1);
+  dateObject.setDate(Number(date.split("-")[2]));
+  dateObject.setHours(0, 0, 0, 0);
+  return getCustomerAppointmentsByDateFromDB(dateObject);
 }
 
 export async function getCustomerAppointmentByStartTimestamp(
