@@ -1,11 +1,6 @@
 import { FormEvent, useState } from "react";
 import { ContactInformation } from "@/types";
-import {
-  getDayOfMonth,
-  getDaysInMonth,
-  getMonth,
-  getYear,
-} from "@/utilities/date";
+import { getDayOfMonth, getMonth, getYear } from "@/utilities/date";
 
 const currentDate = new Date();
 const currentDay = getDayOfMonth(currentDate);

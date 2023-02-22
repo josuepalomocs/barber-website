@@ -1,5 +1,10 @@
 import axios from "axios";
-import { BarberBreak, BarberDaySchedule, BarberService } from "@/types";
+import {
+  BarberBreak,
+  BarberDaySchedule,
+  BarberService,
+  CustomerAppointment,
+} from "@/types";
 
 type BarberServicesOrder =
   | "price-asc"
@@ -104,4 +109,48 @@ export async function deleteBarberDaySchedule(
     `${barberDaySchedulesApiRoute}?weekday-number=${weekdayNumber}`
   );
   return data;
+}
+
+// http requests that target the 'customer-appointments' api route
+const customerAppointmentsApiRoute = "/customer-appointments";
+
+export async function getAllCustomerAppointmentsRequest(): Promise<
+  CustomerAppointment[]
+> {
+  const { data } = await instance.get<CustomerAppointment[]>(
+    `${customerAppointmentsApiRoute}`
+  );
+  return data;
+}
+export async function getCustomerAppointmentsByDateRequest(
+  date: string
+): Promise<CustomerAppointment[]> {
+  const { data } = await instance.get<CustomerAppointment[]>(
+    `${customerAppointmentsApiRoute}?${date}`
+  );
+  return data;
+}
+export async function getCustomerAppointmentByStartTimestampRequest(
+  startTimestamp: number
+): Promise<CustomerAppointment | null> {
+  const { data } = await instance.get<CustomerAppointment | null>(
+    `${customerAppointmentsApiRoute}?startTimestamp=${startTimestamp}`
+  );
+  return data;
+}
+export async function updateCustomerAppointmentRequest(
+  customerAppointment: CustomerAppointment
+): Promise<CustomerAppointment> {
+  const { data } = await instance.put<CustomerAppointment>(
+    `${customerAppointmentsApiRoute}`,
+    customerAppointment
+  );
+  return data;
+}
+export async function deleteCustomerAppointmentRequest(
+  startTimestamp: number
+): Promise<void> {
+  await instance.delete<void>(
+    `${customerAppointmentsApiRoute}?startTimestamp=${startTimestamp}`
+  );
 }

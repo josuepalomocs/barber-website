@@ -1,24 +1,6 @@
 import Head from "next/head";
-import PageWrapper from "@/components/PageWrapper";
-import Main from "@/components/Main";
-import Sidebar from "@/components/Sidebar";
-import useSidebar from "@/hooks/useSidebar";
-import Header from "@/components/Header";
-import About from "@/components/About";
-import { AppointmentProvider } from "@/context/AppointmentProvider";
-import Calendar from "@/components/Calendar";
-import TimeOptionListContainer from "@/components/TimeOptionListContainer";
-import ServiceListContainer from "@/components/ServiceListContainer";
-import ContactFormContainer from "@/components/ContactFormContainer";
-import Modal from "@/components/Modal";
-import useModal from "@/hooks/useModal";
-import { PlusIcon, ScissorsIcon } from "@heroicons/react/20/solid";
-import Form from "@/components/Form";
-import FormInput from "@/components/FormInput";
-import FormSubmit from "@/components/FormSubmit";
-import AddServiceModal from "@/components/admin/AddBarberServiceModal";
-import AdminHeader from "@/components/admin/AdminHeader";
 import BarberServicesContainer from "@/components/admin/BarberServicesContainer";
+import CustomerAppointmentsContainer from "@/components/admin/CustomerAppointmentsContainer";
 
 export default function Home() {
   return (
@@ -30,6 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="w-full min-h-screen text-xs bg-white">
+        <CustomerAppointmentsContainer />
         <BarberServicesContainer />
       </div>
     </>
