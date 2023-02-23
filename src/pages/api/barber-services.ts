@@ -3,7 +3,7 @@ import { BarberService } from "@/types";
 import {
   createBarberServiceInDB,
   deleteBarberServiceInDB,
-  getBarberServicesInDB,
+  getBarberServicesFromDB,
   updateBarberServiceInDB,
 } from "@/services/database";
 
@@ -12,7 +12,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    return getBarberServicesInDB()
+    return getBarberServicesFromDB()
       .then((barberServices) => res.status(200).json(barberServices))
       .catch((error) => {
         console.log(error);

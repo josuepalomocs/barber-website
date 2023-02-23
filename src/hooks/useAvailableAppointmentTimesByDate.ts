@@ -7,7 +7,7 @@ export default function useAvailableAppointmentTimesByDate(date: Date) {
 
   useEffect(() => {
     async function getAvailableAppointmentTimesByDate() {
-      const response = await getAppointment;
+      const response = await getAvai;
     }
 
     getAvailableAppointmentTimesByDate().catch((error) => console.log(error));

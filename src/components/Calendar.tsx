@@ -5,7 +5,7 @@ import {
   getDayOfMonth,
   getDaysInMonth,
   getMonth,
-  getWeekday,
+  getDay,
   getYear,
 } from "@/utilities/date";
 import useAppointment from "@/hooks/useAppointment";
@@ -33,7 +33,7 @@ export default function Calendar({}: CalendarProps) {
       selectedView.month,
       1
     );
-    const firstDayOfMonthIndex = getWeekday(firstDayOfMonthDate);
+    const firstDayOfMonthIndex = getDay(firstDayOfMonthDate);
     const daysInMonth = getDaysInMonth(firstDayOfMonthDate);
     const numCalendarRows = Math.ceil((daysInMonth + firstDayOfMonthIndex) / 7);
 

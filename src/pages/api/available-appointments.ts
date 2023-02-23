@@ -18,6 +18,9 @@ export default async function handler(
       .then((availableAppointments) =>
         res.status(200).json(availableAppointments)
       )
-      .catch((error) => res.status(500).json(error));
+      .catch((error) => {
+        console.log(error);
+        res.status(500).json(error);
+      });
   }
 }

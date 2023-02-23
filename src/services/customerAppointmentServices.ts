@@ -1,11 +1,11 @@
 import { CustomerAppointment } from "@/types";
 import {
-  getBarberDayScheduleByWeekdayNumberFromDB,
+  getBarberDayScheduleByDayFromDB,
   getBarberServiceByIdInDB,
 } from "@/services/database";
 import {
   formatDate,
-  getWeekday,
+  getDay,
   isAfter,
   isBefore,
   isSameMinute,
@@ -57,9 +57,9 @@ export async function createCustomerAppointmentService(
   const customerAppointmentEndDateTime = new Date(
     customerAppointment.endTimestamp * 1000
   );
-  const weekdayNumber = getWeekday(customerAppointmentStartDateTime);
+  const weekdayNumber = getDay(customerAppointmentStartDateTime);
 
-  return getBarberDayScheduleByWeekdayNumberFromDB(weekdayNumber).then(
+  return getBarberDayScheduleByDayFromDB(weekdayNumber).then(
     (barberDaySchedule) => {
       return getBarberServiceByIdInDB(customerAppointment.barberServiceId).then(
         (barberService) => {

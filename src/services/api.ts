@@ -159,7 +159,7 @@ export async function deleteCustomerAppointmentRequest(
 // http requests that target the 'available-appointments' api route
 const availableAppointmentsApiRoute = "/available-appointments";
 
-export async function getAvailableAppointmentsByDate(date: string) {
+export async function getAvailableAppointmentsByDateRequest(date: string) {
   const { data } = await instance.get<AvailableAppointment[]>(
     `${availableAppointmentsApiRoute}?date=${date}`
   );

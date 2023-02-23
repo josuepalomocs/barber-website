@@ -9,15 +9,12 @@ import {
   isAfter as isAfterFn,
 } from "date-fns";
 
-export type WeekdayNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
-export type MonthNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
-
-export function getWeekday(date: Date): WeekdayNumber {
+export function getDay(date: Date): number {
   return getDayFn(date);
 }
 
-export function getMonth(date: Date): MonthNumber {
-  return getMonthFn(date) as MonthNumber;
+export function getMonth(date: Date): number {
+  return getMonthFn(date);
 }
 
 export function getYear(date: Date): number {
@@ -54,4 +51,21 @@ export function isSameOrBefore(dateA: Date, dateB: Date) {
 
 export function isSameOrAfter(dateA: Date, dateB: Date) {
   return isAfter(dateA, dateB) || isSameMinute(dateA, dateB);
+}
+
+export function areDatesOverlapping(
+  startA: Date,
+  endA: Date,
+  startB: Date,
+  endB: Date
+): boolean {
+  return startA <= endB && endA >= startB;
+}
+
+export function convertUnixTimestampToDate(timestamp: number) {
+  return new Date(timestamp * 1000);
+}
+
+export function convertDateToUnixTimestamp(date: Date) {
+  return date.getTime() / 1000;
 }

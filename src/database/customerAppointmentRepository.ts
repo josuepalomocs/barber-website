@@ -1,7 +1,5 @@
 import { CustomerAppointment } from "@/types";
 import dynamoClient from "@/lib/dynamo";
-import { Item } from "aws-sdk/clients/simpledb";
-import { AttributeMap } from "aws-sdk/clients/dynamodb";
 
 export async function getCustomerAppointmentsByDateFromDB(
   date: Date
