@@ -1,27 +1,38 @@
 import Service from "@/components/Service";
 import { BarberService as IService } from "../types";
+import { useContext } from "react";
+import { AppointmentContext } from "@/context/AppointmentProvider";
+import { convertDateToUnixTimestamp } from "@/utilities/date";
 
-interface ServiceListProps {
-  serviceList: IService[];
-}
+export default function ServiceList() {
+  const { selectedDateTime, availableAppointments } =
+    useContext(AppointmentContext);
 
-export default function ServiceList({ serviceList }: ServiceListProps) {
   function renderServices() {
-    return serviceList.map(({ id, name, durationInMinutes, price }, index) => {
-      return (
-        <li
-          key={index}
-          className="flex justify-between items-center bg-white hover:bg-neutral-200 rounded-lg"
-        >
-          <Service
-            id={id}
-            name={name}
-            durationInMinutes={durationInMinutes}
-            price={price}
-          />
-        </li>
-      );
-    });
+    return availableAppointments
+      .filter(({ startTimestamp, availableBarberServices }) => {
+        return convertDateToUnixTimestamp(selectedDateTime) === startTimestamp;
+      })
+      .map(({ availableBarberServices }) => {
+        return availableBarberServices.map(
+          ({ id, name, description, durationInMinutes, priceInUSD }) => {
+            return (
+              <li
+                key={id}
+                className="flex justify-between items-center bg-white hover:bg-neutral-200 rounded-lg"
+              >
+                <Service
+                  id={id}
+                  name={name}
+                  description={description}
+                  durationInMinutes={durationInMinutes}
+                  priceInUSD={priceInUSD}
+                />
+              </li>
+            );
+          }
+        );
+      });
   }
 
   return <ul className="flex flex-col space-y-2">{renderServices()}</ul>;

@@ -22,8 +22,6 @@ export default function TimeOption({ date }: TimeOptionProps) {
   const minutes = date.getMinutes();
   const timeOptionDate = new Date(year, month, day, hours, minutes);
 
-  console.log(date);
-
   const selectedTimeOptionStyles = "border border-blue-500 bg-blue-50";
 
   const sameDateTime = isSameMinute(selectedDateTime, timeOptionDate);

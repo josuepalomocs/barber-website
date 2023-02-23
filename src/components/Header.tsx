@@ -15,9 +15,6 @@ export default function Header({ openSidebar }: HeaderProps) {
         >
           OC FADES
         </Link>
-        {/*<button className="p-2">*/}
-        {/*  <Bars3Icon className="w-[20px] h-[20px]" />*/}
-        {/*</button>*/}
         <div className="flex justify-between items-center text-xs [&>a]:p-2 ml-auto space-x-8">
           <Link href="/about">ABOUT</Link>
           <Link href="/services">SERVICES</Link>

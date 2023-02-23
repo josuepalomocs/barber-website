@@ -1,12 +1,15 @@
 import { createContext, FormEvent, ReactNode } from "react";
 import { getDayOfMonth, getMonth, getYear } from "@/utilities/date";
 import useAppointment from "@/hooks/useAppointment";
+import { AvailableAppointment } from "@/types";
 
 type AppointmentContext = {
+  availableAppointments: AvailableAppointment[];
+  availableAppointmentsAreLoading: boolean;
   selectedDateTime: Date;
   selectDateTime: (date: Date) => void;
-  selectedServiceId: number;
-  selectServiceId: (serviceId: number) => void;
+  selectedServiceId: string;
+  selectServiceId: (serviceId: string) => void;
   firstName: string;
   lastName: string;
   email: string;
@@ -22,19 +25,13 @@ const currentDay = getDayOfMonth(currentDate);
 const currentMonth = getMonth(currentDate);
 const currentYear = getYear(currentDate);
 
-const currentDateSanitized = new Date(
-  currentYear,
-  currentMonth,
-  currentDay,
-  0,
-  0
-);
-
 export const AppointmentContext = createContext<AppointmentContext>({
+  availableAppointments: [],
+  availableAppointmentsAreLoading: false,
   selectedDateTime: new Date(currentYear, currentMonth, currentDay, 0, 0),
   selectDateTime: (date: Date) => {},
-  selectedServiceId: -1,
-  selectServiceId: (serviceId: number) => {},
+  selectedServiceId: "",
+  selectServiceId: (serviceId: string) => {},
   firstName: "",
   lastName: "",
   email: "",

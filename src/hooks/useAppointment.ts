@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
-import { ContactInformation } from "@/types";
 import { getDayOfMonth, getMonth, getYear } from "@/utilities/date";
+import useAvailableAppointmentsByDate from "@/hooks/useAvailableAppointmentsByDate";
+import { CustomerInformation } from "@/types";
 
 const currentDate = new Date();
 const currentDay = getDayOfMonth(currentDate);
@@ -18,9 +19,9 @@ const currentDateSanitized = new Date(
 export default function useAppointment() {
   const [selectedDateTime, setSelectedDateTime] =
     useState(currentDateSanitized);
-  const [selectedServiceId, setSelectedServiceId] = useState(-1);
+  const [selectedServiceId, setSelectedServiceId] = useState("");
   const [contactInformation, setContactInformation] =
-    useState<ContactInformation>({
+    useState<CustomerInformation>({
       firstName: "",
       lastName: "",
       email: "",
@@ -31,7 +32,7 @@ export default function useAppointment() {
     setSelectedDateTime(date);
   }
 
-  function selectServiceId(serviceId: number) {
+  function selectServiceId(serviceId: string) {
     setSelectedServiceId(serviceId);
   }
 
@@ -55,7 +56,14 @@ export default function useAppointment() {
     setContactInformation({ ...contactInformation, phone });
   }
 
+  const selectedDate = new Date(selectedDateTime);
+  selectedDate.setHours(0, 0, 0);
+  const { availableAppointments, availableAppointmentsAreLoading } =
+    useAvailableAppointmentsByDate(selectedDate.toISOString());
+
   return {
+    availableAppointments,
+    availableAppointmentsAreLoading,
     selectedDateTime,
     selectDateTime,
     selectedServiceId,

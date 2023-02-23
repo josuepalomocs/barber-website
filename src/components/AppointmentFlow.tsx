@@ -19,7 +19,7 @@ export default function AppointmentFlow({
           <div className="">
             <h2 className="text-sm mb-2 text-black">Book appointment</h2>
             <p className="text-xs text-neutral-500">
-              Don&apos;t worry, this should be quick.
+              Let&apos;s get you on Osvaldo&apos;s calendar.
             </p>
           </div>
           <button
