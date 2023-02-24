@@ -17,7 +17,7 @@ export default function AppointmentFlow({
       <div className="flex items-center w-full h-20 border border-b-200">
         <div className="flex justify-between items-center w-full px-4">
           <div className="">
-            <h2 className="text-sm mb-2 text-black">Book appointment</h2>
+            <h2 className="text-sm mb-2 text-neutral-800">Book appointment</h2>
             <p className="text-xs text-neutral-500">
               Let&apos;s get you on Osvaldo&apos;s calendar.
             </p>

@@ -35,7 +35,9 @@ export default function TimeOption({ date }: TimeOptionProps) {
         selectDateTime(new Date(year, month, day, hours, minutes));
       }}
     >
-      <time dateTime={date.toISOString()}>{formatDate(date, "h:mmaaa")}</time>
+      <time className="text-neutral-800" dateTime={date.toISOString()}>
+        {formatDate(date, "h:mmaaa")}
+      </time>
     </button>
   );
 }

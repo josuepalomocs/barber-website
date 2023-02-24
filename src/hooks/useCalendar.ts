@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getDayOfMonth, getMonth, getYear } from "@/utilities/date";
-
-type MonthNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+import { BarberDaySchedule } from "@/types";
+import { getBarberDaySchedulesRequest } from "@/services/api";
 
 interface View {
-  month: MonthNumber;
+  month: number;
   year: number;
 }
 
 interface SelectedDate {
   day: number;
-  month: MonthNumber;
+  month: number;
   year: number;
 }
 
@@ -38,6 +38,10 @@ export default function useCalendar({ currentDate }: UseCalendarParams) {
     selectedDateInitialState
   );
 
+  const [barberDaySchedules, setBarberDaySchedules] = useState<
+    BarberDaySchedule[]
+  >([]);
+
   function selectPreviousView(): void {
     const currentMonth = getMonth(new Date());
     const currentYear = getYear(new Date());
@@ -52,7 +56,7 @@ export default function useCalendar({ currentDate }: UseCalendarParams) {
       }
       const newMonthView: View = {
         ...selectedView,
-        month: (selectedView.month - 1) as MonthNumber,
+        month: selectedView.month - 1,
       };
       setSelectedView(newMonthView);
     }
@@ -66,12 +70,12 @@ export default function useCalendar({ currentDate }: UseCalendarParams) {
     }
     const newMonthView: View = {
       ...selectedView,
-      month: (selectedView.month + 1) as MonthNumber,
+      month: selectedView.month + 1,
     };
     setSelectedView(newMonthView);
   }
 
-  function selectDate(day: number, month: MonthNumber, year: number) {
+  function selectDate(day: number, month: number, year: number) {
     setSelectedDate({
       day,
       month,
@@ -79,11 +83,29 @@ export default function useCalendar({ currentDate }: UseCalendarParams) {
     });
   }
 
+  const closedDaysOfWeek = barberDaySchedules
+    .filter(({ openTime }) => {
+      return openTime === "";
+    })
+    .map(({ weekdayNumber }) => {
+      return weekdayNumber;
+    });
+
+  useEffect(() => {
+    async function getBarberDaySchedules() {
+      const response = await getBarberDaySchedulesRequest();
+      setBarberDaySchedules(response);
+    }
+
+    getBarberDaySchedules().catch((error) => console.log(error));
+  }, []);
+
   return {
     selectedDate,
     selectDate,
     selectedView,
     selectPreviousView,
     selectNextView,
+    closedDaysOfWeek,
   };
 }

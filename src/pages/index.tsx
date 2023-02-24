@@ -4,7 +4,7 @@ import Main from "@/components/Main";
 import Sidebar from "@/components/Sidebar";
 import useSidebar from "@/hooks/useSidebar";
 import Header from "@/components/Header";
-import About from "@/components/About";
+import Landing from "@/components/Landing";
 import AppointmentFlow from "@/components/AppointmentFlow";
 
 export default function Home() {
@@ -24,7 +24,7 @@ export default function Home() {
           <AppointmentFlow closeSidebar={closeSidebar} />
         </Sidebar>
         <Main>
-          <About />
+          <Landing />
         </Main>
       </PageWrapper>
     </>

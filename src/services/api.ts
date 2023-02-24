@@ -71,13 +71,15 @@ export async function deleteBarberServiceRequest(id: string): Promise<void> {
 // http requests that target the 'barber-day-schedules' api route
 const barberDaySchedulesApiRoute = "/barber-day-schedules";
 
-export async function getBarberDaySchedules(): Promise<BarberDaySchedule[]> {
+export async function getBarberDaySchedulesRequest(): Promise<
+  BarberDaySchedule[]
+> {
   const { data } = await instance.get<BarberDaySchedule[]>(
     barberDaySchedulesApiRoute
   );
   return data;
 }
-export async function getBarberDayScheduleByWeekdayNumber(
+export async function getBarberDayScheduleByWeekdayNumberRequest(
   weekdayNumber: number
 ): Promise<BarberDaySchedule | null> {
   const { data } = await instance.get<BarberDaySchedule | null>(
@@ -85,7 +87,7 @@ export async function getBarberDayScheduleByWeekdayNumber(
   );
   return data;
 }
-export async function createBarberDaySchedule(
+export async function createBarberDayScheduleRequest(
   barberDaySchedule: BarberDaySchedule
 ): Promise<BarberDaySchedule> {
   const { data } = await instance.post<BarberDaySchedule>(
@@ -94,7 +96,7 @@ export async function createBarberDaySchedule(
   );
   return data;
 }
-export async function updateBarberDaySchedule(
+export async function updateBarberDayScheduleRequest(
   barberDaySchedule: BarberDaySchedule
 ): Promise<BarberDaySchedule> {
   const { data } = await instance.put<BarberDaySchedule>(
@@ -103,7 +105,7 @@ export async function updateBarberDaySchedule(
   );
   return data;
 }
-export async function deleteBarberDaySchedule(
+export async function deleteBarberDayScheduleRequest(
   weekdayNumber: number
 ): Promise<void> {
   const { data } = await instance.delete<void>(

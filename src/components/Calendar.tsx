@@ -17,10 +17,15 @@ interface CalendarProps {}
 export default function Calendar({}: CalendarProps) {
   const { selectedDateTime, selectDateTime } = useContext(AppointmentContext);
 
-  const { selectDate, selectedView, selectPreviousView, selectNextView } =
-    useCalendar({
-      currentDate: selectedDateTime,
-    });
+  const {
+    selectDate,
+    selectedView,
+    selectPreviousView,
+    selectNextView,
+    closedDaysOfWeek,
+  } = useCalendar({
+    currentDate: selectedDateTime,
+  });
 
   const inactiveButtonStyles = "text-neutral-400 hover:bg-neutral-200";
   const inactiveDayStyles = "text-neutral-400 font-light";
@@ -49,6 +54,17 @@ export default function Calendar({}: CalendarProps) {
           ) {
             return <td key={i * 7 + j} className="w-10 h-10" />;
           }
+          if (closedDaysOfWeek.includes(j)) {
+            return (
+              <td key={i * 7 + j} className={`w-10 h-10 ${inactiveDayStyles}`}>
+                <div
+                  className={`flex items-center justify-center ${inactiveDayStyles} w-10 h-10`}
+                >
+                  {7 * i + j - firstDayOfMonthIndex + 1}
+                </div>
+              </td>
+            );
+          }
           return (
             <td
               key={i * 7 + j}
@@ -59,8 +75,10 @@ export default function Calendar({}: CalendarProps) {
                 selectedView.year === getYear(selectedDateTime)
                   ? selectedDayStyles
                   : 7 * i + j - firstDayOfMonthIndex + 1 >=
-                    getDayOfMonth(new Date())
-                  ? "hover:bg-neutral-200"
+                      getDayOfMonth(new Date()) ||
+                    selectedView.month != getMonth(new Date()) ||
+                    selectedView.year != getYear(new Date())
+                  ? "hover:bg-neutral-200 text-neutral-800"
                   : ""
               }`}
             >

@@ -74,7 +74,7 @@ export default function ContactForm({}: ContactFormProps) {
       <div className="mb-2">
         <hr className="border-neutral-200 mt-2 mb-8" />
         <button
-          className="flex justify-center items-center gap-2 p-3 w-full text-white bg-blue-600 focus:outline-neutral-300 rounded-lg"
+          className="flex justify-center items-center gap-2 p-3 w-full text-white bg-black focus:outline-neutral-300 rounded-lg"
           id="bookAppointment"
           type="submit"
         >

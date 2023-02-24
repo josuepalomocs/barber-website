@@ -19,7 +19,7 @@ export default function ServiceList() {
             return (
               <li
                 key={id}
-                className="flex justify-between items-center bg-white hover:bg-neutral-200 rounded-lg"
+                className="flex justify-between items-center bg-white hover:bg-neutral-200 rounded-lg animate-fadeIn"
               >
                 <Service
                   id={id}
@@ -34,6 +34,13 @@ export default function ServiceList() {
         );
       });
   }
+
+  if (
+    !availableAppointments.some(({ startTimestamp }) => {
+      return convertDateToUnixTimestamp(selectedDateTime) === startTimestamp;
+    })
+  )
+    return <div></div>;
 
   return <ul className="flex flex-col space-y-2">{renderServices()}</ul>;
 }
