@@ -15,7 +15,7 @@ type BarberServicesOrder =
 
 const BASE_URL = "http://localhost:3000/api";
 
-const instance = axios.create({
+export const httpClient = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,
 });
@@ -26,7 +26,7 @@ const barberServicesApiRoute = "/barber-services";
 export async function getBarberServicesRequest(
   order?: BarberServicesOrder
 ): Promise<BarberService[]> {
-  const { data } = await instance.get<BarberService[]>(
+  const { data } = await httpClient.get<BarberService[]>(
     `${barberServicesApiRoute}${order ? `?order=${order}` : ""}`
   );
   return data;
@@ -35,7 +35,7 @@ export async function getBarberServicesRequest(
 export async function getBarberServiceByIdRequest(
   id: string
 ): Promise<BarberService> {
-  const { data } = await instance.get<BarberService>(
+  const { data } = await httpClient.get<BarberService>(
     `${barberServicesApiRoute}?barber-service-id=${id}`
   );
   return data;
@@ -44,7 +44,7 @@ export async function getBarberServiceByIdRequest(
 export async function createBarberServiceRequest(
   barberService: BarberService
 ): Promise<BarberService> {
-  const { data } = await instance.post<BarberService>(
+  const { data } = await httpClient.post<BarberService>(
     `${barberServicesApiRoute}`,
     barberService
   );
@@ -54,7 +54,7 @@ export async function createBarberServiceRequest(
 export async function updateBarberServiceRequest(
   barberService: BarberService
 ): Promise<BarberService> {
-  const { data } = await instance.put<BarberService>(
+  const { data } = await httpClient.put<BarberService>(
     `${barberServicesApiRoute}?barber-service-id=${barberService.id}`,
     barberService
   );
@@ -62,7 +62,7 @@ export async function updateBarberServiceRequest(
 }
 
 export async function deleteBarberServiceRequest(id: string): Promise<void> {
-  const { data } = await instance.delete<void>(
+  const { data } = await httpClient.delete<void>(
     `${barberServicesApiRoute}?barber-service-id=${id}`
   );
   return data;
@@ -74,7 +74,7 @@ const barberDaySchedulesApiRoute = "/barber-day-schedules";
 export async function getBarberDaySchedulesRequest(): Promise<
   BarberDaySchedule[]
 > {
-  const { data } = await instance.get<BarberDaySchedule[]>(
+  const { data } = await httpClient.get<BarberDaySchedule[]>(
     barberDaySchedulesApiRoute
   );
   return data;
@@ -82,7 +82,7 @@ export async function getBarberDaySchedulesRequest(): Promise<
 export async function getBarberDayScheduleByWeekdayNumberRequest(
   weekdayNumber: number
 ): Promise<BarberDaySchedule | null> {
-  const { data } = await instance.get<BarberDaySchedule | null>(
+  const { data } = await httpClient.get<BarberDaySchedule | null>(
     `${barberDaySchedulesApiRoute}?weekday-number=${weekdayNumber}`
   );
   return data;
@@ -90,7 +90,7 @@ export async function getBarberDayScheduleByWeekdayNumberRequest(
 export async function createBarberDayScheduleRequest(
   barberDaySchedule: BarberDaySchedule
 ): Promise<BarberDaySchedule> {
-  const { data } = await instance.post<BarberDaySchedule>(
+  const { data } = await httpClient.post<BarberDaySchedule>(
     barberDaySchedulesApiRoute,
     barberDaySchedule
   );
@@ -99,7 +99,7 @@ export async function createBarberDayScheduleRequest(
 export async function updateBarberDayScheduleRequest(
   barberDaySchedule: BarberDaySchedule
 ): Promise<BarberDaySchedule> {
-  const { data } = await instance.put<BarberDaySchedule>(
+  const { data } = await httpClient.put<BarberDaySchedule>(
     barberDaySchedulesApiRoute,
     barberDaySchedule
   );
@@ -108,7 +108,7 @@ export async function updateBarberDayScheduleRequest(
 export async function deleteBarberDayScheduleRequest(
   weekdayNumber: number
 ): Promise<void> {
-  const { data } = await instance.delete<void>(
+  const { data } = await httpClient.delete<void>(
     `${barberDaySchedulesApiRoute}?weekday-number=${weekdayNumber}`
   );
   return data;
@@ -120,7 +120,7 @@ const customerAppointmentsApiRoute = "/customer-appointments";
 export async function getAllCustomerAppointmentsRequest(): Promise<
   CustomerAppointment[]
 > {
-  const { data } = await instance.get<CustomerAppointment[]>(
+  const { data } = await httpClient.get<CustomerAppointment[]>(
     `${customerAppointmentsApiRoute}`
   );
   return data;
@@ -128,7 +128,7 @@ export async function getAllCustomerAppointmentsRequest(): Promise<
 export async function getCustomerAppointmentsByDateRequest(
   date: string
 ): Promise<CustomerAppointment[]> {
-  const { data } = await instance.get<CustomerAppointment[]>(
+  const { data } = await httpClient.get<CustomerAppointment[]>(
     `${customerAppointmentsApiRoute}?${date}`
   );
   return data;
@@ -136,7 +136,7 @@ export async function getCustomerAppointmentsByDateRequest(
 export async function getCustomerAppointmentByStartTimestampRequest(
   startTimestamp: number
 ): Promise<CustomerAppointment | null> {
-  const { data } = await instance.get<CustomerAppointment | null>(
+  const { data } = await httpClient.get<CustomerAppointment | null>(
     `${customerAppointmentsApiRoute}?startTimestamp=${startTimestamp}`
   );
   return data;
@@ -144,7 +144,7 @@ export async function getCustomerAppointmentByStartTimestampRequest(
 export async function updateCustomerAppointmentRequest(
   customerAppointment: CustomerAppointment
 ): Promise<CustomerAppointment> {
-  const { data } = await instance.put<CustomerAppointment>(
+  const { data } = await httpClient.put<CustomerAppointment>(
     `${customerAppointmentsApiRoute}`,
     customerAppointment
   );
@@ -153,7 +153,7 @@ export async function updateCustomerAppointmentRequest(
 export async function deleteCustomerAppointmentRequest(
   startTimestamp: number
 ): Promise<void> {
-  await instance.delete<void>(
+  await httpClient.delete<void>(
     `${customerAppointmentsApiRoute}?startTimestamp=${startTimestamp}`
   );
 }
@@ -162,7 +162,7 @@ export async function deleteCustomerAppointmentRequest(
 const availableAppointmentsApiRoute = "/available-appointments";
 
 export async function getAvailableAppointmentsByDateRequest(date: string) {
-  const { data } = await instance.get<AvailableAppointment[]>(
+  const { data } = await httpClient.get<AvailableAppointment[]>(
     `${availableAppointmentsApiRoute}?date=${date}`
   );
   return data;
