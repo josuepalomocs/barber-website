@@ -20,7 +20,7 @@ export function useGoogleMap() {
   const googleMapOnLoad = useCallback(
     (map: google.maps.Map) => {
       map.set("controlSize", 20);
-      map.set("disableDefaultUI", true);
+      // map.set("disableDefaultUI", true);
     },
     [googleMapCenter]
   );

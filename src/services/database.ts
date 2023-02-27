@@ -177,7 +177,7 @@ export async function getBarberDayScheduleByDayFromDB(
       const dataItem = data.Item;
       if (dataItem) {
         barberDaySchedule = {
-          weekdayNumber: Number(dataItem.weekdayNumber.N),
+          dayOfWeek: Number(dataItem.weekdayNumber.N),
           openTime: dataItem.openTime.S as string,
           closeTime: dataItem.closeTime.S as string,
           breaks:
@@ -217,7 +217,7 @@ export async function getBarberDaySchedulesInDB(): Promise<
       if (dataItems && dataItems.length) {
         barberDaySchedules = dataItems.map((dataItem): BarberDaySchedule => {
           return {
-            weekdayNumber: Number(dataItem.weekdayNumber.N),
+            dayOfWeek: Number(dataItem.weekdayNumber.N),
             openTime: dataItem.openTime.S as string,
             closeTime: dataItem.closeTime.S as string,
             breaks:
@@ -246,7 +246,7 @@ export async function createBarberDayScheduleInDB(
   const params = {
     TableName: "BarberDaySchedule",
     Item: {
-      weekdayNumber: { N: barberDaySchedule.weekdayNumber.toString() },
+      weekdayNumber: { N: barberDaySchedule.dayOfWeek.toString() },
       openTime: { S: barberDaySchedule.openTime },
       closeTime: { S: barberDaySchedule.closeTime },
       breaks: {
@@ -286,7 +286,7 @@ export async function updateBarberDayScheduleInDB(
   const params = {
     TableName: "BarberDaySchedule",
     Key: {
-      weekdayNumber: { N: barberDaySchedule.weekdayNumber.toString() },
+      weekdayNumber: { N: barberDaySchedule.dayOfWeek.toString() },
     },
     UpdateExpression:
       "SET #openTime = :openTime, #closeTime = :closeTime, #breaks = :breaks, " +

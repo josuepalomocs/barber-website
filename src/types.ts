@@ -1,7 +1,3 @@
-export interface TimeOption {
-  date: Date;
-}
-
 export interface BarberService {
   id: string;
   name: string;
@@ -11,7 +7,7 @@ export interface BarberService {
 }
 
 export interface BarberDaySchedule {
-  weekdayNumber: number;
+  dayOfWeek: number;
   openTime: string;
   closeTime: string;
   breaks: BarberBreak[];
@@ -41,4 +37,12 @@ export interface CustomerInformation {
 export interface AvailableAppointment {
   startTimestamp: number;
   availableBarberServices: BarberService[];
+}
+
+export interface CustomError {
+  code: string;
+  message: string;
+  details: {
+    [key: string]: any;
+  };
 }

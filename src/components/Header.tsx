@@ -18,7 +18,7 @@ export default function Header({ openSidebar }: HeaderProps) {
         </button>
         <Link
           href="/"
-          className="text-lg font-extrabold tracking-[.25em] text-neutral-800"
+          className="text-base font-display tracking-[.25em] text-neutral-800"
         >
           OCF
         </Link>

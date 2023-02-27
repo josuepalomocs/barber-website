@@ -1,0 +1,17 @@
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
+
+export default function Hero() {
+  return (
+    <div className="px-4 text-center">
+      <h1 className="text-4xl font-display mx-4 text-neutral-700 mb-6">
+        THE HIGHEST QUALITY CUTS. NO LESS.
+      </h1>
+      <p className="text-lg text-neutral-500 mx-4 mb-6">
+        From classic cuts to modern styles, we&apos;ve got you covered.
+      </p>
+      <button className="flex justify-center items-center gap-1.5 w-full p-4 bg-cyan-700 text-white font-semibold rounded-sm">
+        Book Appointment <ArrowRightIcon className="w-[20px]" />
+      </button>
+    </div>
+  );
+}

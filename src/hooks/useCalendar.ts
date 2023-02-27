@@ -87,8 +87,8 @@ export default function useCalendar({ currentDate }: UseCalendarParams) {
     .filter(({ openTime }) => {
       return openTime === "";
     })
-    .map(({ weekdayNumber }) => {
-      return weekdayNumber;
+    .map(({ dayOfWeek }) => {
+      return dayOfWeek;
     });
 
   useEffect(() => {

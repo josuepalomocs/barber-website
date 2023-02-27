@@ -71,9 +71,7 @@ export async function deleteBarberServiceRequest(id: string): Promise<void> {
 // http requests that target the 'barber-day-schedules' api route
 const barberDaySchedulesApiRoute = "/barber-day-schedules";
 
-export async function getBarberDaySchedulesRequest(): Promise<
-  BarberDaySchedule[]
-> {
+export async function getBarberDaySchedules(): Promise<BarberDaySchedule[]> {
   const { data } = await httpClient.get<BarberDaySchedule[]>(
     barberDaySchedulesApiRoute
   );
@@ -167,3 +165,6 @@ export async function getAvailableAppointmentsByDateRequest(date: string) {
   );
   return data;
 }
+
+// http requests that target the 'shop-week-open-hours' api route
+export async function getShopWeekOpenHours(): Promise<> {}
