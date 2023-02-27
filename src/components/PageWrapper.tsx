@@ -6,7 +6,7 @@ interface PageWrapperProps {
 
 export default function PageWrapper({ children }: PageWrapperProps) {
   return (
-    <div className="flex flex-col max-w-screen min-h-screen bg-white text-sm text-neutral-800">
+    <div className="max-w-screen bg-neutral-50 text-sm text-neutral-800">
       {children}
     </div>
   );

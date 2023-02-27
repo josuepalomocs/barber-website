@@ -11,9 +11,13 @@ interface HeaderProps {
 
 export default function Header({ openSidebar }: HeaderProps) {
   return (
-    <header className="sticky top-0 h-20 border border-b border-neutral-200">
+    <header className="fixed top-0 w-full h-20 border-b bg-white">
       <div className="flex justify-between items-center w-full h-full px-4">
-        <button className="text-neutral-800 text-xs p-2" onClick={openSidebar}>
+        <button
+          className="text-neutral-800 text-xs p-2"
+          title="open-navigation"
+          onClick={openSidebar}
+        >
           <Bars3Icon className="w-[20px] h-[20px]" />
         </button>
         <Link
@@ -22,7 +26,11 @@ export default function Header({ openSidebar }: HeaderProps) {
         >
           OCF
         </Link>
-        <button className="text-neutral-800 text-xs p-2" onClick={openSidebar}>
+        <button
+          className="text-neutral-800 text-xs p-2"
+          title="open-sidebar"
+          onClick={openSidebar}
+        >
           <CalendarIcon className="w-[20px] h-[20px]" />
         </button>
       </div>
