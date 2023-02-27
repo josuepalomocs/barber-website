@@ -69,3 +69,7 @@ export function convertUnixTimestampToDate(timestamp: number) {
 export function convertDateToUnixTimestamp(date: Date) {
   return date.getTime() / 1000;
 }
+
+export function convertDateToISOString(date: Date) {
+  return date.toISOString();
+}

@@ -10,27 +10,22 @@ import {
 } from "@/utilities/date";
 import useAppointment from "@/hooks/useAppointment";
 import { useContext } from "react";
-import { AppointmentContext } from "@/context/AppointmentProvider";
+import { CustomerAppointmentContext } from "@/context/CustomerAppointmentProvider";
 
 interface CalendarProps {}
 
 export default function Calendar({}: CalendarProps) {
-  const { selectedDateTime, selectDateTime } = useContext(AppointmentContext);
+  const { selectedISODate } = useContext(CustomerAppointmentContext);
 
-  const {
-    selectDate,
-    selectedView,
-    selectPreviousView,
-    selectNextView,
-    closedDaysOfWeek,
-  } = useCalendar({
-    currentDate: selectedDateTime,
-  });
+  const { selectedView, selectPreviousView, selectNextView, closedDaysOfWeek } =
+    useCalendar({
+      currentDate: selectedDateTime,
+    });
 
   const inactiveButtonStyles = "text-neutral-400 hover:bg-neutral-200";
   const inactiveDayStyles = "text-neutral-400 font-light";
   const selectedDayStyles =
-    "bg-blue-50 outline outline-1 outline-blue-500 rounded-lg";
+    "bg-blue-50 outline outline-1 outline-blue-500 rounded-sm";
 
   function renderTableBodyRows() {
     const firstDayOfMonthDate = new Date(
@@ -117,7 +112,7 @@ export default function Calendar({}: CalendarProps) {
   }
 
   return (
-    <div className="py-2 border border-neutral-200 bg-white rounded-lg">
+    <div className="py-2 border border-neutral-200 bg-white rounded-sm">
       <div className="mb-2">
         <div className="flex justify-between items-center">
           <button

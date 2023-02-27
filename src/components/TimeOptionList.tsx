@@ -16,7 +16,7 @@ export default function TimeOptionList({
       return (
         <li
           key={startTimestamp}
-          className="text-center bg-white hover:bg-neutral-200 rounded-lg"
+          className="text-center bg-white hover:bg-neutral-200 rounded-sm"
         >
           <TimeOption date={convertUnixTimestampToDate(startTimestamp)} />
         </li>

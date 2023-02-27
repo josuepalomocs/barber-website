@@ -7,14 +7,16 @@ import {
 } from "@/utilities/date";
 import useAppointment from "@/hooks/useAppointment";
 import { useContext } from "react";
-import { AppointmentContext } from "@/context/AppointmentProvider";
+import { CustomerAppointmentContext } from "@/context/CustomerAppointmentProvider";
 
 interface TimeOptionProps {
   date: Date;
 }
 
 export default function TimeOption({ date }: TimeOptionProps) {
-  const { selectedDateTime, selectDateTime } = useContext(AppointmentContext);
+  const { selectedDateTime, selectDateTime } = useContext(
+    CustomerAppointmentContext
+  );
   const year = getYear(date);
   const month = getMonth(date);
   const day = getDayOfMonth(date);
@@ -28,7 +30,7 @@ export default function TimeOption({ date }: TimeOptionProps) {
 
   return (
     <button
-      className={`w-full h-full p-3 focus:outline-neutral-300 rounded-lg border border-neutral-200 ${
+      className={`w-full h-full p-3 focus:outline-neutral-300 rounded-sm border border-neutral-200 ${
         sameDateTime ? selectedTimeOptionStyles : ""
       }`}
       onClick={() => {

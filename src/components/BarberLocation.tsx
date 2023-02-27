@@ -28,7 +28,7 @@ export default function BarberLocation() {
       <p className="text-sm text-neutral-700 mb-4">
         10455 N Central Expy # 124, Dallas, TX 75231
       </p>
-      <div className="border-2 border-neutral-200 mb-4 rounded-sm">
+      <div className="border-2 border-neutral-200 mb-4 rounded-sm -z-50">
         {renderGoogleMap()}
       </div>
       <Link

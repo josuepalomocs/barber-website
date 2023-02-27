@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AppointmentContext } from "@/context/AppointmentProvider";
+import { CustomerAppointmentContext } from "@/context/CustomerAppointmentProvider";
 import { BarberService as IService } from "../types";
 
 interface ServiceProps extends IService {}
@@ -10,7 +10,9 @@ export default function Service({
   durationInMinutes,
   priceInUSD,
 }: ServiceProps) {
-  const { selectedServiceId, selectServiceId } = useContext(AppointmentContext);
+  const { selectedServiceId, selectServiceId } = useContext(
+    CustomerAppointmentContext
+  );
 
   const selectedServiceStyles = "border bg-blue-50 border-blue-500";
 
@@ -22,7 +24,7 @@ export default function Service({
 
   return (
     <button
-      className={`w-full h-full flex justify-between text-left p-4 focus:outline-neutral-300 rounded-lg border border-neutral-200 ${
+      className={`w-full h-full flex justify-between text-left p-4 focus:outline-neutral-300 rounded-sm border border-neutral-200 ${
         selectedServiceId === id ? selectedServiceStyles : ""
       }`}
       onClick={() => {

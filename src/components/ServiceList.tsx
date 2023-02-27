@@ -1,12 +1,13 @@
 import Service from "@/components/Service";
 import { BarberService as IService } from "../types";
 import { useContext } from "react";
-import { AppointmentContext } from "@/context/AppointmentProvider";
+import { CustomerAppointmentContext } from "@/context/CustomerAppointmentProvider";
 import { convertDateToUnixTimestamp } from "@/utilities/date";
 
 export default function ServiceList() {
-  const { selectedDateTime, availableAppointments } =
-    useContext(AppointmentContext);
+  const { selectedDateTime, availableAppointments } = useContext(
+    CustomerAppointmentContext
+  );
 
   function renderServices() {
     return availableAppointments
@@ -19,7 +20,7 @@ export default function ServiceList() {
             return (
               <li
                 key={id}
-                className="flex justify-between items-center bg-white hover:bg-neutral-200 rounded-lg animate-fadeIn"
+                className="flex justify-between items-center bg-white hover:bg-neutral-200 rounded-sm animate-fadeIn"
               >
                 <Service
                   id={id}

@@ -15,7 +15,7 @@ export default function Sidebar({
   return (
     <>
       <aside
-        className={`flex justify-center fixed top-0 right-0 max-h-screen w-full sm:max-w-[400px] overflow-y-auto z-10 bg-white ${
+        className={`flex justify-center fixed top-0 right-0 max-h-screen w-full sm:max-w-[400px] overflow-y-auto z-50 ${
           !isOpen ? isOpenStyles : ""
         } transition duration-300`}
       >

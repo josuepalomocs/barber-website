@@ -1,14 +1,15 @@
 import TimeOptionList from "@/components/TimeOptionList";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { useContext, useEffect, useState } from "react";
-import { AppointmentContext } from "@/context/AppointmentProvider";
+import { CustomerAppointmentContext } from "@/context/CustomerAppointmentProvider";
 import { AvailableAppointment } from "@/types";
 
 interface TimeOptionListContainer {}
 
 export default function TimeOptionListContainer({}: TimeOptionListContainer) {
-  const { availableAppointments, availableAppointmentsAreLoading } =
-    useContext(AppointmentContext);
+  const { availableAppointments, availableAppointmentsAreLoading } = useContext(
+    CustomerAppointmentContext
+  );
 
   const [selectedGroup, setSelectedGroup] = useState(0);
 
