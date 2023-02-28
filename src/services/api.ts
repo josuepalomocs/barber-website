@@ -1,7 +1,6 @@
 import axios from "axios";
 import {
   AvailableAppointment,
-  BarberBreak,
   BarberDaySchedule,
   BarberService,
   CustomerAppointment,
@@ -139,6 +138,17 @@ export async function getCustomerAppointmentByStartTimestampRequest(
   );
   return data;
 }
+
+export async function createCustomerAppointment(
+  customerAppointment: CustomerAppointment
+) {
+  const { data } = await httpClient.post<CustomerAppointment>(
+    `${customerAppointmentsApiRoute}`,
+    customerAppointment
+  );
+  return data;
+}
+
 export async function updateCustomerAppointmentRequest(
   customerAppointment: CustomerAppointment
 ): Promise<CustomerAppointment> {

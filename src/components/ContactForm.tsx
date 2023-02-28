@@ -1,18 +1,35 @@
 import { ScissorsIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
-import { useContext } from "react";
+import { FormEvent, useContext } from "react";
 import { CustomerAppointmentContext } from "@/context/CustomerAppointmentProvider";
+import { createCustomerAppointment } from "@/services/api";
+import { CustomerAppointment } from "@/types";
+import { convertDateToUnixTimestamp } from "@/utilities/date";
 
 interface ContactFormProps {}
 
 export default function ContactForm({}: ContactFormProps) {
-  const { customerInformation, setCustomerInformation } = useContext(
-    CustomerAppointmentContext
-  );
+  const {
+    customerInformation,
+    selectedISODateTime,
+    selectedBarberServiceId,
+    setCustomerInformation,
+  } = useContext(CustomerAppointmentContext);
   const { firstName, lastName, email, phone } = customerInformation;
 
+  async function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const customerAppointment: CustomerAppointment = {
+      startTimestamp: convertDateToUnixTimestamp(new Date(selectedISODateTime)),
+      endTimestamp: 0,
+      barberServiceId: selectedBarberServiceId,
+      customerInformation: customerInformation,
+    };
+    const response = await createCustomerAppointment(customerAppointment);
+  }
+
   return (
-    <form className="grid grid-cols-1 gap-y-2" action="">
+    <form className="grid grid-cols-1 gap-y-2" onSubmit={handleFormSubmit}>
       <div className="flex flex-col">
         <label className="pb-2 text-neutral-500" htmlFor="firstName">
           First name
@@ -29,6 +46,7 @@ export default function ContactForm({}: ContactFormProps) {
               firstName: event.target.value,
             });
           }}
+          required
         />
       </div>
       <div className="flex flex-col">
@@ -47,6 +65,7 @@ export default function ContactForm({}: ContactFormProps) {
               lastName: event.target.value,
             });
           }}
+          required
         />
       </div>
       <div className="flex flex-col">
@@ -57,7 +76,6 @@ export default function ContactForm({}: ContactFormProps) {
           className="p-3 border border-neutral-200 bg-white focus:outline-neutral-300 rounded-sm"
           id="email"
           type="email"
-          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
           placeholder="example@ocf.com"
           value={email}
           onChange={(event) => {
@@ -66,6 +84,8 @@ export default function ContactForm({}: ContactFormProps) {
               email: event.target.value,
             });
           }}
+          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          required
         />
       </div>
       <div className="flex flex-col">
@@ -78,7 +98,6 @@ export default function ContactForm({}: ContactFormProps) {
           type="tel"
           pattern="^[0-9]*$"
           placeholder="xxxxxxxxxx"
-          maxLength={10}
           value={phone}
           onChange={(event) => {
             setCustomerInformation({
@@ -86,6 +105,8 @@ export default function ContactForm({}: ContactFormProps) {
               phone: event.target.value,
             });
           }}
+          maxLength={10}
+          required
         />
       </div>
       <div className="mb-2">
@@ -114,6 +135,16 @@ export default function ContactForm({}: ContactFormProps) {
           Terms of Service
         </Link>{" "}
         apply.
+      </div>
+      <div className="text-xs text-center text-neutral-500">
+        Built by{" "}
+        <Link
+          className="text-neutral-500"
+          href="https://www.linkedin.com/in/josue-palomo/"
+        >
+          Josue Palomo
+        </Link>{" "}
+        🔨
       </div>
     </form>
   );

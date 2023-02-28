@@ -5,7 +5,7 @@ import {
 } from "@/services/database";
 import {
   formatDate,
-  getDay,
+  getDayOfWeek,
   isAfter,
   isBefore,
   isSameMinute,
@@ -54,10 +54,7 @@ export async function createCustomerAppointmentService(
   const customerAppointmentStartDateTime = new Date(
     customerAppointment.startTimestamp * 1000
   );
-  const customerAppointmentEndDateTime = new Date(
-    customerAppointment.endTimestamp * 1000
-  );
-  const weekdayNumber = getDay(customerAppointmentStartDateTime);
+  const weekdayNumber = getDayOfWeek(customerAppointmentStartDateTime);
 
   return getBarberDayScheduleByDayFromDB(weekdayNumber).then(
     (barberDaySchedule) => {
@@ -76,6 +73,12 @@ export async function createCustomerAppointmentService(
               `Invalid appointment. Could not create appointment on weekdayNumber '${weekdayNumber}'
                 due to no opening time.`
             );
+          const customerAppointmentEndDateTime = new Date(
+            customerAppointment.startTimestamp * 1000 +
+              barberService.durationInMinutes * 60 * 1000
+          );
+          customerAppointment.endTimestamp =
+            customerAppointmentEndDateTime.getTime() / 1000;
           if (
             isBefore(
               customerAppointmentStartDateTime,

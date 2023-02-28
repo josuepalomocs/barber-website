@@ -34,7 +34,6 @@ export function CustomerAppointmentProvider({
   children,
 }: CustomerAppointmentProviderProps) {
   const value = useCustomerAppointment();
-  console.log(value);
 
   return (
     <CustomerAppointmentContext.Provider value={value}>

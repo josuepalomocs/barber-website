@@ -48,9 +48,7 @@ export default function AppointmentFlow({
             </div>
           </AvailableAppointmentsProvider>
           <hr className="border-neutral-200 mb-8" />
-          <div className="">
-            <ContactFormContainer />
-          </div>
+          <div className="">{<ContactFormContainer />}</div>
         </CustomerAppointmentProvider>
       </div>
     </div>

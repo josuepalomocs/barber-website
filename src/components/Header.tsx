@@ -16,7 +16,7 @@ export default function Header({ openSidebar }: HeaderProps) {
         <button
           className="text-neutral-800 text-xs p-2"
           title="open-navigation"
-          onClick={openSidebar}
+          onClick={() => {}}
         >
           <Bars3Icon className="w-[20px] h-[20px]" />
         </button>
