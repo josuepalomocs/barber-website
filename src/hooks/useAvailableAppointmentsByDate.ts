@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAvailableAppointmentsByDateRequest } from "@/services/api";
 import { AvailableAppointment } from "@/types";
+import { formatDate } from "@/utilities/date";
 
 export default function useAvailableAppointmentsByDate(date: string) {
   const [availableAppointments, setAvailableAppointments] = useState<
@@ -12,7 +13,9 @@ export default function useAvailableAppointmentsByDate(date: string) {
   useEffect(() => {
     async function getAvailableAppointmentTimesByDate() {
       setAvailableAppointmentsAreLoading(true);
-      const response = await getAvailableAppointmentsByDateRequest(date);
+      const response = await getAvailableAppointmentsByDateRequest(
+        formatDate(new Date(date), "yyyy-MM-dd")
+      );
       setAvailableAppointments(response);
       setAvailableAppointmentsAreLoading(false);
     }

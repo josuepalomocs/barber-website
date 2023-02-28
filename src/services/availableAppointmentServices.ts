@@ -6,7 +6,7 @@ import {
   areDatesOverlapping,
   convertDateToUnixTimestamp,
   convertUnixTimestampToDate,
-  getDay,
+  getDayOfWeek,
   isAfter,
 } from "@/utilities/date";
 import { getCustomerAppointmentsByDateFromDB } from "@/database/customerAppointmentRepository";
@@ -15,11 +15,17 @@ import { AvailableAppointment } from "@/types";
 export async function getAvailableAppointmentsByDate(
   dateString: string
 ): Promise<AvailableAppointment[]> {
-  const date = new Date(dateString);
+  const date = new Date(
+    Number(dateString.split("-")[0]),
+    Number(dateString.split("-")[1]) - 1,
+    Number(dateString.split("-")[2])
+  );
   const customerAppointmentsByDate = await getCustomerAppointmentsByDateFromDB(
     date
   );
-  const dateDay = getDay(date);
+  console.log(date.toDateString());
+  const dateDay = getDayOfWeek(date);
+  console.log(dateDay);
   const barberDaySchedule = await getBarberDayScheduleByDayFromDB(dateDay);
   const barberServices = await getBarberServicesFromDB();
 

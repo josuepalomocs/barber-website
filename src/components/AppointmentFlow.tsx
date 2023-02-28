@@ -4,6 +4,7 @@ import TimeOptionListContainer from "@/components/TimeOptionListContainer";
 import ServiceListContainer from "@/components/ServiceListContainer";
 import ContactFormContainer from "@/components/ContactFormContainer";
 import { XMarkIcon } from "@heroicons/react/20/solid";
+import { AvailableAppointmentsProvider } from "@/context/AvailableAppointmentProvider";
 
 interface AppointmentFlowProps {
   closeSidebar: () => void;
@@ -37,13 +38,15 @@ export default function AppointmentFlow({
             <Calendar />
           </div>
           <hr className="border-neutral-200 mb-8" />
-          <div className="mb-4">
-            <TimeOptionListContainer />
-          </div>
-          <hr className="border-neutral-200 mb-8" />
-          <div className="mb-4">
-            <ServiceListContainer />
-          </div>
+          <AvailableAppointmentsProvider>
+            <div className="mb-4">
+              <TimeOptionListContainer />
+            </div>
+            <hr className="border-neutral-200 mb-8" />
+            <div className="mb-4">
+              <ServiceListContainer />
+            </div>
+          </AvailableAppointmentsProvider>
           <hr className="border-neutral-200 mb-8" />
           <div className="">
             <ContactFormContainer />

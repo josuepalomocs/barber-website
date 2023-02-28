@@ -8,13 +8,14 @@ import {
 import useAppointment from "@/hooks/useAppointment";
 import { useContext } from "react";
 import { CustomerAppointmentContext } from "@/context/CustomerAppointmentProvider";
+import { AvailableAppointmentsContext } from "@/context/AvailableAppointmentProvider";
 
 interface TimeOptionProps {
   date: Date;
 }
 
 export default function TimeOption({ date }: TimeOptionProps) {
-  const { selectedDateTime, selectDateTime } = useContext(
+  const { selectedISODateTime, setSelectedISODateTime } = useContext(
     CustomerAppointmentContext
   );
   const year = getYear(date);
@@ -26,7 +27,10 @@ export default function TimeOption({ date }: TimeOptionProps) {
 
   const selectedTimeOptionStyles = "border border-blue-500 bg-blue-50";
 
-  const sameDateTime = isSameMinute(selectedDateTime, timeOptionDate);
+  const sameDateTime = isSameMinute(
+    new Date(selectedISODateTime),
+    timeOptionDate
+  );
 
   return (
     <button
@@ -34,7 +38,9 @@ export default function TimeOption({ date }: TimeOptionProps) {
         sameDateTime ? selectedTimeOptionStyles : ""
       }`}
       onClick={() => {
-        selectDateTime(new Date(year, month, day, hours, minutes));
+        setSelectedISODateTime(
+          new Date(year, month, day, hours, minutes).toISOString
+        );
       }}
     >
       <time className="text-neutral-800" dateTime={date.toISOString()}>

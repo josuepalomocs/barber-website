@@ -3,7 +3,7 @@ import useAppointment from "@/hooks/useAppointment";
 import { CustomerInformation } from "@/types";
 import { useCustomerAppointment } from "@/hooks/useCustomerAppointment";
 
-interface AppointmentProviderProps {
+interface CustomerAppointmentProviderProps {
   children: ReactNode;
 }
 
@@ -32,7 +32,7 @@ export const CustomerAppointmentContext = createContext<AppointmentContext>({
 
 export function CustomerAppointmentProvider({
   children,
-}: AppointmentProviderProps) {
+}: CustomerAppointmentProviderProps) {
   const value = useCustomerAppointment();
 
   return (
