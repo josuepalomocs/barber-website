@@ -5,6 +5,7 @@ export function useCustomerAppointment() {
   const [selectedISODateTime, setSelectedISODateTime] = useState(
     new Date().toISOString()
   );
+  console.log(selectedISODateTime);
   const [selectedBarberServiceId, setSelectedBarberServiceId] = useState("");
   const [customerInformation, setCustomerInformation] =
     useState<CustomerInformation>({

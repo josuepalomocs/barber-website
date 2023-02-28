@@ -10,7 +10,7 @@ export default function Service({
   durationInMinutes,
   priceInUSD,
 }: ServiceProps) {
-  const { selectedServiceId, selectServiceId } = useContext(
+  const { selectedBarberServiceId, setSelectedBarberServiceId } = useContext(
     CustomerAppointmentContext
   );
 
@@ -25,10 +25,10 @@ export default function Service({
   return (
     <button
       className={`w-full h-full flex justify-between text-left p-4 focus:outline-neutral-300 rounded-sm border border-neutral-200 ${
-        selectedServiceId === id ? selectedServiceStyles : ""
+        selectedBarberServiceId === id ? selectedServiceStyles : ""
       }`}
       onClick={() => {
-        selectServiceId(id);
+        setSelectedBarberServiceId(id);
       }}
     >
       <div className="">

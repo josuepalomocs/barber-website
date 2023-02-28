@@ -3,16 +3,19 @@ import { BarberService as IService } from "../types";
 import { useContext } from "react";
 import { CustomerAppointmentContext } from "@/context/CustomerAppointmentProvider";
 import { convertDateToUnixTimestamp } from "@/utilities/date";
+import { AvailableAppointmentsContext } from "@/context/AvailableAppointmentProvider";
 
 export default function ServiceList() {
-  // const { selectedDateTime, availableAppointments } = useContext(
-  //   CustomerAppointmentContext
-  // );
+  const { availableAppointments } = useContext(AvailableAppointmentsContext);
+  const { selectedISODateTime } = useContext(CustomerAppointmentContext);
 
   function renderServices() {
     return availableAppointments
-      .filter(({ startTimestamp, availableBarberServices }) => {
-        return convertDateToUnixTimestamp(selectedDateTime) === startTimestamp;
+      .filter(({ startTimestamp }) => {
+        return (
+          convertDateToUnixTimestamp(new Date(selectedISODateTime)) ===
+          startTimestamp
+        );
       })
       .map(({ availableBarberServices }) => {
         return availableBarberServices.map(
@@ -36,14 +39,15 @@ export default function ServiceList() {
       });
   }
 
-  return <></>;
-
   if (
     !availableAppointments.some(({ startTimestamp }) => {
-      return convertDateToUnixTimestamp(selectedDateTime) === startTimestamp;
+      return (
+        convertDateToUnixTimestamp(new Date(selectedISODateTime)) ===
+        startTimestamp
+      );
     })
   )
-    return <div></div>;
+    return <div />;
 
   return <ul className="flex flex-col space-y-2">{renderServices()}</ul>;
 }

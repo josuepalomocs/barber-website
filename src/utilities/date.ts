@@ -59,7 +59,7 @@ export function areDatesOverlapping(
   startB: Date,
   endB: Date
 ): boolean {
-  return startA <= endB && endA >= startB;
+  return startA < endB && endA > startB;
 }
 
 export function convertUnixTimestampToDate(timestamp: number) {

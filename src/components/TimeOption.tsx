@@ -39,7 +39,7 @@ export default function TimeOption({ date }: TimeOptionProps) {
       }`}
       onClick={() => {
         setSelectedISODateTime(
-          new Date(year, month, day, hours, minutes).toISOString
+          new Date(year, month, day, hours, minutes).toISOString()
         );
       }}
     >
