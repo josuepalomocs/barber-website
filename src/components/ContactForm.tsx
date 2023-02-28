@@ -6,16 +6,10 @@ import { CustomerAppointmentContext } from "@/context/CustomerAppointmentProvide
 interface ContactFormProps {}
 
 export default function ContactForm({}: ContactFormProps) {
-  const {
-    firstName,
-    lastName,
-    email,
-    phone,
-    handleChangeFirstName,
-    handleChangeLastName,
-    handleChangeEmail,
-    handleChangePhone,
-  } = useContext(CustomerAppointmentContext);
+  const { customerInformation, setCustomerInformation } = useContext(
+    CustomerAppointmentContext
+  );
+  const { firstName, lastName, email, phone } = customerInformation;
 
   return (
     <form className="grid grid-cols-1 gap-y-2" action="">
@@ -29,7 +23,12 @@ export default function ContactForm({}: ContactFormProps) {
           type="text"
           placeholder="Peter"
           value={firstName}
-          onChange={handleChangeFirstName}
+          onChange={(event) => {
+            setCustomerInformation({
+              ...customerInformation,
+              firstName: event.target.value,
+            });
+          }}
         />
       </div>
       <div className="flex flex-col">
@@ -42,7 +41,12 @@ export default function ContactForm({}: ContactFormProps) {
           type="text"
           placeholder="Pan"
           value={lastName}
-          onChange={handleChangeLastName}
+          onChange={(event) => {
+            setCustomerInformation({
+              ...customerInformation,
+              lastName: event.target.value,
+            });
+          }}
         />
       </div>
       <div className="flex flex-col">
@@ -53,9 +57,15 @@ export default function ContactForm({}: ContactFormProps) {
           className="p-3 border border-neutral-200 bg-white focus:outline-neutral-300 rounded-sm"
           id="email"
           type="email"
+          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
           placeholder="example@ocf.com"
           value={email}
-          onChange={handleChangeEmail}
+          onChange={(event) => {
+            setCustomerInformation({
+              ...customerInformation,
+              email: event.target.value,
+            });
+          }}
         />
       </div>
       <div className="flex flex-col">
@@ -66,9 +76,16 @@ export default function ContactForm({}: ContactFormProps) {
           className="p-3 border border-neutral-200 bg-white focus:outline-neutral-300 rounded-sm"
           id="phone"
           type="tel"
-          placeholder="+1 (xxx) xxx xxxx"
+          pattern="^[0-9]*$"
+          placeholder="xxxxxxxxxx"
+          maxLength={10}
           value={phone}
-          onChange={handleChangePhone}
+          onChange={(event) => {
+            setCustomerInformation({
+              ...customerInformation,
+              phone: event.target.value,
+            });
+          }}
         />
       </div>
       <div className="mb-2">

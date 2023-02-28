@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CustomerInformation } from "@/types";
 
 export function useCustomerAppointment() {
   const [selectedISODateTime, setSelectedISODateTime] = useState(
     new Date().toISOString()
   );
-  console.log(selectedISODateTime);
   const [selectedBarberServiceId, setSelectedBarberServiceId] = useState("");
   const [customerInformation, setCustomerInformation] =
     useState<CustomerInformation>({
@@ -14,6 +13,10 @@ export function useCustomerAppointment() {
       email: "",
       phone: "",
     });
+
+  useEffect(() => {
+    setSelectedBarberServiceId("");
+  }, [selectedISODateTime]);
 
   return {
     selectedISODateTime,

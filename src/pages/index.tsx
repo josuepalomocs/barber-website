@@ -26,7 +26,7 @@ export default function Home() {
           <AppointmentFlow closeSidebar={closeSidebar} />
         </Sidebar>
         <div className="h-20" />
-        <div className="grid space-y-12 py-12">
+        <div className="grid max-w-lg m-auto space-y-12 py-12">
           <div className="flex justify-center items-center">
             <Hero />
           </div>

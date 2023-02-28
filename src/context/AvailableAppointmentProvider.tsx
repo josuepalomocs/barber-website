@@ -33,7 +33,6 @@ export function AvailableAppointmentsProvider({
       selectedDateDayOfMonth
     ).toISOString()
   );
-  console.log(value);
 
   return (
     <AvailableAppointmentsContext.Provider value={value}>
