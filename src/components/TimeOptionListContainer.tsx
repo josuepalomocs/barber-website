@@ -7,28 +7,28 @@ import { AvailableAppointment } from "@/types";
 interface TimeOptionListContainer {}
 
 export default function TimeOptionListContainer({}: TimeOptionListContainer) {
-  const { availableAppointments, availableAppointmentsAreLoading } = useContext(
-    CustomerAppointmentContext
-  );
+  // const { availableAppointments, availableAppointmentsAreLoading } = useContext(
+  //   CustomerAppointmentContext
+  // );
 
   const [selectedGroup, setSelectedGroup] = useState(0);
 
-  useEffect(() => {
-    setSelectedGroup(0);
-  }, [availableAppointments]);
+  // useEffect(() => {
+  //   setSelectedGroup(0);
+  // }, [availableAppointments]);
+  //
+  // const availableAppointmentTimeGroups: AvailableAppointment[][] =
+  //   createAvailableAppointmentTimeGroups();
 
-  const availableAppointmentTimeGroups: AvailableAppointment[][] =
-    createAvailableAppointmentTimeGroups();
-
-  function createAvailableAppointmentTimeGroups(): AvailableAppointment[][] {
-    const result: AvailableAppointment[][] = [];
-
-    for (let i = 0; i < availableAppointments.length; i += 8) {
-      result.push(availableAppointments.slice(i, i + 8));
-    }
-
-    return result;
-  }
+  // function createAvailableAppointmentTimeGroups(): AvailableAppointment[][] {
+  //   const result: AvailableAppointment[][] = [];
+  //
+  //   for (let i = 0; i < availableAppointments.length; i += 8) {
+  //     result.push(availableAppointments.slice(i, i + 8));
+  //   }
+  //
+  //   return result;
+  // }
 
   return (
     <div className="text-sm">
@@ -47,20 +47,20 @@ export default function TimeOptionListContainer({}: TimeOptionListContainer) {
           </button>
           <button
             className="p-2 hover:bg-neutral-200 rounded-full"
-            onClick={() => {
-              if (selectedGroup < availableAppointmentTimeGroups.length - 1) {
-                setSelectedGroup(selectedGroup + 1);
-              }
-            }}
+            // onClick={() => {
+            //   if (selectedGroup < availableAppointmentTimeGroups.length - 1) {
+            //     setSelectedGroup(selectedGroup + 1);
+            //   }
+            // }}
           >
             <ChevronDownIcon className="w-[20px] h-[20px]" />
           </button>
         </div>
       </div>
-      <TimeOptionList
-        timeOptionList={availableAppointmentTimeGroups[selectedGroup]}
-        isLoading={availableAppointmentsAreLoading}
-      />
+      {/*<TimeOptionList*/}
+      {/*  timeOptionList={availableAppointmentTimeGroups[selectedGroup]}*/}
+      {/*  isLoading={availableAppointmentsAreLoading}*/}
+      {/*/>*/}
     </div>
   );
 }

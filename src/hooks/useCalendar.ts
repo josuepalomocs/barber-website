@@ -1,86 +1,63 @@
 import { useEffect, useState } from "react";
-import { getDayOfMonth, getMonth, getYear } from "@/utilities/date";
 import { BarberDaySchedule } from "@/types";
-import { getBarberDaySchedulesRequest } from "@/services/api";
+import { getBarberDaySchedules } from "@/services/api";
 
-interface View {
-  month: number;
+interface CalendarView {
   year: number;
-}
-
-interface SelectedDate {
-  day: number;
   month: number;
-  year: number;
 }
 
-interface UseCalendarParams {
-  currentDate: Date;
-}
+export default function useCalendar() {
+  const currentDate = new Date();
+  const currentDateYear = currentDate.getFullYear();
+  const currentDateMonth = currentDate.getMonth();
 
-export default function useCalendar({ currentDate }: UseCalendarParams) {
-  const selectedViewInitialState: View = {
-    month: getMonth(currentDate),
-    year: getYear(currentDate),
-  };
-
-  const [selectedView, setSelectedView] = useState<View>(
-    selectedViewInitialState
-  );
-
-  const selectedDateInitialState: SelectedDate = {
-    day: getDayOfMonth(currentDate),
-    month: getMonth(currentDate),
-    year: getYear(currentDate),
-  };
-
-  const [selectedDate, setSelectedDate] = useState<SelectedDate>(
-    selectedDateInitialState
-  );
+  const [selectedCalendarView, setSelectedCalendarView] =
+    useState<CalendarView>({
+      year: currentDateYear,
+      month: currentDateMonth,
+    });
 
   const [barberDaySchedules, setBarberDaySchedules] = useState<
     BarberDaySchedule[]
   >([]);
 
+  useEffect(() => {
+    getBarberDaySchedules()
+      .then((barberDaySchedules) => setBarberDaySchedules(barberDaySchedules))
+      .catch((error) => console.log(error));
+  }, []);
+
   function selectPreviousView(): void {
-    const currentMonth = getMonth(new Date());
-    const currentYear = getYear(new Date());
-    if (
-      selectedView.month !== currentMonth ||
-      selectedView.year !== currentYear
-    ) {
-      if (selectedView.month === 0) {
-        const newView: View = { month: 11, year: selectedView.year - 1 };
-        setSelectedView(newView);
-        return;
+    const isDifferentMonthOrYear =
+      selectedCalendarView.month !== currentDateMonth ||
+      selectedCalendarView.year !== currentDateYear;
+
+    if (isDifferentMonthOrYear) {
+      let newMonth = selectedCalendarView.month - 1;
+      let newYear = selectedCalendarView.year;
+
+      if (newMonth < 0) {
+        newMonth = 11;
+        newYear -= 1;
       }
-      const newMonthView: View = {
-        ...selectedView,
-        month: selectedView.month - 1,
-      };
-      setSelectedView(newMonthView);
+
+      const newView = { month: newMonth, year: newYear };
+      setSelectedCalendarView(newView);
     }
   }
 
   function selectNextView() {
-    if (selectedView.month === 11) {
-      const newMonthView: View = { month: 0, year: selectedView.year + 1 };
-      setSelectedView(newMonthView);
-      return;
-    }
-    const newMonthView: View = {
-      ...selectedView,
-      month: selectedView.month + 1,
-    };
-    setSelectedView(newMonthView);
-  }
+    let newMonth = selectedCalendarView.month + 1;
+    let newYear = selectedCalendarView.year;
 
-  function selectDate(day: number, month: number, year: number) {
-    setSelectedDate({
-      day,
-      month,
-      year,
-    });
+    if (newMonth > 11) {
+      newMonth = 0;
+      newYear += 1;
+    }
+
+    const newView = { month: newMonth, year: newYear };
+    setSelectedCalendarView(newView);
   }
 
   const closedDaysOfWeek = barberDaySchedules
@@ -91,21 +68,10 @@ export default function useCalendar({ currentDate }: UseCalendarParams) {
       return dayOfWeek;
     });
 
-  useEffect(() => {
-    async function getBarberDaySchedules() {
-      const response = await getBarberDaySchedulesRequest();
-      setBarberDaySchedules(response);
-    }
-
-    getBarberDaySchedules().catch((error) => console.log(error));
-  }, []);
-
   return {
-    selectedDate,
-    selectDate,
-    selectedView,
+    selectedCalendarView,
+    closedDaysOfWeek,
     selectPreviousView,
     selectNextView,
-    closedDaysOfWeek,
   };
 }

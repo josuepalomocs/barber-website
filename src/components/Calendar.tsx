@@ -3,109 +3,133 @@ import useCalendar from "@/hooks/useCalendar";
 import {
   formatDate,
   getDayOfMonth,
+  getDayOfWeek,
   getDaysInMonth,
   getMonth,
-  getDay,
   getYear,
 } from "@/utilities/date";
-import useAppointment from "@/hooks/useAppointment";
 import { useContext } from "react";
 import { CustomerAppointmentContext } from "@/context/CustomerAppointmentProvider";
 
-interface CalendarProps {}
+export default function Calendar() {
+  const { selectedISODateTime, setSelectedISODateTime } = useContext(
+    CustomerAppointmentContext
+  );
+  const selectedDate = new Date(selectedISODateTime);
+  const selectedDateYear = selectedDate.getFullYear();
+  const selectedDateMonth = selectedDate.getMonth();
+  const selectedDateDayOfMonth = selectedDate.getDate();
 
-export default function Calendar({}: CalendarProps) {
-  const { selectedISODate } = useContext(CustomerAppointmentContext);
+  const {
+    selectedCalendarView,
+    selectPreviousView,
+    selectNextView,
+    closedDaysOfWeek,
+  } = useCalendar();
 
-  const { selectedView, selectPreviousView, selectNextView, closedDaysOfWeek } =
-    useCalendar({
-      currentDate: selectedDateTime,
-    });
-
-  const inactiveButtonStyles = "text-neutral-400 hover:bg-neutral-200";
-  const inactiveDayStyles = "text-neutral-400 font-light";
-  const selectedDayStyles =
+  const disabledTableCellStyles = "text-neutral-400 font-light";
+  const activeTableCellStyles = "hover:bg-neutral-200 text-neutral-800";
+  const selectedTableCellStyles =
     "bg-blue-50 outline outline-1 outline-blue-500 rounded-sm";
 
   function renderTableBodyRows() {
     const firstDayOfMonthDate = new Date(
-      selectedView.year,
-      selectedView.month,
+      selectedCalendarView.year,
+      selectedCalendarView.month,
       1
     );
-    const firstDayOfMonthIndex = getDay(firstDayOfMonthDate);
+    const firstDayOfMonthIndex = getDayOfWeek(firstDayOfMonthDate);
     const daysInMonth = getDaysInMonth(firstDayOfMonthDate);
     const numCalendarRows = Math.ceil((daysInMonth + firstDayOfMonthIndex) / 7);
 
     return Array.from({ length: numCalendarRows }, (_, i) => (
       <tr key={i} className="text-sm flex justify-between">
         {Array.from({ length: 7 }, (_, j) => {
-          if (i === 0 && j < firstDayOfMonthIndex) {
-            return <td key={i * 7 + j} className="w-10 h-10" />;
-          }
-          if (
-            i === numCalendarRows - 1 &&
-            7 * i + j - firstDayOfMonthIndex + 1 > daysInMonth
-          ) {
-            return <td key={i * 7 + j} className="w-10 h-10" />;
-          }
-          if (closedDaysOfWeek.includes(j)) {
+          const tableCellIndex = i * 7 + j;
+          if (isTableCellEmpty())
+            return <td key={tableCellIndex} className="w-10 h-10" />;
+
+          if (isTableCellDisabled()) {
             return (
-              <td key={i * 7 + j} className={`w-10 h-10 ${inactiveDayStyles}`}>
-                <div
-                  className={`flex items-center justify-center ${inactiveDayStyles} w-10 h-10`}
-                >
-                  {7 * i + j - firstDayOfMonthIndex + 1}
+              <td
+                key={tableCellIndex}
+                className={`w-10 h-10 ${disabledTableCellStyles}`}
+              >
+                <div className={`flex items-center justify-center w-10 h-10`}>
+                  {tableCellIndex - firstDayOfMonthIndex + 1}
                 </div>
               </td>
             );
           }
+
           return (
             <td
-              key={i * 7 + j}
+              key={tableCellIndex}
               className={`${
-                7 * i + j - firstDayOfMonthIndex + 1 ===
-                  getDayOfMonth(selectedDateTime) &&
-                selectedView.month === getMonth(selectedDateTime) &&
-                selectedView.year === getYear(selectedDateTime)
-                  ? selectedDayStyles
-                  : 7 * i + j - firstDayOfMonthIndex + 1 >=
-                      getDayOfMonth(new Date()) ||
-                    selectedView.month != getMonth(new Date()) ||
-                    selectedView.year != getYear(new Date())
-                  ? "hover:bg-neutral-200 text-neutral-800"
+                isTableCellSelected()
+                  ? selectedTableCellStyles
+                  : isTableCellActive()
+                  ? activeTableCellStyles
                   : ""
               }`}
             >
-              {7 * i + j - firstDayOfMonthIndex + 1 <
-                getDayOfMonth(new Date()) &&
-              selectedView.month === getMonth(new Date()) &&
-              selectedView.year === getYear(new Date()) ? (
+              {isTableCellDisabled() ? (
                 <div
-                  className={`flex items-center justify-center ${inactiveDayStyles} w-10 h-10`}
+                  className={`flex items-center justify-center w-10 h-10 ${disabledTableCellStyles}`}
                 >
-                  {7 * i + j - firstDayOfMonthIndex + 1}
+                  {tableCellIndex - firstDayOfMonthIndex + 1}
                 </div>
               ) : (
                 <button
                   className="w-10 h-10 focus:outline-neutral-300"
                   onClick={() => {
-                    selectDateTime(
-                      new Date(
-                        selectedView.year,
-                        selectedView.month,
-                        7 * i + j - firstDayOfMonthIndex + 1,
-                        0,
-                        0
-                      )
+                    setSelectedISODateTime(
+                      `${selectedCalendarView.year}-${
+                        selectedCalendarView.month + 1
+                      }-${tableCellIndex - firstDayOfMonthIndex + 1}`
                     );
                   }}
                 >
-                  {7 * i + j - firstDayOfMonthIndex + 1}
+                  {tableCellIndex - firstDayOfMonthIndex + 1}
                 </button>
               )}
             </td>
           );
+          function isTableCellEmpty() {
+            return (
+              (i === 0 && j < firstDayOfMonthIndex) ||
+              (i === numCalendarRows - 1 &&
+                tableCellIndex - firstDayOfMonthIndex + 1 > daysInMonth)
+            );
+          }
+
+          function isTableCellDisabled() {
+            return (
+              closedDaysOfWeek.includes(j) ||
+              (tableCellIndex - firstDayOfMonthIndex + 1 <
+                getDayOfMonth(new Date()) &&
+                selectedCalendarView.month === getMonth(new Date()) &&
+                selectedCalendarView.year === getYear(new Date()))
+            );
+          }
+
+          function isTableCellSelected() {
+            return (
+              tableCellIndex - firstDayOfMonthIndex + 1 ===
+                selectedDateDayOfMonth &&
+              selectedCalendarView.month === selectedDateMonth &&
+              selectedCalendarView.year === selectedDateYear
+            );
+          }
+
+          function isTableCellActive() {
+            return (
+              tableCellIndex - firstDayOfMonthIndex + 1 >=
+                getDayOfMonth(new Date()) ||
+              selectedCalendarView.month != getMonth(new Date()) ||
+              selectedCalendarView.year != getYear(new Date())
+            );
+          }
         })}
       </tr>
     ));
@@ -123,7 +147,7 @@ export default function Calendar({}: CalendarProps) {
           </button>
           <span className="text-sm text-neutral-500">
             {formatDate(
-              new Date(selectedView.year, selectedView.month),
+              new Date(selectedCalendarView.year, selectedCalendarView.month),
               "MMMM yyyy"
             )}
           </span>

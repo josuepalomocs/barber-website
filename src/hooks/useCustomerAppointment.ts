@@ -2,8 +2,9 @@ import { useState } from "react";
 import { CustomerInformation } from "@/types";
 
 export function useCustomerAppointment() {
-  const [selectedISODate, setSelectedISODate] = useState("");
-  const [selectedISOTime, setSelectedISOTime] = useState("");
+  const [selectedISODateTime, setSelectedISODateTime] = useState(
+    new Date().toISOString()
+  );
   const [selectedBarberServiceId, setSelectedBarberServiceId] = useState("");
   const [customerInformation, setCustomerInformation] =
     useState<CustomerInformation>({
@@ -14,12 +15,10 @@ export function useCustomerAppointment() {
     });
 
   return {
-    selectedISODate,
-    selectedISOTime,
+    selectedISODateTime,
     selectedBarberServiceId,
     customerInformation,
-    setSelectedISODate,
-    setSelectedISOTime,
+    setSelectedISODateTime,
     setSelectedBarberServiceId,
     setCustomerInformation,
   };

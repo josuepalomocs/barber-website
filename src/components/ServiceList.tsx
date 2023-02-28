@@ -5,9 +5,9 @@ import { CustomerAppointmentContext } from "@/context/CustomerAppointmentProvide
 import { convertDateToUnixTimestamp } from "@/utilities/date";
 
 export default function ServiceList() {
-  const { selectedDateTime, availableAppointments } = useContext(
-    CustomerAppointmentContext
-  );
+  // const { selectedDateTime, availableAppointments } = useContext(
+  //   CustomerAppointmentContext
+  // );
 
   function renderServices() {
     return availableAppointments
@@ -35,6 +35,8 @@ export default function ServiceList() {
         );
       });
   }
+
+  return <></>;
 
   if (
     !availableAppointments.some(({ startTimestamp }) => {

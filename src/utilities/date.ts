@@ -9,7 +9,7 @@ import {
   isAfter as isAfterFn,
 } from "date-fns";
 
-export function getDay(date: Date): number {
+export function getDayOfWeek(date: Date): number {
   return getDayFn(date);
 }
 

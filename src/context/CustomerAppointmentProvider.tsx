@@ -8,19 +8,16 @@ interface AppointmentProviderProps {
 }
 
 interface AppointmentContext {
-  selectedISODate: string;
-  selectedISOTime: string;
+  selectedISODateTime: string;
   selectedBarberServiceId: string;
   customerInformation: CustomerInformation;
-  setSelectedISODate: Dispatch<SetStateAction<string>>;
-  setSelectedISOTime: Dispatch<SetStateAction<string>>;
+  setSelectedISODateTime: Dispatch<SetStateAction<string>>;
   setSelectedBarberServiceId: Dispatch<SetStateAction<string>>;
   setCustomerInformation: Dispatch<SetStateAction<CustomerInformation>>;
 }
 
 export const CustomerAppointmentContext = createContext<AppointmentContext>({
-  selectedISODate: "",
-  selectedISOTime: "",
+  selectedISODateTime: new Date().toISOString(),
   selectedBarberServiceId: "",
   customerInformation: {
     firstName: "",
@@ -28,8 +25,7 @@ export const CustomerAppointmentContext = createContext<AppointmentContext>({
     email: "",
     phone: "",
   },
-  setSelectedISODate: () => {},
-  setSelectedISOTime: () => {},
+  setSelectedISODateTime: () => {},
   setSelectedBarberServiceId: () => {},
   setCustomerInformation: () => {},
 });
