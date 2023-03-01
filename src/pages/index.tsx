@@ -8,6 +8,7 @@ import AppointmentFlow from "@/components/AppointmentFlow";
 import BarberLocation from "@/components/BarberLocation";
 import BarberHours from "@/components/BarberHours";
 import Footer from "@/components/Footer";
+import { CustomerAppointmentProvider } from "@/context/CustomerAppointmentProvider";
 
 export default function Home() {
   const { isOpen, openSidebar, closeSidebar } = useSidebar();
@@ -22,13 +23,15 @@ export default function Home() {
       </Head>
       <PageWrapper>
         <Header openSidebar={openSidebar} />
-        <Sidebar isOpen={isOpen} closeSidebar={closeSidebar}>
-          <AppointmentFlow closeSidebar={closeSidebar} />
-        </Sidebar>
+        <CustomerAppointmentProvider>
+          <Sidebar isOpen={isOpen} closeSidebar={closeSidebar}>
+            <AppointmentFlow closeSidebar={closeSidebar} />
+          </Sidebar>
+        </CustomerAppointmentProvider>
         <div className="h-20" />
         <div className="grid max-w-lg m-auto space-y-12 py-12">
           <div className="flex justify-center items-center">
-            <Hero />
+            <Hero openSidebar={openSidebar} />
           </div>
           <hr className="" />
           <div className="px-4 flex justify-center items-center">

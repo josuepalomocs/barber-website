@@ -176,5 +176,26 @@ export async function getAvailableAppointmentsByDateRequest(date: string) {
   return data;
 }
 
-// http requests that target the 'shop-week-open-hours' api route
-export async function getShopWeekOpenHours(): Promise<> {}
+// http requests that target the 'emails' api route
+const emailsApiRoute = "/emails";
+export async function createCustomerAppointmentConfirmationEmail(
+  customerAppointment: CustomerAppointment
+) {
+  const { data } = await httpClient.post(
+    `${emailsApiRoute}`,
+    customerAppointment
+  );
+  return data;
+}
+
+// http requests that target the 'slack-customer-appointments' api route
+const slackCustomerAppointmentsApiRoute = "/slack-customer-appointments";
+export async function createSlackCustomerAppointment(
+  customerAppointment: CustomerAppointment
+) {
+  const { data } = await httpClient.post(
+    `${slackCustomerAppointmentsApiRoute}`,
+    customerAppointment
+  );
+  return data;
+}

@@ -5,7 +5,7 @@ import {
   BarberService,
   CustomerAppointment,
 } from "@/types";
-import dynamoClient from "@/lib/dynamo";
+import { dynamoClient } from "@/lib/aws";
 
 // database queries that target the 'barber-service' table
 

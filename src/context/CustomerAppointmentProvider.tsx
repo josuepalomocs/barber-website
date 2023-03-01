@@ -1,5 +1,4 @@
 import { createContext, Dispatch, ReactNode, SetStateAction } from "react";
-import useAppointment from "@/hooks/useAppointment";
 import { CustomerInformation } from "@/types";
 import { useCustomerAppointment } from "@/hooks/useCustomerAppointment";
 
@@ -11,9 +10,11 @@ interface AppointmentContext {
   selectedISODateTime: string;
   selectedBarberServiceId: string;
   customerInformation: CustomerInformation;
+  isAppointmentBooked: boolean;
   setSelectedISODateTime: Dispatch<SetStateAction<string>>;
   setSelectedBarberServiceId: Dispatch<SetStateAction<string>>;
   setCustomerInformation: Dispatch<SetStateAction<CustomerInformation>>;
+  setIsAppointmentBooked: Dispatch<SetStateAction<boolean>>;
 }
 
 export const CustomerAppointmentContext = createContext<AppointmentContext>({
@@ -25,9 +26,11 @@ export const CustomerAppointmentContext = createContext<AppointmentContext>({
     email: "",
     phone: "",
   },
+  isAppointmentBooked: false,
   setSelectedISODateTime: () => {},
   setSelectedBarberServiceId: () => {},
   setCustomerInformation: () => {},
+  setIsAppointmentBooked: () => {},
 });
 
 export function CustomerAppointmentProvider({

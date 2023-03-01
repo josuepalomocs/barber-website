@@ -1,5 +1,5 @@
 import { CustomerAppointment } from "@/types";
-import dynamoClient from "@/lib/dynamo";
+import { dynamoClient } from "@/lib/aws";
 
 export async function getCustomerAppointmentsByDateFromDB(
   date: Date

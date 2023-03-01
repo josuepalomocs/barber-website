@@ -12,6 +12,5 @@ AWS.config.update({
   },
 });
 
-const dynamoClient = new AWS.DynamoDB();
-
-export default dynamoClient;
+export const dynamoClient = new AWS.DynamoDB();
+export const sesClient = new AWS.SES();

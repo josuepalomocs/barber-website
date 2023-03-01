@@ -13,6 +13,7 @@ export function useCustomerAppointment() {
       email: "",
       phone: "",
     });
+  const [isAppointmentBooked, setIsAppointmentBooked] = useState(false);
 
   useEffect(() => {
     setSelectedBarberServiceId("");
@@ -22,8 +23,10 @@ export function useCustomerAppointment() {
     selectedISODateTime,
     selectedBarberServiceId,
     customerInformation,
+    isAppointmentBooked,
     setSelectedISODateTime,
     setSelectedBarberServiceId,
     setCustomerInformation,
+    setIsAppointmentBooked,
   };
 }

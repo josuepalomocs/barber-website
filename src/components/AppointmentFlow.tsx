@@ -1,10 +1,14 @@
-import { CustomerAppointmentProvider } from "@/context/CustomerAppointmentProvider";
+import {
+  CustomerAppointmentContext,
+  CustomerAppointmentProvider,
+} from "@/context/CustomerAppointmentProvider";
 import Calendar from "@/components/Calendar";
 import TimeOptionListContainer from "@/components/TimeOptionListContainer";
 import ServiceListContainer from "@/components/ServiceListContainer";
 import ContactFormContainer from "@/components/ContactFormContainer";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { AvailableAppointmentsProvider } from "@/context/AvailableAppointmentProvider";
+import { useContext } from "react";
 
 interface AppointmentFlowProps {
   closeSidebar: () => void;
@@ -13,6 +17,30 @@ interface AppointmentFlowProps {
 export default function AppointmentFlow({
   closeSidebar,
 }: AppointmentFlowProps) {
+  const { isAppointmentBooked } = useContext(CustomerAppointmentContext);
+
+  if (isAppointmentBooked) {
+    return (
+      <div className="flex flex-col w-full h-screen bg-white px-4 space-y-12">
+        <div className="flex items-center h-20">
+          <button
+            className="text-sm text-neutral-400 focus:outline-neutral-300 p-2 ml-auto"
+            onClick={closeSidebar}
+          >
+            <XMarkIcon className="w-[20px] h-[20px]" />
+          </button>
+        </div>
+        <div className="text-center">
+          <p className="text-4xl font-display mb-4">THANK YOU</p>
+          <p className="text-lg text-neutral-500">
+            Your appointment is booked. <br /> A confirmation email has been
+            sent to your inbox.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full h-full">
       <div className="flex items-center w-full h-20 border border-b-200 bg-white">
@@ -33,23 +61,21 @@ export default function AppointmentFlow({
       </div>
       <div className="p-4 bg-neutral-50">
         <h2 className="mt-4 text-sm text-neutral-500 mb-4">Pick a date</h2>
-        <CustomerAppointmentProvider>
+        <div className="mb-4">
+          <Calendar />
+        </div>
+        <hr className="border-neutral-200 mb-8" />
+        <AvailableAppointmentsProvider>
           <div className="mb-4">
-            <Calendar />
+            <TimeOptionListContainer />
           </div>
           <hr className="border-neutral-200 mb-8" />
-          <AvailableAppointmentsProvider>
-            <div className="mb-4">
-              <TimeOptionListContainer />
-            </div>
-            <hr className="border-neutral-200 mb-8" />
-            <div className="mb-4">
-              <ServiceListContainer />
-            </div>
-          </AvailableAppointmentsProvider>
-          <hr className="border-neutral-200 mb-8" />
-          <div className="">{<ContactFormContainer />}</div>
-        </CustomerAppointmentProvider>
+          <div className="mb-4">
+            <ServiceListContainer />
+          </div>
+        </AvailableAppointmentsProvider>
+        <hr className="border-neutral-200 mb-8" />
+        <div className="">{<ContactFormContainer />}</div>
       </div>
     </div>
   );

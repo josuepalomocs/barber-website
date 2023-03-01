@@ -2,7 +2,11 @@ import { ScissorsIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { FormEvent, useContext } from "react";
 import { CustomerAppointmentContext } from "@/context/CustomerAppointmentProvider";
-import { createCustomerAppointment } from "@/services/api";
+import {
+  createCustomerAppointment,
+  createCustomerAppointmentConfirmationEmail,
+  createSlackCustomerAppointment,
+} from "@/services/api";
 import { CustomerAppointment } from "@/types";
 import { convertDateToUnixTimestamp } from "@/utilities/date";
 
@@ -14,6 +18,7 @@ export default function ContactForm({}: ContactFormProps) {
     selectedISODateTime,
     selectedBarberServiceId,
     setCustomerInformation,
+    setIsAppointmentBooked,
   } = useContext(CustomerAppointmentContext);
   const { firstName, lastName, email, phone } = customerInformation;
 
@@ -26,6 +31,11 @@ export default function ContactForm({}: ContactFormProps) {
       customerInformation: customerInformation,
     };
     const response = await createCustomerAppointment(customerAppointment);
+    setIsAppointmentBooked(true);
+    const sendEmailResponse =
+      createCustomerAppointmentConfirmationEmail(response);
+    const slackCustomerAppointmentResponse =
+      createSlackCustomerAppointment(response);
   }
 
   return (
