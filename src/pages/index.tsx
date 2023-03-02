@@ -9,6 +9,7 @@ import BarberLocation from "@/components/BarberLocation";
 import BarberHours from "@/components/BarberHours";
 import Footer from "@/components/Footer";
 import { CustomerAppointmentProvider } from "@/context/CustomerAppointmentProvider";
+import BarberContact from "@/components/BarberContact";
 
 export default function Home() {
   const { isOpen, openSidebar, closeSidebar } = useSidebar();
@@ -39,6 +40,9 @@ export default function Home() {
           </div>
           <div className="px-4 flex justify-center items-center">
             <BarberLocation />
+          </div>
+          <div className="px-4 flex justify-center items-center">
+            <BarberContact />
           </div>
           <Footer />
         </div>

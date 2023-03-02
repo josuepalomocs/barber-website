@@ -147,14 +147,13 @@ export default function ContactForm({}: ContactFormProps) {
         apply.
       </div>
       <div className="text-xs text-center text-neutral-500">
-        Built by{" "}
+        Developed by{" "}
         <Link
-          className="text-neutral-500"
+          className="text-blue-500"
           href="https://www.linkedin.com/in/josue-palomo/"
         >
           Josue Palomo
-        </Link>{" "}
-        🔨
+        </Link>
       </div>
     </form>
   );

@@ -34,7 +34,7 @@ export default function TimeOptionListContainer() {
         <p className="text-neutral-500">Pick a time</p>
         <div className="text-neutral-400">
           <button
-            className="p-2 hover:bg-neutral-200 rounded-full"
+            className="p-2 hover:bg-neutral-200 rounded-sm"
             onClick={() => {
               if (selectedGroup > 0) {
                 setSelectedGroup(selectedGroup - 1);
@@ -44,7 +44,7 @@ export default function TimeOptionListContainer() {
             <ChevronUpIcon className="w-[20px] h-[20px]" />
           </button>
           <button
-            className="p-2 hover:bg-neutral-200 rounded-full"
+            className="p-2 hover:bg-neutral-200 rounded-sm"
             onClick={() => {
               if (selectedGroup < availableAppointmentTimeGroups.length - 1) {
                 setSelectedGroup(selectedGroup + 1);
