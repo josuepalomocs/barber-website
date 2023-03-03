@@ -106,7 +106,7 @@ export async function createCustomerAppointmentSlackMessage(
   );
 
   return await axios.post(SLACK_APPOINTMENTS_WEBHOOK_URL, {
-    text: "New appointment booking! 🥳",
+    text: `${firstName} just booked an appointment! 🥳`,
     blocks: [
       {
         type: "header",
