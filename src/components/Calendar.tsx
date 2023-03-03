@@ -15,6 +15,7 @@ export default function Calendar() {
   const { selectedISODateTime, setSelectedISODateTime } = useContext(
     CustomerAppointmentContext
   );
+  console.log(selectedISODateTime);
   const selectedDate = new Date(selectedISODateTime);
   const selectedDateYear = selectedDate.getFullYear();
   const selectedDateMonth = selectedDate.getMonth();
@@ -26,7 +27,6 @@ export default function Calendar() {
     selectNextView,
     closedDaysOfWeek,
   } = useCalendar();
-
   const disabledTableCellStyles = "text-neutral-400 font-light";
   const activeTableCellStyles = "hover:bg-neutral-200 text-neutral-800";
   const selectedTableCellStyles =
@@ -85,8 +85,14 @@ export default function Calendar() {
                   onClick={() => {
                     setSelectedISODateTime(
                       `${selectedCalendarView.year}-${
-                        selectedCalendarView.month + 1
-                      }-${tableCellIndex - firstDayOfMonthIndex + 1}`
+                        selectedCalendarView.month + 1 < 10
+                          ? `0${selectedCalendarView.month + 1}`
+                          : selectedCalendarView.month + 1
+                      }-${
+                        tableCellIndex - firstDayOfMonthIndex + 1 < 10
+                          ? `0${tableCellIndex - firstDayOfMonthIndex + 1}`
+                          : tableCellIndex - firstDayOfMonthIndex + 1
+                      }T06:00:00.000Z`
                     );
                   }}
                 >

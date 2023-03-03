@@ -21,7 +21,7 @@ export default function useAvailableAppointmentsByDate(date: string) {
     }
 
     getAvailableAppointmentTimesByDate().catch((error) => console.log(error));
-  }, [date]);
+  }, [date.slice(0, 10)]);
 
   return { availableAppointments, availableAppointmentsAreLoading };
 }

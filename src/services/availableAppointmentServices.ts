@@ -23,9 +23,7 @@ export async function getAvailableAppointmentsByDate(
   const customerAppointmentsByDate = await getCustomerAppointmentsByDateFromDB(
     date
   );
-  console.log(date.toDateString());
   const dateDay = getDayOfWeek(date);
-  console.log(dateDay);
   const barberDaySchedule = await getBarberDayScheduleByDayFromDB(dateDay);
   const barberServices = await getBarberServicesFromDB();
 

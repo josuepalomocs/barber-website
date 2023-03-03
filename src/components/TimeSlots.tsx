@@ -3,8 +3,6 @@ import { useState } from "react";
 interface TimeSlotsProps {}
 
 export default function TimeSlots({}: TimeSlotsProps) {
-  const [selectedTime, setSelectedTime] = useState();
-
   return (
     <div className="text-xs">
       <p className="text-neutral-500 mb-4">Pick a time</p>

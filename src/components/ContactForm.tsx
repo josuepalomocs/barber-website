@@ -32,8 +32,8 @@ export default function ContactForm({}: ContactFormProps) {
     };
     const response = await createCustomerAppointment(customerAppointment);
     setIsAppointmentBooked(true);
-    const sendEmailResponse =
-      createCustomerAppointmentConfirmationEmail(response);
+    // const sendEmailResponse =
+    //   createCustomerAppointmentConfirmationEmail(response);
     const slackCustomerAppointmentResponse =
       createSlackCustomerAppointment(response);
   }

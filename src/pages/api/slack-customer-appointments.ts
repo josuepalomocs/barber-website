@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { CustomerAppointment } from "@/types";
-import createCustomerAppointmentSlackMessage from "@/services/slack";
+import { createCustomerAppointmentSlackMessage } from "@/services/slack";
 
 export default async function handler(
   req: NextApiRequest,

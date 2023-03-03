@@ -22,17 +22,7 @@ export function AvailableAppointmentsProvider({
   children,
 }: AvailableAppointmentsProviderProps) {
   const { selectedISODateTime } = useContext(CustomerAppointmentContext);
-  const selectedDate = new Date(selectedISODateTime);
-  const selectedDateYear = selectedDate.getFullYear();
-  const selectedDateMonth = selectedDate.getMonth();
-  const selectedDateDayOfMonth = selectedDate.getDate();
-  const value = useAvailableAppointmentsByDate(
-    new Date(
-      selectedDateYear,
-      selectedDateMonth,
-      selectedDateDayOfMonth
-    ).toISOString()
-  );
+  const value = useAvailableAppointmentsByDate(selectedISODateTime);
 
   return (
     <AvailableAppointmentsContext.Provider value={value}>

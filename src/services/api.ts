@@ -5,6 +5,7 @@ import {
   BarberService,
   CustomerAppointment,
 } from "@/types";
+import process from "process";
 
 type BarberServicesOrder =
   | "price-asc"
@@ -12,7 +13,7 @@ type BarberServicesOrder =
   | "duration-asc"
   | "duration-desc";
 
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/api`;
 
 export const httpClient = axios.create({
   baseURL: BASE_URL,
