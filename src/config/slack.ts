@@ -15,8 +15,9 @@ if (!process.env.SLACK_BARBER_SERVICES_WEBHOOK_URL)
 
 const slackBotToken = process.env.SLACK_BOT_TOKEN;
 const slackCustomerAppointmentsWebhookUrl =
-  process.env.slackCustomerAppointmentsWebhookUrl;
-const slackBarberServicesWebhookUrl = process.env.slackBarberServicesWebhookUrl;
+  process.env.SLACK_CUSTOMER_APPOINTMENTS_WEBHOOK_URL;
+const slackBarberServicesWebhookUrl =
+  process.env.SLACK_BARBER_SERVICES_WEBHOOK_URL;
 
 export {
   slackBotToken,
