@@ -6,7 +6,7 @@ import {
 import axios from "axios";
 import process from "process";
 import { formatDuration } from "date-fns";
-import { formatDate, getDayOfWeek } from "@/utilities/date";
+import { formatDate } from "@/utilities/date";
 
 const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
 function getSlackBotToken() {
