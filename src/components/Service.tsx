@@ -8,7 +8,7 @@ export default function Service({
   id,
   name,
   durationInMinutes,
-  priceInUSD,
+  priceInUsd,
 }: ServiceProps) {
   const { selectedBarberServiceId, setSelectedBarberServiceId } = useContext(
     CustomerAppointmentContext
@@ -35,7 +35,7 @@ export default function Service({
         <p className="mb-4">{name}</p>
         <p className="text-neutral-500 text-xs">{durationString}</p>
       </div>
-      <p className="">${priceInUSD}</p>
+      <p className="">${priceInUsd}</p>
     </button>
   );
 }

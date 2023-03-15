@@ -21,7 +21,7 @@ export default function AddBarberServiceModal({
     name: "",
     description: "",
     durationInMinutes: -1,
-    priceInUSD: -1,
+    priceInUsd: -1,
   });
 
   function handleServiceNameChange(e: ChangeEvent<HTMLInputElement>) {
@@ -41,7 +41,7 @@ export default function AddBarberServiceModal({
   function handleServicePriceInUSDChange(e: ChangeEvent<HTMLInputElement>) {
     setBarberServiceData({
       ...barberServiceData,
-      priceInUSD: e.target.valueAsNumber,
+      priceInUsd: e.target.valueAsNumber,
     });
   }
 
@@ -92,7 +92,7 @@ export default function AddBarberServiceModal({
           placeholder="30"
           label="Price (USD)"
           value={
-            barberServiceData.priceInUSD < 0 ? "" : barberServiceData.priceInUSD
+            barberServiceData.priceInUsd < 0 ? "" : barberServiceData.priceInUsd
           }
           handleChange={handleServicePriceInUSDChange}
         ></FormInput>

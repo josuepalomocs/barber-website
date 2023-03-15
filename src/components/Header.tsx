@@ -24,7 +24,7 @@ export default function Header({ openSidebar }: HeaderProps) {
           href="/"
           className="text-base font-display tracking-[.25em] text-neutral-800"
         >
-          OCF
+          OCFADES
         </Link>
         <button
           className="text-neutral-800 text-xs p-2"

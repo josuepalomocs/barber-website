@@ -15,7 +15,6 @@ export default function Calendar() {
   const { selectedISODateTime, setSelectedISODateTime } = useContext(
     CustomerAppointmentContext
   );
-  console.log(selectedISODateTime);
   const selectedDate = new Date(selectedISODateTime);
   const selectedDateYear = selectedDate.getFullYear();
   const selectedDateMonth = selectedDate.getMonth();

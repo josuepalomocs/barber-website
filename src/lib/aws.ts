@@ -1,14 +1,15 @@
 import AWS from "aws-sdk";
-
-const AMAZON_REGION = process.env.AMAZON_REGION as string;
-const AMAZON_ACCESS_KEY = process.env.AMAZON_ACCESS_KEY as string;
-const AMAZON_SECRET_KEY = process.env.AMAZON_SECRET_KEY as string;
+import {
+  amazonAccessKey,
+  amazonRegion,
+  amazonSecretKey,
+} from "@/config/amazon";
 
 AWS.config.update({
-  region: AMAZON_REGION,
+  region: amazonRegion,
   credentials: {
-    accessKeyId: AMAZON_ACCESS_KEY,
-    secretAccessKey: AMAZON_SECRET_KEY,
+    accessKeyId: amazonAccessKey,
+    secretAccessKey: amazonSecretKey,
   },
 });
 

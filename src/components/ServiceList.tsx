@@ -19,7 +19,7 @@ export default function ServiceList() {
       })
       .map(({ availableBarberServices }) => {
         return availableBarberServices.map(
-          ({ id, name, description, durationInMinutes, priceInUSD }) => {
+          ({ id, name, description, durationInMinutes, priceInUsd }) => {
             return (
               <li
                 key={id}
@@ -30,7 +30,7 @@ export default function ServiceList() {
                   name={name}
                   description={description}
                   durationInMinutes={durationInMinutes}
-                  priceInUSD={priceInUSD}
+                  priceInUsd={priceInUsd}
                 />
               </li>
             );

@@ -1,8 +1,24 @@
 import Head from "next/head";
-import BarberServicesContainer from "@/components/admin/BarberServicesContainer";
-import CustomerAppointmentsContainer from "@/components/admin/CustomerAppointmentsContainer";
+import {
+  BellIcon,
+  CalendarDaysIcon,
+  CurrencyDollarIcon,
+  EllipsisHorizontalIcon,
+  EyeIcon,
+  PencilSquareIcon,
+  ScissorsIcon,
+  SunIcon,
+  UserCircleIcon,
+  UserGroupIcon,
+} from "@heroicons/react/20/solid";
+import Modal from "@/components/admin/Modal/Modal";
+import useModal from "@/components/admin/Modal/useModal";
+import BarberServicesForm from "@/components/admin/Form/BarberServicesForm";
+import BarberServicesContainer from "@/components/admin/BarberServices/BarberServicesContainer";
 
 export default function Home() {
+  const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
+
   return (
     <>
       <Head>
@@ -11,10 +27,253 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="w-full min-h-screen text-xs bg-neutral-500">
-        <CustomerAppointmentsContainer />
+      <div className="w-full h-full text-sm bg-neutral-50 text-neutral-700">
+        <div className="p-4 border-b flex justify-between items-center">
+          <h1 className="text-xl font-display">OCFADES</h1>
+          <button className="p-2 text-neutral-700 rounded-sm">
+            <BellIcon className="w-[20px] h-[20px]" />
+          </button>
+        </div>
+        <div className="p-4">
+          <div className="flex justify-between mb-4">
+            <h2 className="text-lg">Analytics</h2>
+            <select
+              className="rounded-sm border bg-white p-2"
+              name="timeRanges"
+              id="timeRanges"
+            >
+              <option value="today">Today</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="yearly">Yearly</option>
+            </select>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex items-center space-x-4 p-4 bg-white rounded-sm drop-shadow-sm">
+              <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                <CurrencyDollarIcon className="w-[20px] h-[20px]" />
+              </div>
+              <div className="">
+                <p className="text-xs">REVENUE</p>
+                <p className="text-lg">
+                  $235.<span className="text-sm">00</span>
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4 p-4 bg-white rounded-sm drop-shadow-sm">
+              <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                <CalendarDaysIcon className="w-[20px] h-[20px]" />
+              </div>
+              <div className="">
+                <p className="text-xs">BOOKINGS</p>
+                <p className="text-lg">8</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4 p-4 bg-white rounded-sm drop-shadow-sm">
+              <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                <EyeIcon className="w-[20px] h-[20px]" />
+              </div>
+              <div className="">
+                <p className="text-xs">SITE VISITS</p>
+                <p className="text-lg">16</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4 p-4 bg-white rounded-sm drop-shadow-sm">
+              <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                <UserGroupIcon className="w-[20px] h-[20px]" />
+              </div>
+              <div className="">
+                <p className="text-xs">NEW CLIENTS</p>
+                <p className="text-lg">5</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="p-4">
+          <div className="flex justify-between mb-4">
+            <h2 className="text-lg">Appointments</h2>
+          </div>
+          <div className="bg-white drop-shadow-sm p-4 rounded-sm">
+            <h4 className="text-xs mb-4">TODAY</h4>
+            <ul className="flex flex-col space-y-4">
+              <li className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="w-1 h-12 bg-neutral-200 rounded-l-full" />
+                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                    <UserCircleIcon className="w-[20px] h-[20px]" />
+                  </div>
+                  <div>
+                    <div>Josue Palomo</div>
+                    <div className="text-neutral-400">2:30am - 3:30am</div>
+                  </div>
+                </div>
+                <button className="p-2">
+                  <EllipsisHorizontalIcon className="w-[20px] h-[20px]" />
+                </button>
+              </li>
+              <li className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="w-1 h-12 bg-red-200 rounded-l-full" />
+                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                    <UserCircleIcon className="w-[20px] h-[20px]" />
+                  </div>
+                  <div>
+                    <div>Leo Dallis</div>
+                    <div className="text-neutral-400">2:30am - 3:30am</div>
+                  </div>
+                </div>
+                <button className="p-2">
+                  <EllipsisHorizontalIcon className="w-[20px] h-[20px]" />
+                </button>
+              </li>
+              <li className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="w-1 h-12 bg-green-200 rounded-l-full" />
+                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                    <UserCircleIcon className="w-[20px] h-[20px]" />
+                  </div>
+                  <div>
+                    <div>Osvaldo Catalan</div>
+                    <div className="text-neutral-400">2:30am - 3:30am</div>
+                  </div>
+                </div>
+                <button className="p-2">
+                  <EllipsisHorizontalIcon className="w-[20px] h-[20px]" />
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
         <BarberServicesContainer />
+        <div className="p-4">
+          <div className="flex justify-between mb-4">
+            <h2 className="text-lg">Schedule</h2>
+          </div>
+          <div className="bg-white drop-shadow-sm p-4 rounded-sm">
+            <ul className="flex flex-col space-y-4">
+              <li className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                    <SunIcon className="w-[20px] h-[20px]" />
+                  </div>
+                  <div>
+                    <div>Monday</div>
+                    <ul className="text-neutral-400">
+                      <li>11:00am - 2:00pm</li>
+                    </ul>
+                  </div>
+                </div>
+                <button className="p-2">
+                  <PencilSquareIcon className="w-[20px] h-[20px]" />
+                </button>
+              </li>
+              <li className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                    <SunIcon className="w-[20px] h-[20px]" />
+                  </div>
+                  <div>
+                    <div>Tuesday</div>
+                    <ul className="text-neutral-400">
+                      <li>11:00am - 2:00pm</li>
+                    </ul>
+                  </div>
+                </div>
+                <button className="p-2">
+                  <PencilSquareIcon className="w-[20px] h-[20px]" />
+                </button>
+              </li>
+              <li className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                    <SunIcon className="w-[20px] h-[20px]" />
+                  </div>
+                  <div>
+                    <div>Wednesday</div>
+                    <ul className="text-neutral-400">
+                      <li>11:00am - 2:00pm</li>
+                    </ul>
+                  </div>
+                </div>
+                <button className="p-2">
+                  <PencilSquareIcon className="w-[20px] h-[20px]" />
+                </button>
+              </li>
+              <li className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                    <SunIcon className="w-[20px] h-[20px]" />
+                  </div>
+                  <div>
+                    <div>Thursday</div>
+                    <ul className="text-neutral-400">
+                      <li>11:00am - 2:00pm</li>
+                    </ul>
+                  </div>
+                </div>
+                <button className="p-2">
+                  <PencilSquareIcon className="w-[20px] h-[20px]" />
+                </button>
+              </li>
+              <li className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                    <SunIcon className="w-[20px] h-[20px]" />
+                  </div>
+                  <div>
+                    <div>Friday</div>
+                    <ul className="text-neutral-400">
+                      <li>11:00am - 2:00pm</li>
+                    </ul>
+                  </div>
+                </div>
+                <button className="p-2">
+                  <PencilSquareIcon className="w-[20px] h-[20px]" />
+                </button>
+              </li>
+              <li className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                    <SunIcon className="w-[20px] h-[20px]" />
+                  </div>
+                  <div>
+                    <div>Saturday</div>
+                    <ul className="text-neutral-400">
+                      <li>11:00am - 2:00pm</li>
+                    </ul>
+                  </div>
+                </div>
+                <button className="p-2">
+                  <PencilSquareIcon className="w-[20px] h-[20px]" />
+                </button>
+              </li>
+              <li className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
+                    <SunIcon className="w-[20px] h-[20px]" />
+                  </div>
+                  <div>
+                    <div>Sunday</div>
+                    <ul className="text-neutral-400">
+                      <li>11:00am - 2:00pm</li>
+                    </ul>
+                  </div>
+                </div>
+                <button className="p-2">
+                  <PencilSquareIcon className="w-[20px] h-[20px]" />
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        handleClose={handleCloseModal}
+        title="Add service"
+      >
+        <BarberServicesForm type="add" />
+      </Modal>
     </>
   );
 }

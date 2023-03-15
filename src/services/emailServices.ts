@@ -45,7 +45,7 @@ export async function sendCustomerAppointmentConfirmationEmail(
           )}</li>
                 \t\t<li><strong>Service: </strong>${barberService?.name}</li>
                 \t\t<li><strong>Price: </strong>$${
-                  barberService?.priceInUSD
+                  barberService?.priceInUsd
                 }</li>
                 \t\t<li><strong>Location:</strong>
                 <a href="https://goo.gl/maps/ksbyfxYFftbK79md8">10455 N Central Expy # 124, Dallas, TX 75231</a>

@@ -12,6 +12,7 @@
     "@heroicons/react": "^2.0.14",
     "@next/font": "^13.1.6",
     "@react-google-maps/api": "^2.18.1",
+    "@slack/bolt": "^3.12.2",
     "@types/google.maps": "^3.52.0",
     "@types/node": "18.13.0",
     "@types/react": "18.0.27",
@@ -26,6 +27,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-google-recaptcha-v3": "^1.10.1",
+    "react-hook-form": "^7.43.5",
     "typescript": "4.9.5",
     "uuid": "^9.0.0"
   },

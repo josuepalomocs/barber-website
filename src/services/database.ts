@@ -31,7 +31,7 @@ export async function getBarberServiceByIdInDB(
           name: dataItem.barberServiceName.S as string,
           description: dataItem.barberServiceDescription.S as string,
           durationInMinutes: Number(dataItem.barberServiceDurationInMinutes.N),
-          priceInUSD: Number(dataItem.barberServicePriceInUSD.N),
+          priceInUsd: Number(dataItem.barberServicePriceInUSD.N),
         };
       }
       resolve(barberService);
@@ -61,7 +61,7 @@ export async function getBarberServicesFromDB(): Promise<BarberService[]> {
             durationInMinutes: Number(
               dataItem.barberServiceDurationInMinutes.N
             ),
-            priceInUSD: Number(dataItem.barberServicePriceInUSD.N),
+            priceInUsd: Number(dataItem.barberServicePriceInUSD.N),
           };
         });
       }
@@ -84,7 +84,7 @@ export async function createBarberServiceInDB(
       barberServiceDurationInMinutes: {
         N: barberService.durationInMinutes.toString(),
       },
-      barberServicePriceInUSD: { N: barberService.priceInUSD.toString() },
+      barberServicePriceInUSD: { N: barberService.priceInUsd.toString() },
     },
   };
 
@@ -122,7 +122,7 @@ export async function updateBarberServiceInDB(
       ":barberServiceDurationInMinutes": {
         S: barberService.durationInMinutes.toString(),
       },
-      ":barberServicePriceInUSD": { S: barberService.priceInUSD.toString() },
+      ":barberServicePriceInUSD": { S: barberService.priceInUsd.toString() },
     },
     ReturnValues: "ALL_NEW",
   };

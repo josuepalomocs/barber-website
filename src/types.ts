@@ -1,9 +1,8 @@
 export interface BarberService {
   id: string;
   name: string;
-  description: string;
   durationInMinutes: number;
-  priceInUSD: number;
+  priceInUsd: number;
 }
 
 export interface BarberDaySchedule {

@@ -1,12 +1,12 @@
 import process from "process";
 import { useJsApiLoader } from "@react-google-maps/api";
 import { useCallback } from "react";
+import { googleMapsAccessKey } from "@/config/google";
 
 export function useGoogleMap() {
-  const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
   const { isLoaded: googleMapIsLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey,
+    googleMapsApiKey: googleMapsAccessKey,
     preventGoogleFontsLoading: true,
   });
 

@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { BarberDaySchedule } from "@/types";
 import {
   deleteBarberDayScheduleInDB,
-  getBarberDayScheduleByWeekdayNumberInDB,
+  getBarberDayScheduleByDayFromDB,
   getBarberDaySchedulesInDB,
   updateBarberDayScheduleInDB,
 } from "@/services/database";
@@ -19,7 +19,7 @@ export default async function handler(
     const weekdayNumber = req.query["weekday-number"];
 
     if (weekdayNumber) {
-      return getBarberDayScheduleByWeekdayNumberInDB(Number(weekdayNumber))
+      return getBarberDayScheduleByDayFromDB(Number(weekdayNumber))
         .then((barberDaySchedule) => res.status(200).json(barberDaySchedule))
         .catch((error) => {
           console.log(error);

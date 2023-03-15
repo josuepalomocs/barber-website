@@ -38,7 +38,7 @@ export default function BarberService({
         </div>
         <div>
           <p className="font-medium">Price</p>
-          <p className="mb-4">${barberService.priceInUSD}</p>
+          <p className="mb-4">${barberService.priceInUsd}</p>
         </div>
         <button
           className="text-xs w-16 p-3 bg-neutral-200 rounded mr-4"
