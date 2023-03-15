@@ -16,7 +16,7 @@ export default function BarberServicesContainer() {
           Add service
         </button>
       </div>
-      <BarberServices barberServices={barberServices ?? []} />
+      <BarberServices barberServices={barberServices} />
       <Modal
         isOpen={isModalOpen}
         handleClose={handleCloseModal}

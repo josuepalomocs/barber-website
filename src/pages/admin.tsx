@@ -6,7 +6,6 @@ import {
   EllipsisHorizontalIcon,
   EyeIcon,
   PencilSquareIcon,
-  ScissorsIcon,
   SunIcon,
   UserCircleIcon,
   UserGroupIcon,
@@ -15,6 +14,7 @@ import Modal from "@/components/admin/Modal/Modal";
 import useModal from "@/components/admin/Modal/useModal";
 import BarberServicesForm from "@/components/admin/Form/BarberServicesForm";
 import BarberServicesContainer from "@/components/admin/BarberServices/BarberServicesContainer";
+import BarberDaySchedulesContainer from "@/components/admin/BarberDaySchedules/BarberDaySchedulesContainer";
 
 export default function Home() {
   const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
@@ -145,127 +145,7 @@ export default function Home() {
           </div>
         </div>
         <BarberServicesContainer />
-        <div className="p-4">
-          <div className="flex justify-between mb-4">
-            <h2 className="text-lg">Schedule</h2>
-          </div>
-          <div className="bg-white drop-shadow-sm p-4 rounded-sm">
-            <ul className="flex flex-col space-y-4">
-              <li className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
-                    <SunIcon className="w-[20px] h-[20px]" />
-                  </div>
-                  <div>
-                    <div>Monday</div>
-                    <ul className="text-neutral-400">
-                      <li>11:00am - 2:00pm</li>
-                    </ul>
-                  </div>
-                </div>
-                <button className="p-2">
-                  <PencilSquareIcon className="w-[20px] h-[20px]" />
-                </button>
-              </li>
-              <li className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
-                    <SunIcon className="w-[20px] h-[20px]" />
-                  </div>
-                  <div>
-                    <div>Tuesday</div>
-                    <ul className="text-neutral-400">
-                      <li>11:00am - 2:00pm</li>
-                    </ul>
-                  </div>
-                </div>
-                <button className="p-2">
-                  <PencilSquareIcon className="w-[20px] h-[20px]" />
-                </button>
-              </li>
-              <li className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
-                    <SunIcon className="w-[20px] h-[20px]" />
-                  </div>
-                  <div>
-                    <div>Wednesday</div>
-                    <ul className="text-neutral-400">
-                      <li>11:00am - 2:00pm</li>
-                    </ul>
-                  </div>
-                </div>
-                <button className="p-2">
-                  <PencilSquareIcon className="w-[20px] h-[20px]" />
-                </button>
-              </li>
-              <li className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
-                    <SunIcon className="w-[20px] h-[20px]" />
-                  </div>
-                  <div>
-                    <div>Thursday</div>
-                    <ul className="text-neutral-400">
-                      <li>11:00am - 2:00pm</li>
-                    </ul>
-                  </div>
-                </div>
-                <button className="p-2">
-                  <PencilSquareIcon className="w-[20px] h-[20px]" />
-                </button>
-              </li>
-              <li className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
-                    <SunIcon className="w-[20px] h-[20px]" />
-                  </div>
-                  <div>
-                    <div>Friday</div>
-                    <ul className="text-neutral-400">
-                      <li>11:00am - 2:00pm</li>
-                    </ul>
-                  </div>
-                </div>
-                <button className="p-2">
-                  <PencilSquareIcon className="w-[20px] h-[20px]" />
-                </button>
-              </li>
-              <li className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
-                    <SunIcon className="w-[20px] h-[20px]" />
-                  </div>
-                  <div>
-                    <div>Saturday</div>
-                    <ul className="text-neutral-400">
-                      <li>11:00am - 2:00pm</li>
-                    </ul>
-                  </div>
-                </div>
-                <button className="p-2">
-                  <PencilSquareIcon className="w-[20px] h-[20px]" />
-                </button>
-              </li>
-              <li className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="flex justify-center items-center w-8 h-8 bg-neutral-100 rounded-sm">
-                    <SunIcon className="w-[20px] h-[20px]" />
-                  </div>
-                  <div>
-                    <div>Sunday</div>
-                    <ul className="text-neutral-400">
-                      <li>11:00am - 2:00pm</li>
-                    </ul>
-                  </div>
-                </div>
-                <button className="p-2">
-                  <PencilSquareIcon className="w-[20px] h-[20px]" />
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <BarberDaySchedulesContainer />
       </div>
       <Modal
         isOpen={isModalOpen}

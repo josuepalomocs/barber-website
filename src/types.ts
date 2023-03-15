@@ -6,12 +6,16 @@ export interface BarberService {
 }
 
 export interface BarberDaySchedule {
-  dayOfWeek: number;
+  id: number;
+  dayOfWeek: DayOfWeek;
   openTime: string;
   closeTime: string;
-  breaks: BarberBreak[];
-  appointmentIntervalInMinutes: number;
-  appointmentSlots: string[];
+}
+
+export interface DayOfWeek {
+  id: number;
+  dayName: string;
+  dayNumber: number;
 }
 
 export interface BarberBreak {
