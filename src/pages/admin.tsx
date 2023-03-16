@@ -5,20 +5,14 @@ import {
   CurrencyDollarIcon,
   EllipsisHorizontalIcon,
   EyeIcon,
-  PencilSquareIcon,
-  SunIcon,
   UserCircleIcon,
   UserGroupIcon,
 } from "@heroicons/react/20/solid";
-import Modal from "@/components/admin/Modal/Modal";
-import useModal from "@/components/admin/Modal/useModal";
-import BarberServicesForm from "@/components/admin/Form/BarberServicesForm";
 import BarberServicesContainer from "@/components/admin/BarberServices/BarberServicesContainer";
 import BarberDaySchedulesContainer from "@/components/admin/BarberDaySchedules/BarberDaySchedulesContainer";
+import BottomNavigation from "@/components/BottomNavigation/BottomNavigation";
 
 export default function Home() {
-  const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
-
   return (
     <>
       <Head>
@@ -27,12 +21,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="w-full h-full text-sm bg-neutral-50 text-neutral-700">
-        <div className="p-4 border-b flex justify-between items-center">
+      <div className="w-full h-full text-sm bg-neutral-50 text-neutral-700 pb-20">
+        <div className="p-4 border-b text-center">
           <h1 className="text-xl font-display">OCFADES</h1>
-          <button className="p-2 text-neutral-700 rounded-sm">
-            <BellIcon className="w-[20px] h-[20px]" />
-          </button>
         </div>
         <div className="p-4">
           <div className="flex justify-between mb-4">
@@ -146,14 +137,8 @@ export default function Home() {
         </div>
         <BarberServicesContainer />
         <BarberDaySchedulesContainer />
+        <BottomNavigation />
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        handleClose={handleCloseModal}
-        title="Add service"
-      >
-        <BarberServicesForm type="add" />
-      </Modal>
     </>
   );
 }

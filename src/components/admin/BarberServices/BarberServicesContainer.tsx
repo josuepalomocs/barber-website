@@ -7,6 +7,7 @@ import useBarberServices from "@/components/admin/BarberServices/useBarberServic
 export default function BarberServicesContainer() {
   const { isModalOpen, handleOpenModal, handleCloseModal } = useModal();
   const { barberServices } = useBarberServices();
+  console.log(barberServices);
 
   return (
     <div className="p-4">

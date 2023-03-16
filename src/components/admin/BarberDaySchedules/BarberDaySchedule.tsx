@@ -27,6 +27,7 @@ export default function BarberDaySchedule({
   }
 
   function utcToLocalTime(utcTimeString: string) {
+    console.log(utcTimeString);
     const currentDate = new Date();
     const [hours, minutes] = utcTimeString.split(":");
     const utcDate = new Date(
@@ -38,6 +39,7 @@ export default function BarberDaySchedule({
         Number(minutes)
       )
     );
+    console.log(utcDate);
 
     return `${formatDate(utcDate, "h:mmaaa")}`;
   }
