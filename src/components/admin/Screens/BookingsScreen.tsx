@@ -1,40 +1,102 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import { formatDate, isBefore } from "@/utilities/date";
-import { useState } from "react";
+import { formatDate, getDaysInMonth, isBefore } from "@/utilities/date";
+import useBookingCalendar from "@/components/admin/hooks/useBookingCalendar";
+import { useEffect, useRef } from "react";
 
 export default function BookingsScreen() {
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+  const {
+    selectedCalendarDate,
+    selectedCalendarView,
+    selectCalendarDate,
+    selectPreviousCalendarViewMonth,
+    selectNextCalendarViewMonth,
+  } = useBookingCalendar();
+  const {
+    year: selectedYear,
+    month: selectedMonth,
+    dayOfMonth: selectedDayOfMonth,
+  } = selectedCalendarDate;
 
-  function renderMonthDays(yearNumber: number, monthNumber: number) {
-    const date = new Date(yearNumber, monthNumber + 1, 0);
-    const days = date.getDate();
+  const selectedCalendarViewDate = new Date(
+    selectedCalendarView.year,
+    selectedCalendarView.month
+  );
 
-    return Array.from({ length: days }, (_, index) => {
-      const pastDayStyles = "bg-transparent text-neutral-400";
-      const currentDate = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        index + 1
-      );
-      return (
-        <li key={index}>
-          <button
-            className={`flex flex-col space-y-2 justify-center items-center w-16 h-16 drop-shadow-sm bg-white rounded-sm ${
-              isBefore(currentDate, new Date()) && pastDayStyles
+  const currentDayElement = useRef<HTMLLIElement>(null);
+
+  function scrollToCurrentDayElement() {
+    currentDayElement.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "center",
+    });
+  }
+
+  useEffect(() => {
+    scrollToCurrentDayElement();
+  }, []);
+
+  function renderMonthDays() {
+    const daysInSelectedCalendarViewMonth = getDaysInMonth(
+      selectedCalendarViewDate
+    );
+
+    return Array.from(
+      { length: daysInSelectedCalendarViewMonth },
+      (_, index) => {
+        const pastDayStyles =
+          "bg-transparent text-neutral-400 drop-shadow-none";
+        const currentAndFutureDayStyles = "bg-white";
+        const selectedDateStyles = "bg-black text-white drop-shadow-none";
+        return (
+          <li
+            key={index}
+            ref={
+              new Date().getDate() === index + 1 ? currentDayElement : undefined
+            }
+            className={`drop-shadow-sm rounded-sm ${
+              selectedYear === selectedCalendarView.year &&
+              selectedMonth === selectedCalendarView.month &&
+              selectedDayOfMonth === index + 1
+                ? selectedDateStyles
+                : isBefore(
+                    new Date(
+                      selectedCalendarView.year,
+                      selectedCalendarView.month,
+                      index + 2
+                    ),
+                    new Date()
+                  )
+                ? pastDayStyles
+                : currentAndFutureDayStyles
             }`}
           >
-            <span className="text-xs text-neutral-400">
-              {formatDate(
-                new Date(date.getFullYear(), date.getMonth(), index + 1),
-                "iii"
-              )}
-            </span>
-            <span className="text-base">{index + 1}</span>
-          </button>
-        </li>
-      );
-    });
+            <button
+              className={`flex flex-col space-y-2 justify-center items-center w-16 h-16`}
+              onClick={() => {
+                selectCalendarDate(
+                  selectedCalendarView.year,
+                  selectedCalendarView.month,
+                  index + 1
+                );
+              }}
+            >
+              <span className="text-xs">
+                {formatDate(
+                  new Date(
+                    selectedCalendarView.year,
+                    selectedCalendarView.month,
+                    index + 1
+                  ),
+                  "iii"
+                )}
+              </span>
+              <span className="text-base">{index + 1}</span>
+            </button>
+          </li>
+        );
+      }
+    );
   }
 
   return (
@@ -44,17 +106,20 @@ export default function BookingsScreen() {
       </div>
       <div className="p-4">
         <div className="flex justify-between items-center mb-4">
-          <button className="p-2">
+          <button className="p-2" onClick={selectPreviousCalendarViewMonth}>
             <ChevronLeftIcon className="w-[20px] h-[20px]" />
           </button>
-          <span>March 2023</span>
-          <button className="p-2">
+          <span>
+            {formatDate(
+              new Date(selectedCalendarView.year, selectedCalendarView.month),
+              "MMM yyyy"
+            )}
+          </span>
+          <button className="p-2" onClick={selectNextCalendarViewMonth}>
             <ChevronRightIcon className="w-[20px] h-[20px]" />
           </button>
         </div>
-        <ul className="flex space-x-4 overflow-x-auto">
-          {renderMonthDays(selectedYear, selectedMonth)}
-        </ul>
+        <ul className="flex space-x-4 overflow-x-auto">{renderMonthDays()}</ul>
       </div>
     </div>
   );
