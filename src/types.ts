@@ -1,3 +1,5 @@
+export type Screen = "home" | "analytics" | "bookings" | "shop";
+
 export interface BarberService {
   id: string;
   name: string;
